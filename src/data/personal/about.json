@@ -1,0 +1,61 @@
+{
+  "personal": {
+    "name": "Piyush",
+    "title": "AI Innovator & Data Science Learner",
+    "tagline": "Building the Future with AI, Data, and Purpose",
+    "bio": "An 18-year-old AI & Data Science learner exploring how intelligence, design, and empathy can shape a better future.",
+    "location": "India",
+    "availability": "Open to collaboration",
+    "email": "piyush@example.com",
+    "story": {
+      "spark": "My journey into AI began with a simple curiosity — how can machines think, learn, and understand like humans? Watching how AI could write, create, and solve problems made me realize intelligence isn't just something we use, it's something we can build.",
+      "journey": "I began teaching myself the foundations — Python, data structures, and the logic behind machine learning. Step by step, I explored AI, Data Science, and Automation through online resources, real-world experiments, and community learning.",
+      "purpose": "I believe AI is not just technology — it's a reflection of how humans think, decide, and dream. My purpose is to create ethical, human-centered AI systems that enhance creativity, productivity, and opportunity.",
+      "vision": "My long-term vision is to build AI startups that combine technical innovation with social impact — creating intelligent products that empower learners, creators, and organizations."
+    },
+    "values": [
+      {
+        "name": "Curiosity",
+        "description": "Always exploring how intelligence works — in humans and machines",
+        "icon": "search"
+      },
+      {
+        "name": "Integrity",
+        "description": "Building technology that's ethical, transparent, and human-centered",
+        "icon": "shield"
+      },
+      {
+        "name": "Innovation",
+        "description": "Continuously blending ideas, tools, and logic to create something new",
+        "icon": "lightbulb"
+      },
+      {
+        "name": "Empathy",
+        "description": "Designing AI that feels human — connecting logic with emotion",
+        "icon": "heart"
+      },
+      {
+        "name": "Purpose",
+        "description": "Every project exists to make life better, not just smarter",
+        "icon": "target"
+      }
+    ],
+    "philosophy": "I design intelligence with empathy — blending data, emotion, and purpose into a calm futuristic experience.",
+    "interests": [
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Data Science",
+      "Automation",
+      "Human-AI Interaction",
+      "AI Ethics",
+      "Startup Innovation"
+    ]
+  },
+  "stats": {
+    "years_learning": 3,
+    "projects_completed": 20,
+    "skills_mastered": 28,
+    "hours_coded": 5000,
+    "impact_reach": "2000+ people"
+  }
+}

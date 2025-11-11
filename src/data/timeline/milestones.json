@@ -1,0 +1,108 @@
+{
+  "milestones": [
+    {
+      "id": "milestone-1",
+      "date": "2024-01",
+      "title": "Launched AI Automation Platform",
+      "category": "project",
+      "description": "Successfully deployed an AI-powered automation system helping 50+ businesses optimize workflows",
+      "icon": "rocket",
+      "impact": "high",
+      "tags": ["AI", "Automation", "Launch"],
+      "metrics": {
+        "users": 1200,
+        "efficiency": "45% improvement"
+      }
+    },
+    {
+      "id": "milestone-2",
+      "date": "2023-11",
+      "title": "Completed Data Science Specialization",
+      "category": "learning",
+      "description": "Finished comprehensive data science program covering ML, statistics, and visualization",
+      "icon": "award",
+      "impact": "medium",
+      "tags": ["Learning", "Data Science", "Certification"],
+      "achievement": "Top 5% of cohort"
+    },
+    {
+      "id": "milestone-3",
+      "date": "2023-09",
+      "title": "Healthcare ML Model Deployment",
+      "category": "project",
+      "description": "Deployed predictive healthcare model with 89% accuracy, helping 500+ patients",
+      "icon": "heart",
+      "impact": "critical",
+      "tags": ["Healthcare", "ML", "Impact"],
+      "metrics": {
+        "accuracy": "89%",
+        "patients": 500
+      }
+    },
+    {
+      "id": "milestone-4",
+      "date": "2023-07",
+      "title": "Won AI Hackathon",
+      "category": "achievement",
+      "description": "First place in regional AI hackathon for innovative chatbot solution",
+      "icon": "trophy",
+      "impact": "high",
+      "tags": ["Hackathon", "AI", "Award"],
+      "achievement": "1st Place - 200+ participants"
+    },
+    {
+      "id": "milestone-5",
+      "date": "2023-05",
+      "title": "Open Source Contribution Milestone",
+      "category": "community",
+      "description": "Reached 100+ contributions to AI/ML open source projects",
+      "icon": "git-branch",
+      "impact": "medium",
+      "tags": ["Open Source", "Community", "GitHub"],
+      "metrics": {
+        "contributions": 100,
+        "projects": 15
+      }
+    },
+    {
+      "id": "milestone-6",
+      "date": "2023-03",
+      "title": "Started AI Learning Journey",
+      "category": "learning",
+      "description": "Began intensive self-study in AI, ML, and data science",
+      "icon": "book",
+      "impact": "foundational",
+      "tags": ["Learning", "AI", "Beginning"],
+      "achievement": "Completed 10+ courses"
+    },
+    {
+      "id": "milestone-7",
+      "date": "2023-01",
+      "title": "First ML Model Deployed",
+      "category": "project",
+      "description": "Successfully deployed first machine learning model to production",
+      "icon": "code",
+      "impact": "medium",
+      "tags": ["ML", "Deployment", "First"],
+      "achievement": "Production-ready model"
+    },
+    {
+      "id": "milestone-8",
+      "date": "2022-10",
+      "title": "Discovered Passion for AI",
+      "category": "personal",
+      "description": "The moment that sparked my journey into artificial intelligence",
+      "icon": "spark",
+      "impact": "foundational",
+      "tags": ["Personal", "Discovery", "AI"],
+      "achievement": "Found my calling"
+    }
+  ],
+  "stats": {
+    "total_milestones": 8,
+    "projects_launched": 4,
+    "certifications_earned": 5,
+    "hackathons_won": 2,
+    "open_source_contributions": 100
+  }
+}

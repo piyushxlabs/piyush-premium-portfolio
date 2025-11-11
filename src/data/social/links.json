@@ -1,0 +1,65 @@
+{
+  "social": [
+    {
+      "id": "github",
+      "name": "GitHub",
+      "url": "https://github.com/piyush",
+      "icon": "github",
+      "username": "@piyush",
+      "primary": true,
+      "stats": {
+        "followers": 250,
+        "repositories": 35,
+        "contributions": 1200
+      }
+    },
+    {
+      "id": "linkedin",
+      "name": "LinkedIn",
+      "url": "https://linkedin.com/in/piyush",
+      "icon": "linkedin",
+      "username": "Piyush",
+      "primary": true,
+      "stats": {
+        "connections": 500
+      }
+    },
+    {
+      "id": "twitter",
+      "name": "Twitter",
+      "url": "https://twitter.com/piyush",
+      "icon": "twitter",
+      "username": "@piyush",
+      "primary": false,
+      "stats": {
+        "followers": 180
+      }
+    },
+    {
+      "id": "email",
+      "name": "Email",
+      "url": "mailto:piyush@example.com",
+      "icon": "mail",
+      "username": "piyush@example.com",
+      "primary": true
+    },
+    {
+      "id": "medium",
+      "name": "Medium",
+      "url": "https://medium.com/@piyush",
+      "icon": "medium",
+      "username": "@piyush",
+      "primary": false,
+      "stats": {
+        "articles": 12,
+        "followers": 95
+      }
+    }
+  ],
+  "contact": {
+    "email": "piyush@example.com",
+    "availability": "Open to collaboration",
+    "response_time": "Within 24 hours",
+    "preferred_contact": "email"
+  }
+}

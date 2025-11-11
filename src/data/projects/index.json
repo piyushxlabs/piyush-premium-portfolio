@@ -1,0 +1,225 @@
+{
+  "projects": [
+    {
+      "id": "ai-automation-tool",
+      "title": "AI-Powered Automation Platform",
+      "slug": "ai-automation-tool",
+      "description": "Intelligent workflow automation system using machine learning to optimize business processes",
+      "fullDescription": "Built an end-to-end automation platform that leverages AI to identify repetitive tasks and create intelligent workflows. The system learns from user behavior and continuously optimizes processes.",
+      "category": "AI/ML",
+      "technologies": ["Python", "TensorFlow", "FastAPI", "React", "PostgreSQL"],
+      "featured": true,
+      "status": "completed",
+      "date": "2024-01",
+      "images": {
+        "cover": "/images/projects/ai-automation/cover.jpg",
+        "mockup": "/images/projects/ai-automation/mockup.png",
+        "gallery": [
+          "/images/projects/ai-automation/screenshot-1.jpg",
+          "/images/projects/ai-automation/screenshot-2.jpg"
+        ]
+      },
+      "links": {
+        "demo": "https://demo.example.com",
+        "github": "https://github.com/piyush/ai-automation",
+        "case_study": "/projects/ai-automation-tool"
+      },
+      "metrics": {
+        "users": 1200,
+        "efficiency_gain": "45%",
+        "time_saved": "2000+ hours",
+        "impact": "High"
+      },
+      "problem": "Businesses waste countless hours on repetitive manual tasks that could be automated.",
+      "solution": "Created an AI system that identifies patterns in workflows and automatically generates optimization suggestions.",
+      "impact": "Helped 50+ businesses save an average of 15 hours per week on manual processes.",
+      "tags": ["AI", "Automation", "Machine Learning", "Productivity"]
+    },
+    {
+      "id": "data-visualization-dashboard",
+      "title": "Real-Time Data Analytics Dashboard",
+      "slug": "data-visualization-dashboard",
+      "description": "Interactive dashboard for visualizing complex datasets with AI-powered insights",
+      "fullDescription": "Developed a comprehensive analytics platform that transforms raw data into actionable insights through intelligent visualizations and predictive analytics.",
+      "category": "Data Science",
+      "technologies": ["Python", "Pandas", "D3.js", "Next.js", "MongoDB"],
+      "featured": true,
+      "status": "completed",
+      "date": "2023-11",
+      "images": {
+        "cover": "/images/projects/data-viz/cover.jpg",
+        "mockup": "/images/projects/data-viz/mockup.png",
+        "gallery": [
+          "/images/projects/data-viz/screenshot-1.jpg"
+        ]
+      },
+      "links": {
+        "demo": "https://dataviz-demo.example.com",
+        "github": "https://github.com/piyush/data-viz",
+        "case_study": "/projects/data-visualization-dashboard"
+      },
+      "metrics": {
+        "data_points": "10M+",
+        "response_time": "<100ms",
+        "accuracy": "94%",
+        "impact": "High"
+      },
+      "problem": "Organizations struggle to extract meaningful insights from large datasets quickly.",
+      "solution": "Built an intuitive dashboard with AI-powered pattern recognition and predictive analytics.",
+      "impact": "Enabled data-driven decision making for 30+ organizations.",
+      "tags": ["Data Science", "Visualization", "Analytics", "AI"]
+    },
+    {
+      "id": "ml-prediction-model",
+      "title": "Predictive ML Model for Healthcare",
+      "slug": "ml-prediction-model",
+      "description": "Machine learning model for early disease prediction using patient data",
+      "fullDescription": "Developed a sophisticated ML model that analyzes patient health records to predict potential health risks, enabling early intervention.",
+      "category": "AI/ML",
+      "technologies": ["Python", "Scikit-learn", "TensorFlow", "Flask", "Docker"],
+      "featured": false,
+      "status": "completed",
+      "date": "2023-09",
+      "images": {
+        "cover": "/images/projects/ml-health/cover.jpg",
+        "mockup": "/images/projects/ml-health/mockup.png",
+        "gallery": []
+      },
+      "links": {
+        "github": "https://github.com/piyush/ml-health-prediction",
+        "case_study": "/projects/ml-prediction-model"
+      },
+      "metrics": {
+        "accuracy": "89%",
+        "patients_helped": "500+",
+        "early_detection": "72%",
+        "impact": "Critical"
+      },
+      "problem": "Late diagnosis leads to worse health outcomes and higher treatment costs.",
+      "solution": "Created a predictive model that identifies health risks months before symptoms appear.",
+      "impact": "Helped healthcare providers intervene early for 500+ patients.",
+      "tags": ["Machine Learning", "Healthcare", "AI", "Python"]
+    },
+    {
+      "id": "chatbot-assistant",
+      "title": "Intelligent Customer Support Chatbot",
+      "slug": "chatbot-assistant",
+      "description": "NLP-powered chatbot that handles customer queries with human-like understanding",
+      "fullDescription": "Built an advanced conversational AI that understands context, sentiment, and intent to provide personalized customer support.",
+      "category": "AI/ML",
+      "technologies": ["Python", "OpenAI API", "LangChain", "React", "Node.js"],
+      "featured": false,
+      "status": "completed",
+      "date": "2023-07",
+      "images": {
+        "cover": "/images/projects/chatbot/cover.jpg",
+        "mockup": "/images/projects/chatbot/mockup.png",
+        "gallery": []
+      },
+      "links": {
+        "demo": "https://chatbot-demo.example.com",
+        "github": "https://github.com/piyush/ai-chatbot",
+        "case_study": "/projects/chatbot-assistant"
+      },
+      "metrics": {
+        "queries_handled": "50K+",
+        "satisfaction_rate": "92%",
+        "response_time": "<2s",
+        "impact": "High"
+      },
+      "problem": "Customer support teams are overwhelmed with repetitive queries.",
+      "solution": "Developed an AI chatbot that handles 80% of common queries automatically.",
+      "impact": "Reduced support ticket volume by 65% for client companies.",
+      "tags": ["NLP", "Chatbot", "AI", "Customer Support"]
+    },
+    {
+      "id": "image-recognition-system",
+      "title": "Computer Vision Classification System",
+      "slug": "image-recognition-system",
+      "description": "Deep learning model for accurate image classification and object detection",
+      "fullDescription": "Implemented a state-of-the-art computer vision system using CNNs for multi-class image classification with real-time processing capabilities.",
+      "category": "AI/ML",
+      "technologies": ["Python", "PyTorch", "OpenCV", "FastAPI", "AWS"],
+      "featured": false,
+      "status": "completed",
+      "date": "2023-05",
+      "images": {
+        "cover": "/images/projects/cv-system/cover.jpg",
+        "mockup": "/images/projects/cv-system/mockup.png",
+        "gallery": []
+      },
+      "links": {
+        "github": "https://github.com/piyush/cv-classification",
+        "case_study": "/projects/image-recognition-system"
+      },
+      "metrics": {
+        "accuracy": "96%",
+        "processing_speed": "30 FPS",
+        "classes": "100+",
+        "impact": "Medium"
+      },
+      "problem": "Manual image classification is time-consuming and error-prone.",
+      "solution": "Built a deep learning model that classifies images with 96% accuracy in real-time.",
+      "impact": "Automated image processing for e-commerce and security applications.",
+      "tags": ["Computer Vision", "Deep Learning", "PyTorch", "AI"]
+    },
+    {
+      "id": "sentiment-analysis-tool",
+      "title": "Social Media Sentiment Analyzer",
+      "slug": "sentiment-analysis-tool",
+      "description": "NLP tool for analyzing sentiment trends across social media platforms",
+      "fullDescription": "Created a comprehensive sentiment analysis system that monitors social media conversations and provides real-time insights into public opinion.",
+      "category": "Data Science",
+      "technologies": ["Python", "NLTK", "Transformers", "React", "MongoDB"],
+      "featured": false,
+      "status": "completed",
+      "date": "2023-03",
+      "images": {
+        "cover": "/images/projects/sentiment/cover.jpg",
+        "mockup": "/images/projects/sentiment/mockup.png",
+        "gallery": []
+      },
+      "links": {
+        "demo": "https://sentiment-demo.example.com",
+        "github": "https://github.com/piyush/sentiment-analyzer",
+        "case_study": "/projects/sentiment-analysis-tool"
+      },
+      "metrics": {
+        "posts_analyzed": "1M+",
+        "accuracy": "88%",
+        "languages": "5",
+        "impact": "Medium"
+      },
+      "problem": "Brands struggle to understand public sentiment about their products.",
+      "solution": "Developed an NLP system that analyzes millions of social media posts for sentiment trends.",
+      "impact": "Helped brands make data-driven marketing decisions.",
+      "tags": ["NLP", "Sentiment Analysis", "Data Science", "Social Media"]
+    }
+  ],
+  "categories": [
+    {
+      "id": "ai-ml",
+      "name": "AI/ML",
+      "description": "Artificial Intelligence and Machine Learning projects",
+      "icon": "brain"
+    },
+    {
+      "id": "data-science",
+      "name": "Data Science",
+      "description": "Data analysis and visualization projects",
+      "icon": "chart"
+    },
+    {
+      "id": "automation",
+      "name": "Automation",
+      "description": "Workflow automation and productivity tools",
+      "icon": "zap"
+    },
+    {
+      "id": "web-dev",
+      "name": "Web Development",
+      "description": "Full-stack web applications",
+      "icon": "code"
+    }
+  ]
+}

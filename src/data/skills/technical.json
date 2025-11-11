@@ -1,0 +1,192 @@
+{
+  "skills": [
+    {
+      "id": "ai-ml",
+      "category": "AI & Machine Learning",
+      "icon": "brain",
+      "skills": [
+        {
+          "name": "Machine Learning",
+          "level": 85,
+          "experience": "2 years",
+          "projects": 8,
+          "description": "Supervised & unsupervised learning, model optimization"
+        },
+        {
+          "name": "Deep Learning",
+          "level": 80,
+          "experience": "1.5 years",
+          "projects": 6,
+          "description": "Neural networks, CNNs, RNNs, Transformers"
+        },
+        {
+          "name": "Natural Language Processing",
+          "level": 75,
+          "experience": "1 year",
+          "projects": 5,
+          "description": "Text analysis, sentiment analysis, chatbots"
+        },
+        {
+          "name": "Computer Vision",
+          "level": 70,
+          "experience": "1 year",
+          "projects": 4,
+          "description": "Image classification, object detection"
+        }
+      ]
+    },
+    {
+      "id": "programming",
+      "category": "Programming Languages",
+      "icon": "code",
+      "skills": [
+        {
+          "name": "Python",
+          "level": 90,
+          "experience": "3 years",
+          "projects": 15,
+          "description": "Primary language for AI/ML and automation"
+        },
+        {
+          "name": "JavaScript/TypeScript",
+          "level": 85,
+          "experience": "2 years",
+          "projects": 12,
+          "description": "Full-stack web development"
+        },
+        {
+          "name": "SQL",
+          "level": 75,
+          "experience": "2 years",
+          "projects": 10,
+          "description": "Database design and optimization"
+        },
+        {
+          "name": "R",
+          "level": 60,
+          "experience": "1 year",
+          "projects": 3,
+          "description": "Statistical analysis and visualization"
+        }
+      ]
+    },
+    {
+      "id": "frameworks",
+      "category": "Frameworks & Libraries",
+      "icon": "layers",
+      "skills": [
+        {
+          "name": "TensorFlow",
+          "level": 80,
+          "experience": "1.5 years",
+          "projects": 7,
+          "description": "Deep learning model development"
+        },
+        {
+          "name": "PyTorch",
+          "level": 75,
+          "experience": "1 year",
+          "projects": 5,
+          "description": "Neural network research and implementation"
+        },
+        {
+          "name": "Scikit-learn",
+          "level": 85,
+          "experience": "2 years",
+          "projects": 10,
+          "description": "Classical ML algorithms"
+        },
+        {
+          "name": "Next.js",
+          "level": 80,
+          "experience": "1.5 years",
+          "projects": 8,
+          "description": "Modern React framework"
+        },
+        {
+          "name": "FastAPI",
+          "level": 75,
+          "experience": "1 year",
+          "projects": 6,
+          "description": "High-performance Python APIs"
+        }
+      ]
+    },
+    {
+      "id": "data-tools",
+      "category": "Data Science Tools",
+      "icon": "database",
+      "skills": [
+        {
+          "name": "Pandas",
+          "level": 85,
+          "experience": "2 years",
+          "projects": 12,
+          "description": "Data manipulation and analysis"
+        },
+        {
+          "name": "NumPy",
+          "level": 85,
+          "experience": "2 years",
+          "projects": 12,
+          "description": "Numerical computing"
+        },
+        {
+          "name": "Matplotlib/Seaborn",
+          "level": 80,
+          "experience": "2 years",
+          "projects": 10,
+          "description": "Data visualization"
+        },
+        {
+          "name": "Jupyter",
+          "level": 90,
+          "experience": "2.5 years",
+          "projects": 15,
+          "description": "Interactive data analysis"
+        }
+      ]
+    },
+    {
+      "id": "cloud-devops",
+      "category": "Cloud & DevOps",
+      "icon": "cloud",
+      "skills": [
+        {
+          "name": "AWS",
+          "level": 70,
+          "experience": "1 year",
+          "projects": 5,
+          "description": "EC2, S3, Lambda, SageMaker"
+        },
+        {
+          "name": "Docker",
+          "level": 75,
+          "experience": "1.5 years",
+          "projects": 8,
+          "description": "Containerization and deployment"
+        },
+        {
+          "name": "Git/GitHub",
+          "level": 85,
+          "experience": "3 years",
+          "projects": 20,
+          "description": "Version control and collaboration"
+        },
+        {
+          "name": "CI/CD",
+          "level": 65,
+          "experience": "1 year",
+          "projects": 4,
+          "description": "Automated deployment pipelines"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_skills": 28,
+    "years_experience": 3,
+    "projects_completed": 20,
+    "certifications": 5
+  }
+}
