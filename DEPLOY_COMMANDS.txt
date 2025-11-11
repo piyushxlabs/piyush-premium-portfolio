@@ -1,0 +1,35 @@
+# Git Commands for Deployment
+
+## Step 1: Stage all changes
+git add .
+
+## Step 2: Commit with descriptive message
+git commit -m "fix(ui): add missing ui primitives and ensure tsconfig alias
+
+- Created Badge, Divider, InputField, Loader, Modal, Tooltip, SectionTitle components
+- Added barrel exports for Button and Card components
+- Fixed Button loading prop implementation
+- Implemented CloseIcon SVG
+- Added explicit baseUrl to tsconfig.json
+- Fixed TypeScript errors in HeroSection and Tooltip
+- All components follow Neural Horizon design system
+- Build now passes successfully (23 routes generated)"
+
+## Step 3: Push to main branch (triggers Vercel auto-deploy)
+git push origin main
+
+## Alternative: Deploy directly with Vercel CLI
+vercel --prod
+
+---
+
+## Verification After Deploy
+
+1. Check Vercel dashboard for deployment status
+2. Visit deployed URL to verify site loads
+3. Test components-preview page: /components-preview
+4. Verify all routes are accessible
+
+---
+
+✅ Ready to deploy!
