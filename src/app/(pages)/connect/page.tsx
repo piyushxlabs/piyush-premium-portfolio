@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { Mail, Github, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Github, Linkedin, Twitter, Instagram } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Connect | Piyush - Get in Touch',
@@ -21,45 +21,56 @@ export default function ConnectPage() {
         
         <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
           <a
-            href="mailto:hello@piyush.dev"
+            href="mailto:piyushjaguri13@gmail.com"
             className="p-6 rounded-2xl bg-glass border border-overlay-medium hover:border-accent-cyan transition-all group"
           >
             <Mail className="w-8 h-8 text-accent-cyan mb-4" />
             <h3 className="font-heading font-semibold text-lg mb-2">Email</h3>
-            <p className="text-sm text-muted">hello@piyush.dev</p>
+            <p className="text-sm text-muted">piyushjaguri13@gmail.com</p>
           </a>
           
           <a
-            href="https://github.com"
+            href="https://github.com/piyushxlabs"
             target="_blank"
             rel="noopener noreferrer"
             className="p-6 rounded-2xl bg-glass border border-overlay-medium hover:border-accent-cyan transition-all group"
           >
             <Github className="w-8 h-8 text-accent-cyan mb-4" />
             <h3 className="font-heading font-semibold text-lg mb-2">GitHub</h3>
-            <p className="text-sm text-muted">View my code</p>
+            <p className="text-sm text-muted">@piyushxlabs</p>
           </a>
           
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/piyush-jaguri-a9169338b/"
             target="_blank"
             rel="noopener noreferrer"
             className="p-6 rounded-2xl bg-glass border border-overlay-medium hover:border-accent-cyan transition-all group"
           >
             <Linkedin className="w-8 h-8 text-accent-cyan mb-4" />
             <h3 className="font-heading font-semibold text-lg mb-2">LinkedIn</h3>
-            <p className="text-sm text-muted">Professional network</p>
+            <p className="text-sm text-muted">Piyush Jaguri</p>
           </a>
           
           <a
-            href="https://twitter.com"
+            href="https://x.com/piyushxlabs"
             target="_blank"
             rel="noopener noreferrer"
             className="p-6 rounded-2xl bg-glass border border-overlay-medium hover:border-accent-cyan transition-all group"
           >
             <Twitter className="w-8 h-8 text-accent-cyan mb-4" />
             <h3 className="font-heading font-semibold text-lg mb-2">Twitter</h3>
-            <p className="text-sm text-muted">Follow my journey</p>
+            <p className="text-sm text-muted">@piyushxlabs</p>
+          </a>
+
+          <a
+            href="https://www.instagram.com/lost.in.piyush?igsh=MXN4NWY5YW80YTc1Mw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-6 rounded-2xl bg-glass border border-overlay-medium hover:border-accent-cyan transition-all group md:col-span-2"
+          >
+            <Instagram className="w-8 h-8 text-accent-cyan mb-4" />
+            <h3 className="font-heading font-semibold text-lg mb-2">Instagram</h3>
+            <p className="text-sm text-muted">@lost.in.piyush</p>
           </a>
         </div>
       </div>

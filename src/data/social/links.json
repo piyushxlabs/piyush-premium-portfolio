@@ -3,9 +3,9 @@
     {
       "id": "github",
       "name": "GitHub",
-      "url": "https://github.com/piyush",
+      "url": "https://github.com/piyushxlabs",
       "icon": "github",
-      "username": "@piyush",
+      "username": "@piyushxlabs",
       "primary": true,
       "stats": {
         "followers": 250,
@@ -16,9 +16,9 @@
     {
       "id": "linkedin",
       "name": "LinkedIn",
-      "url": "https://linkedin.com/in/piyush",
+      "url": "https://www.linkedin.com/in/piyush-jaguri-a9169338b/",
       "icon": "linkedin",
-      "username": "Piyush",
+      "username": "Piyush Jaguri",
       "primary": true,
       "stats": {
         "connections": 500
@@ -27,20 +27,31 @@
     {
       "id": "twitter",
       "name": "Twitter",
-      "url": "https://twitter.com/piyush",
+      "url": "https://x.com/piyushxlabs",
       "icon": "twitter",
-      "username": "@piyush",
+      "username": "@piyushxlabs",
       "primary": false,
       "stats": {
         "followers": 180
       }
     },
     {
+      "id": "instagram",
+      "name": "Instagram",
+      "url": "https://www.instagram.com/lost.in.piyush?igsh=MXN4NWY5YW80YTc1Mw==",
+      "icon": "instagram",
+      "username": "@lost.in.piyush",
+      "primary": true,
+      "stats": {
+        "followers": 320
+      }
+    },
+    {
       "id": "email",
       "name": "Email",
-      "url": "mailto:piyush@example.com",
+      "url": "mailto:piyushjaguri13@gmail.com",
       "icon": "mail",
-      "username": "piyush@example.com",
+      "username": "piyushjaguri13@gmail.com",
       "primary": true
     },
     {
@@ -57,7 +68,7 @@
     }
   ],
   "contact": {
-    "email": "piyush@example.com",
+    "email": "piyushjaguri13@gmail.com",
     "availability": "Open to collaboration",
     "response_time": "Within 24 hours",
     "preferred_contact": "email"

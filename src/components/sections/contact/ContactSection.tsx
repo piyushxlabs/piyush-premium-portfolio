@@ -12,8 +12,8 @@ const contactMethods = [
   {
     icon: Mail,
     title: "Email Me",
-    description: "hello@piyush.dev",
-    href: "mailto:hello@piyush.dev",
+    description: "piyushjaguri13@gmail.com",
+    href: "mailto:piyushjaguri13@gmail.com",
   },
   {
     icon: MessageSquare,

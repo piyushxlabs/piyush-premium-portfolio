@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { Github, Linkedin, Mail, Twitter, Instagram } from "lucide-react";
 
 const footerLinks = {
   work: [
@@ -20,16 +20,17 @@ const footerLinks = {
   connect: [
     { label: "Contact", href: "/connect" },
     { label: "Thoughts", href: "/thoughts" },
-    { label: "GitHub", href: "https://github.com" },
-    { label: "LinkedIn", href: "https://linkedin.com" },
+    { label: "GitHub", href: "https://github.com/piyushxlabs" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/piyush-jaguri-a9169338b/" },
   ],
 };
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-  { icon: Mail, href: "mailto:hello@piyush.dev", label: "Email" },
+  { icon: Github, href: "https://github.com/piyushxlabs", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/piyush-jaguri-a9169338b/", label: "LinkedIn" },
+  { icon: Twitter, href: "https://x.com/piyushxlabs", label: "Twitter" },
+  { icon: Instagram, href: "https://www.instagram.com/lost.in.piyush?igsh=MXN4NWY5YW80YTc1Mw==", label: "Instagram" },
+  { icon: Mail, href: "mailto:piyushjaguri13@gmail.com", label: "Email" },
 ];
 
 export function Footer() {
