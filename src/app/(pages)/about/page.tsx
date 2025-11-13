@@ -1,217 +1,170 @@
+'use client';
+
 import { Metadata } from 'next';
 import Image from 'next/image';
+import { Sparkles, Heart, Lightbulb, Target, Rocket } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-export const metadata: Metadata = {
-  title: 'About | Piyush - AI Innovator & Visionary',
-  description: 'Discover the journey of Piyush - an 18-year-old AI innovator exploring how intelligence, design, and empathy can shape a better future through data science and automation.',
-  openGraph: {
-    title: 'About Piyush - Young AI Innovator',
-    description: 'Building intelligence with empathy — one idea at a time.',
-    images: ['/images/about/piyush.png'],
-  },
-};
+const values = [
+  { icon: Sparkles, title: 'Curiosity', description: 'Always exploring how intelligence works in humans and machines' },
+  { icon: Heart, title: 'Empathy', description: 'Building technology that feels human and serves people' },
+  { icon: Lightbulb, title: 'Innovation', description: 'Blending ideas, tools, and logic to create something new' },
+  { icon: Target, title: 'Purpose', description: 'Every project exists to make life better, not just smarter' },
+];
+
+const journey = [
+  { phase: 'The Spark', story: 'It started with a question: How can machines think, learn, and understand like humans? That curiosity became my compass.' },
+  { phase: 'The Journey', story: 'From Python basics to neural networks, I explored AI through experiments, failures, and breakthroughs—learning that intelligence is built, not given.' },
+  { phase: 'The Purpose', story: 'I realized AI isn\'t just technology—it\'s a reflection of how we think and dream. My mission: create systems that enhance creativity and empower people.' },
+  { phase: 'The Vision', story: 'Building AI startups that combine innovation with impact—tools that don\'t just automate work, but amplify human potential.' },
+];
 
 export default function AboutPage() {
-  const values = [
-    { icon: '🔍', title: 'Curiosity', description: 'Always exploring how intelligence works — in humans and machines.' },
-    { icon: '💎', title: 'Integrity', description: 'Building technology that\'s ethical, transparent, and human-centered.' },
-    { icon: '⚡', title: 'Innovation', description: 'Continuously blending ideas, tools, and logic to create something new.' },
-    { icon: '❤️', title: 'Empathy', description: 'Designing AI that feels human — connecting logic with emotion.' },
-    { icon: '🎯', title: 'Purpose', description: 'Every project exists to make life better, not just smarter.' },
-    { icon: '🌱', title: 'Growth', description: 'Embracing continuous learning and evolution.' }
-  ];
-
-  const journey = [
-    { phase: 'Learning', description: 'I began teaching myself the foundations — Python, data structures, and the logic behind machine learning. Step by step, I explored AI, Data Science, and Automation through online resources, real-world experiments, and community learning.' },
-    { phase: 'Building', description: 'I\'ve studied how algorithms make decisions, built small AI projects, explored automation workflows, and designed experiments that connect data with design, logic with creativity.' },
-    { phase: 'Evolving', description: 'Every project I\'ve worked on has one common goal: to understand how intelligent systems can make life simpler, smarter, and more human.' }
-  ];
-
   return (
-    <main className="min-h-screen">
-      <section className="pt-32 pb-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-accent-cyan rounded-full blur-[120px] animate-pulse" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-lavender rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
-        </div>
-
-        <div className="container mx-auto max-w-6xl relative z-10">
-          <div className="text-center mb-16 space-y-6">
-            <h1 className="text-6xl md:text-8xl font-heading font-bold mb-6 text-gradient">
-              Building Intelligence
-            </h1>
-            <p className="text-3xl md:text-4xl font-heading font-semibold text-foreground">
-              with Empathy
-            </p>
-            <div className="w-24 h-1 mx-auto bg-neural rounded-full" />
+    <main className="relative min-h-screen pt-32 pb-20">
+      <div className="absolute inset-0 bg-glow opacity-30 pointer-events-none" />
+      
+      <div className="container mx-auto px-6 max-w-6xl relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-20"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-glass border border-accent-cyan/20 mb-6">
+            <Rocket className="w-4 h-4 text-accent-cyan" />
+            <span className="text-sm text-muted">My Story</span>
           </div>
+          <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6 text-gradient-heading">
+            Building Intelligence with Empathy
+          </h1>
+          <p className="text-xl md:text-2xl text-muted max-w-3xl mx-auto leading-relaxed">
+            An 18-year-old AI innovator exploring how data, design, and empathy can shape a better future
+          </p>
+        </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center mt-20">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-neural rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
-              <div className="relative rounded-2xl overflow-hidden border border-accent-cyan/20 bg-glass">
-                <Image
-                  src="/images/about/piyush.png"
-                  alt="Piyush - AI Innovator"
-                  width={600}
-                  height={600}
-                  className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  priority
-                />
-              </div>
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-32">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative"
+          >
+            <div className="relative rounded-3xl overflow-hidden bg-glass border border-overlay-medium p-2">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/20 via-transparent to-accent-lavender/20 animate-pulse-glow" />
+              <Image
+                src="/images/about/Piyush.png"
+                alt="Piyush - AI Innovator"
+                width={600}
+                height={600}
+                className="relative z-10 rounded-2xl w-full h-auto"
+                priority
+              />
             </div>
+            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent-cyan/20 rounded-full blur-3xl" />
+            <div className="absolute -top-6 -left-6 w-32 h-32 bg-accent-lavender/20 rounded-full blur-3xl" />
+          </motion.div>
 
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <h2 className="text-4xl font-heading font-bold text-foreground">
-                  Hey, I'm <span className="text-accent-cyan">Piyush</span>
-                </h2>
-                <p className="text-xl text-muted leading-relaxed">
-                  An 18-year-old AI & Data Science learner exploring how intelligence can create impact, empathy, and innovation.
-                </p>
-              </div>
-
-              <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
-                <p>
-                  I believe AI is not just technology — it's a reflection of how humans think, decide, and dream. My purpose is to create ethical, human-centered AI systems that enhance creativity, productivity, and opportunity.
-                </p>
-                <p>
-                  What drives me isn't just curiosity — it's the belief that intelligence, when built with empathy, can transform societies, empower people, and solve problems that truly matter.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-3 gap-4 pt-6">
-                <div className="text-center p-4 rounded-xl bg-glass border border-accent-cyan/20">
-                  <div className="text-3xl font-bold text-accent-cyan">18</div>
-                  <div className="text-sm text-muted mt-1">Years Young</div>
-                </div>
-                <div className="text-center p-4 rounded-xl bg-glass border border-accent-lavender/20">
-                  <div className="text-3xl font-bold text-accent-lavender">∞</div>
-                  <div className="text-sm text-muted mt-1">Learning</div>
-                </div>
-                <div className="text-center p-4 rounded-xl bg-glass border border-accent-teal/20">
-                  <div className="text-3xl font-bold text-accent-teal">AI</div>
-                  <div className="text-sm text-muted mt-1">Passion</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-6 relative">
-        <div className="container mx-auto max-w-4xl">
-          <div className="bg-glass border border-accent-cyan/20 rounded-3xl p-12">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 rounded-full bg-neural flex items-center justify-center">
-                <span className="text-2xl">✨</span>
-              </div>
-              <h2 className="text-3xl font-heading font-bold text-foreground">The Spark</h2>
-            </div>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              My journey into AI began with a simple curiosity — how can machines think, learn, and understand like humans?
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              As a teenager, I was fascinated by how data could reveal patterns that even humans miss. Watching how AI could write, create, and solve problems made me realize one thing — intelligence isn't just something we use, it's something we can build.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-4">
-              Core Values
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="space-y-6"
+          >
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
+              Hi, I'm <span className="text-gradient">Piyush</span>
             </h2>
-            <p className="text-xl text-muted">
-              The principles that guide my work
+            <p className="text-lg text-muted leading-relaxed">
+              A young AI & Data Science learner exploring how intelligence, design, and empathy can shape a better future. My journey began with curiosity about how machines think—and evolved into a mission to build meaningful, human-centered AI systems.
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {values.map((value, index) => (
-              <div
-                key={index}
-                className="group relative p-8 rounded-2xl bg-glass border border-white/10 hover:border-accent-cyan/50 transition-all duration-300 hover:scale-105"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent to-accent-cyan/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative z-10">
-                  <div className="text-4xl mb-4">{value.icon}</div>
-                  <h3 className="text-xl font-heading font-bold text-foreground mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="text-muted leading-relaxed">
-                    {value.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-accent-cyan/10 via-accent-indigo/10 to-accent-lavender/10" />
-        <div className="container mx-auto max-w-4xl relative z-10">
-          <div className="text-center space-y-8">
-            <div className="text-6xl md:text-8xl opacity-20">"</div>
-            <blockquote className="text-3xl md:text-4xl font-heading font-semibold text-foreground leading-relaxed">
-              I design intelligence with empathy — blending data, emotion, and purpose into meaningful innovation.
-            </blockquote>
-            <div className="w-24 h-1 mx-auto bg-neural rounded-full" />
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-4">
-              The Journey
-            </h2>
-            <p className="text-xl text-muted">
-              From curiosity to creation
+            <p className="text-lg text-muted leading-relaxed">
+              I don't just study AI—I explore how intelligent systems can solve real-world problems and improve lives. From automation to creative intelligence, I'm fascinated by the intersection of logic and emotion.
             </p>
-          </div>
+            <p className="text-lg text-muted leading-relaxed">
+              My long-term vision? To build AI-driven startups that focus on ethical automation, creative intelligence, and social impact—products that don't just work smart, but feel right.
+            </p>
+          </motion.div>
+        </div>
 
-          <div className="space-y-8">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-32"
+        >
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-4">My Journey</h2>
+          <p className="text-center text-muted mb-16 max-w-2xl mx-auto">
+            From curiosity to creation—the path that shaped my vision
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-8">
             {journey.map((item, index) => (
-              <div
-                key={index}
-                className="relative pl-12 pb-8 border-l-2 border-accent-cyan/30 last:border-l-0"
+              <motion.div
+                key={item.phase}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="bg-glass rounded-2xl p-8 border border-overlay-medium backdrop-blur-xl hover:border-accent-cyan/40 transition-all duration-300 group"
               >
-                <div className="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-neural" />
-                <h3 className="text-2xl font-heading font-bold text-accent-cyan mb-3">
-                  {item.phase}
-                </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-2 h-2 rounded-full bg-accent-cyan group-hover:scale-150 transition-transform" />
+                  <h3 className="text-xl font-heading font-semibold text-gradient">{item.phase}</h3>
+                </div>
+                <p className="text-muted leading-relaxed">{item.story}</p>
+              </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+        </motion.div>
 
-      <section className="py-20 px-6 mb-20">
-        <div className="container mx-auto max-w-4xl">
-          <div className="bg-gradient-to-br from-accent-cyan/10 to-accent-lavender/10 border border-accent-cyan/20 rounded-3xl p-12">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 rounded-full bg-neural flex items-center justify-center">
-                <span className="text-2xl">🚀</span>
-              </div>
-              <h2 className="text-3xl font-heading font-bold text-foreground">Vision</h2>
-            </div>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              My long-term vision is to build AI startups that combine technical innovation with social impact — creating intelligent products that empower learners, creators, and organizations.
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              In the future, I see myself as a founder who bridges human creativity with artificial intelligence, shaping tools that not only automate work — but amplify human potential.
-            </p>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-4">Core Values</h2>
+          <p className="text-center text-muted mb-16 max-w-2xl mx-auto">
+            The principles that guide how I think, create, and build
+          </p>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {values.map((value, index) => (
+              <motion.div
+                key={value.title}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -8 }}
+                className="bg-glass rounded-2xl p-6 border border-overlay-medium backdrop-blur-xl text-center group hover:border-accent-cyan/40 transition-all duration-300"
+              >
+                <div className="w-14 h-14 rounded-xl bg-accent-cyan/10 border border-accent-cyan/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-accent-cyan/20 transition-all duration-300">
+                  <value.icon className="w-7 h-7 text-accent-cyan" />
+                </div>
+                <h3 className="font-heading font-semibold text-lg mb-2">{value.title}</h3>
+                <p className="text-sm text-muted leading-relaxed">{value.description}</p>
+              </motion.div>
+            ))}
           </div>
-        </div>
-      </section>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-32 text-center"
+        >
+          <div className="inline-block px-8 py-6 rounded-3xl bg-glass border border-overlay-medium backdrop-blur-xl max-w-3xl">
+            <p className="text-xl md:text-2xl font-heading text-muted italic leading-relaxed">
+              "The future belongs to those who teach machines how to care."
+            </p>
+            <p className="text-sm text-muted/60 mt-4">— My philosophy on AI</p>
+          </div>
+        </motion.div>
+      </div>
     </main>
   );
 }

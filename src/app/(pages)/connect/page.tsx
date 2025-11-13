@@ -1,8 +1,16 @@
 'use client';
 
-import { Metadata } from 'next';
-import { Mail, Github, Linkedin, Twitter, Instagram, Send, Sparkles } from 'lucide-react';
 import { useState, FormEvent } from 'react';
+import { Send, Sparkles } from 'lucide-react';
+import { socialLinks } from '@/config/social-links';
+
+const contactCards = [
+  { color: 'cyan', description: 'piyushjaguri13@gmail.com' },
+  { color: 'lavender', description: 'View my code' },
+  { color: 'indigo', description: 'Connect professionally' },
+  { color: 'teal', description: 'Follow my journey' },
+  { color: 'lavender', description: 'Visual journey' },
+];
 
 export default function ConnectPage() {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
@@ -22,44 +30,44 @@ export default function ConnectPage() {
   };
 
   return (
-    <main className="min-h-screen pt-32 pb-20 relative overflow-hidden">
+    <main className="relative min-h-screen pt-32 pb-20">
       <div className="absolute inset-0 bg-glow opacity-40 pointer-events-none" />
       
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
-        <div className="text-center mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-glass border border-accent-cyan/20 mb-4">
+        <div className="text-center mb-16 animate-fade-up">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-glass border border-accent-cyan/20 mb-6">
             <Sparkles className="w-4 h-4 text-accent-cyan" />
-            <span className="text-sm text-accent-cyan font-medium">Let's Build Together</span>
+            <span className="text-sm text-muted">Open to collaboration</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-heading font-bold text-gradient-heading">
-            Connect & Collaborate
+          <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6 text-gradient-heading">
+            Let's Build Together
           </h1>
-          <p className="text-xl md:text-2xl text-muted max-w-2xl mx-auto">
-            Every great innovation starts with a conversation. Let's create something intelligent.
+          <p className="text-xl md:text-2xl text-muted max-w-2xl mx-auto leading-relaxed">
+            Whether you're a mentor, collaborator, or fellow innovator — I'd love to connect and explore how we can create something meaningful.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-start">
-          <div className="lg:col-span-3 space-y-8">
-            <div className="bg-glass rounded-3xl p-8 md:p-10 border border-overlay-medium relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 to-accent-lavender/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="grid lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
+          <div className="lg:col-span-3 order-2 lg:order-1">
+            <div className="bg-glass rounded-3xl p-8 md:p-10 border border-overlay-medium backdrop-blur-xl shadow-card relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               
               <div className="relative z-10">
-                <h2 className="text-2xl md:text-3xl font-heading font-semibold mb-3">Send a Message</h2>
-                <p className="text-muted mb-8">Share your ideas, questions, or collaboration opportunities</p>
+                <h2 className="text-2xl font-heading font-semibold mb-2">Send a Message</h2>
+                <p className="text-muted mb-8">Share your ideas, questions, or just say hello.</p>
 
                 {submitted ? (
-                  <div className="py-16 text-center space-y-4 animate-fade-up">
-                    <div className="w-16 h-16 mx-auto rounded-full bg-success/20 flex items-center justify-center">
-                      <Send className="w-8 h-8 text-success" />
+                  <div className="py-16 text-center animate-scale-in">
+                    <div className="w-16 h-16 rounded-full bg-success/20 border-2 border-success mx-auto mb-4 flex items-center justify-center">
+                      <Send className="w-7 h-7 text-success" />
                     </div>
-                    <h3 className="text-2xl font-heading font-semibold">Message Sent!</h3>
+                    <h3 className="text-xl font-heading font-semibold mb-2">Message Sent!</h3>
                     <p className="text-muted">I'll get back to you soon.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-2">
-                      <label htmlFor="name" className="block text-sm font-medium text-foreground/90">
+                      <label htmlFor="name" className="block text-sm font-medium text-foreground">
                         Your Name
                       </label>
                       <input
@@ -68,13 +76,13 @@ export default function ConnectPage() {
                         required
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                        className="w-full px-5 py-3.5 bg-background-surface/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 focus:border-accent-cyan transition-all duration-300 placeholder:text-muted/50"
-                        placeholder="Piyush Jaguri"
+                        className="w-full px-4 py-3 rounded-xl bg-overlay-light border border-overlay-medium focus:border-accent-cyan focus:ring-2 focus:ring-accent-cyan/20 outline-none transition-all duration-300 text-foreground placeholder:text-muted"
+                        placeholder="John Doe"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="email" className="block text-sm font-medium text-foreground/90">
+                      <label htmlFor="email" className="block text-sm font-medium text-foreground">
                         Email Address
                       </label>
                       <input
@@ -83,13 +91,13 @@ export default function ConnectPage() {
                         required
                         value={formState.email}
                         onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                        className="w-full px-5 py-3.5 bg-background-surface/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 focus:border-accent-cyan transition-all duration-300 placeholder:text-muted/50"
-                        placeholder="your@email.com"
+                        className="w-full px-4 py-3 rounded-xl bg-overlay-light border border-overlay-medium focus:border-accent-cyan focus:ring-2 focus:ring-accent-cyan/20 outline-none transition-all duration-300 text-foreground placeholder:text-muted"
+                        placeholder="john@example.com"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="message" className="block text-sm font-medium text-foreground/90">
+                      <label htmlFor="message" className="block text-sm font-medium text-foreground">
                         Your Message
                       </label>
                       <textarea
@@ -98,98 +106,87 @@ export default function ConnectPage() {
                         rows={6}
                         value={formState.message}
                         onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                        className="w-full px-5 py-3.5 bg-background-surface/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 focus:border-accent-cyan transition-all duration-300 resize-none placeholder:text-muted/50"
-                        placeholder="Tell me about your project or idea..."
+                        className="w-full px-4 py-3 rounded-xl bg-overlay-light border border-overlay-medium focus:border-accent-cyan focus:ring-2 focus:ring-accent-cyan/20 outline-none transition-all duration-300 text-foreground placeholder:text-muted resize-none"
+                        placeholder="Tell me about your idea or project..."
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full group relative px-8 py-4 bg-gradient-to-r from-accent-cyan to-accent-lavender rounded-xl font-heading font-semibold text-background overflow-hidden transition-all duration-300 hover:shadow-glow disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="group/btn w-full relative px-8 py-4 rounded-xl font-heading font-semibold text-base bg-neural overflow-hidden transition-all duration-300 hover:shadow-glow disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <span className="relative z-10 flex items-center justify-center gap-2">
                         {isSubmitting ? (
                           <>
-                            <div className="w-5 h-5 border-2 border-background/30 border-t-background rounded-full animate-spin" />
+                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                             Sending...
                           </>
                         ) : (
                           <>
                             Send Message
-                            <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                            <Send className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
                           </>
                         )}
                       </span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-accent-lavender to-accent-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-accent-cyan via-accent-lavender to-accent-cyan bg-[length:200%_100%] animate-[shimmer_3s_linear_infinite] opacity-0 group-hover/btn:opacity-100 transition-opacity" />
                     </button>
                   </form>
                 )}
               </div>
             </div>
-
-            <div className="bg-glass rounded-2xl p-6 border border-overlay-medium">
-              <p className="text-sm text-muted leading-relaxed">
-                <span className="text-accent-cyan font-medium">Open to:</span> AI collaborations, startup discussions, mentorship opportunities, and innovative project ideas that create meaningful impact.
-              </p>
-            </div>
           </div>
 
-          <div className="lg:col-span-2 space-y-6">
-            <div className="bg-glass rounded-2xl p-6 border border-overlay-medium">
-              <h3 className="font-heading font-semibold text-lg mb-4">Direct Contact</h3>
-              <a
-                href="mailto:piyushjaguri13@gmail.com"
-                className="flex items-center gap-3 p-4 rounded-xl bg-background-surface/30 border border-border hover:border-accent-cyan transition-all group"
-              >
-                <div className="w-10 h-10 rounded-lg bg-accent-cyan/10 flex items-center justify-center group-hover:bg-accent-cyan/20 transition-colors">
-                  <Mail className="w-5 h-5 text-accent-cyan" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs text-muted mb-0.5">Email</p>
-                  <p className="text-sm font-medium truncate">piyushjaguri13@gmail.com</p>
-                </div>
-              </a>
-            </div>
-
-            <div className="bg-glass rounded-2xl p-6 border border-overlay-medium">
-              <h3 className="font-heading font-semibold text-lg mb-4">Social Links</h3>
-              <div className="space-y-3">
-                {[
-                  { icon: Github, label: 'GitHub', handle: '@piyushxlabs', url: 'https://github.com/piyushxlabs' },
-                  { icon: Linkedin, label: 'LinkedIn', handle: 'Piyush Jaguri', url: 'https://www.linkedin.com/in/piyush-jaguri-a9169338b/' },
-                  { icon: Twitter, label: 'Twitter', handle: '@piyushxlabs', url: 'https://x.com/piyushxlabs' },
-                  { icon: Instagram, label: 'Instagram', handle: '@lost.in.piyush', url: 'https://www.instagram.com/lost.in.piyush?igsh=MXN4NWY5YW80YTc1Mw==' },
-                ].map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-background-surface/30 transition-all group"
-                  >
-                    <social.icon className="w-5 h-5 text-accent-cyan group-hover:scale-110 transition-transform" />
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">{social.label}</p>
-                      <p className="text-xs text-muted">{social.handle}</p>
+          <div className="lg:col-span-2 order-1 lg:order-2 space-y-4">
+            {socialLinks.map((social, index) => {
+              const colorMap: Record<number, string> = {
+                0: 'cyan',
+                1: 'lavender',
+                2: 'indigo',
+                3: 'teal',
+                4: 'lavender'
+              };
+              const color = colorMap[index];
+              return (
+                <div key={social.label} className="bg-glass rounded-2xl p-6 border border-overlay-medium backdrop-blur-xl hover:border-accent-cyan/40 transition-all duration-300 group">
+                  <div className="flex items-start gap-4">
+                    <div className={`w-12 h-12 rounded-xl bg-accent-${color}/10 border border-accent-${color}/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                      <social.icon className={`w-6 h-6 text-accent-${color}`} />
                     </div>
-                  </a>
-                ))}
-              </div>
-            </div>
+                    <div className="flex-1">
+                      <h3 className="font-heading font-semibold mb-1">{social.label}</h3>
+                      <a 
+                        href={social.href} 
+                        target={social.label !== 'Email' ? '_blank' : undefined}
+                        rel={social.label !== 'Email' ? 'noopener noreferrer' : undefined}
+                        className={`text-sm text-muted hover:text-accent-${color} transition-colors`}
+                        aria-label={social.label}
+                      >
+                        {contactCards[index].description}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
-            <div className="bg-gradient-to-br from-accent-cyan/10 to-accent-lavender/10 rounded-2xl p-6 border border-accent-cyan/20">
-              <p className="text-sm leading-relaxed">
-                <span className="font-heading font-semibold text-accent-cyan">Building intelligence with empathy</span> — one conversation at a time. Let's shape the future together.
-              </p>
-            </div>
+        <div className="mt-20 text-center max-w-3xl mx-auto">
+          <div className="inline-block px-6 py-3 rounded-2xl bg-glass border border-overlay-medium backdrop-blur-xl">
+            <p className="text-muted text-sm leading-relaxed">
+              <span className="text-accent-cyan font-medium">Currently exploring:</span> AI automation, intelligent systems, and human-centered design. Always open to meaningful conversations about technology and innovation.
+            </p>
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+      `}</style>
     </main>
   );
 }
-
-
-
-

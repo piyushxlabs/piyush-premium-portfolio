@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { Github, Linkedin, Mail, Twitter, Instagram } from "lucide-react";
+import { socialLinks, githubUrl, linkedinUrl } from "@/config/social-links";
 
 const footerLinks = {
   work: [
@@ -20,18 +20,10 @@ const footerLinks = {
   connect: [
     { label: "Contact", href: "/connect" },
     { label: "Thoughts", href: "/thoughts" },
-    { label: "GitHub", href: "https://github.com/piyushxlabs" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/piyush-jaguri-a9169338b/" },
+    { label: "GitHub", href: githubUrl },
+    { label: "LinkedIn", href: linkedinUrl },
   ],
 };
-
-const socialLinks = [
-  { icon: Github, href: "https://github.com/piyushxlabs", label: "GitHub" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/piyush-jaguri-a9169338b/", label: "LinkedIn" },
-  { icon: Twitter, href: "https://x.com/piyushxlabs", label: "Twitter" },
-  { icon: Instagram, href: "https://www.instagram.com/lost.in.piyush?igsh=MXN4NWY5YW80YTc1Mw==", label: "Instagram" },
-  { icon: Mail, href: "mailto:piyushjaguri13@gmail.com", label: "Email" },
-];
 
 export function Footer() {
   return (

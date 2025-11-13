@@ -2,15 +2,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter, Instagram, Mail } from "lucide-react";
-
-const socialLinks = [
-  { icon: Github, href: "https://github.com/piyushxlabs", label: "GitHub" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/piyush-jaguri-a9169338b/", label: "LinkedIn" },
-  { icon: Twitter, href: "https://x.com/piyushxlabs", label: "Twitter" },
-  { icon: Instagram, href: "https://www.instagram.com/lost.in.piyush?igsh=MXN4NWY5YW80YTc1Mw==", label: "Instagram" },
-  { icon: Mail, href: "mailto:piyushjaguri13@gmail.com", label: "Email" },
-];
+import { socialLinks } from "@/config/social-links";
 
 export function SocialIcons() {
   return (
