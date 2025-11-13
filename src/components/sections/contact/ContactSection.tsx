@@ -29,27 +29,33 @@ const contactMethods = [
   },
 ];
 
-// Floating particles component
+// Floating particles component with stable positions
+const particlePositions = Array.from({ length: 20 }, (_, i) => ({
+  left: (i * 37 + 23) % 100,
+  top: (i * 53 + 17) % 100,
+  duration: 3 + (i % 3),
+  delay: (i % 5) * 0.4,
+}));
+
 function FloatingParticles() {
-  const particles = Array.from({ length: 20 });
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((_, i) => (
+      {particlePositions.map((pos, i) => (
         <motion.div
           key={i}
           className="absolute w-1 h-1 bg-accent-cyan rounded-full"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            left: `${pos.left}%`,
+            top: `${pos.top}%`,
           }}
           animate={{
             y: [-20, -100],
             opacity: [0, 0.6, 0],
           }}
           transition={{
-            duration: 3 + Math.random() * 2,
+            duration: pos.duration,
             repeat: Infinity,
-            delay: Math.random() * 2,
+            delay: pos.delay,
             ease: "easeOut",
           }}
         />
