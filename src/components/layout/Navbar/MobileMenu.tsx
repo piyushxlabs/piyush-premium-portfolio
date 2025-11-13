@@ -1,11 +1,11 @@
-// MobileMenu — Full-screen mobile menu with slide-in animation
+// src/components/layout/Navbar/MobileMenu.tsx
+
 "use client";
 
 import { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
 import { cn } from "@/utils/helpers/cn";
 
 interface MobileMenuProps {
@@ -14,28 +14,67 @@ interface MobileMenuProps {
   items: Array<{ href: string; label: string }>;
 }
 
-// Floating particles background
-function FloatingParticles() {
-  const particles = Array.from({ length: 15 });
+function FloatingOrbs() {
+  const orbs = Array.from({ length: 8 });
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((_, i) => (
+      {orbs.map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 bg-accent-cyan rounded-full"
+          className="absolute rounded-full blur-3xl"
           style={{
+            width: `${Math.random() * 200 + 100}px`,
+            height: `${Math.random() * 200 + 100}px`,
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
+            background:
+              i % 2 === 0
+                ? "radial-gradient(circle, rgba(34,211,238,0.1) 0%, transparent 70%)"
+                : "radial-gradient(circle, rgba(167,139,250,0.1) 0%, transparent 70%)",
           }}
           animate={{
-            y: [-10, -50],
-            opacity: [0, 0.4, 0],
+            x: [0, Math.random() * 100 - 50],
+            y: [0, Math.random() * 100 - 50],
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
           }}
           transition={{
-            duration: 2 + Math.random() * 2,
+            duration: 10 + Math.random() * 10,
             repeat: Infinity,
-            delay: Math.random() * 2,
-            ease: "easeOut",
+            ease: "easeInOut",
+            delay: Math.random() * 5,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function NeuralLines() {
+  const lines = Array.from({ length: 12 });
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+      {lines.map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute h-px"
+          style={{
+            width: `${Math.random() * 300 + 100}px`,
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            background:
+              "linear-gradient(90deg, transparent, rgba(34,211,238,0.5), transparent)",
+            transform: `rotate(${Math.random() * 360}deg)`,
+          }}
+          animate={{
+            opacity: [0, 0.5, 0],
+            scaleX: [0, 1, 0],
+          }}
+          transition={{
+            duration: 3 + Math.random() * 2,
+            repeat: Infinity,
+            delay: Math.random() * 3,
+            ease: "easeInOut",
           }}
         />
       ))}
@@ -71,114 +110,183 @@ export function MobileMenu({ isOpen, onClose, items }: MobileMenuProps) {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
             onClick={onClose}
-            className="fixed inset-0 bg-gradient-to-br from-black/80 via-slate-900/70 to-transparent backdrop-blur-xl z-40 md:hidden"
+            className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-40 lg:hidden"
           />
 
-          {/* Menu Drawer */}
           <motion.div
-            initial={{ x: "-100%", opacity: 0 }}
+            initial={{ x: "100%", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "-100%", opacity: 0 }}
-            transition={{ type: "spring", stiffness: 60, damping: 15 }}
-            className="fixed top-0 left-0 bottom-0 w-[80vw] max-w-sm bg-white/5 backdrop-blur-lg border-r border-white/10 z-50 md:hidden"
+            exit={{ x: "100%", opacity: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 80,
+              damping: 20,
+              mass: 0.8,
+            }}
+            className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-slate-950/95 backdrop-blur-2xl border-l border-cyan-500/10 z-50 lg:hidden overflow-y-auto"
             aria-modal="true"
             role="dialog"
           >
-            {/* Floating particles */}
-            <FloatingParticles />
+            <FloatingOrbs />
+            <NeuralLines />
 
-            {/* Light beam gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-accent-cyan/5 via-transparent to-accent-lavender/5 pointer-events-none" />
+            <motion.div
+              className="absolute inset-0 opacity-30"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(34,211,238,0.05) 0%, transparent 50%, rgba(167,139,250,0.05) 100%)",
+              }}
+            />
 
-            <div className="relative flex flex-col h-full p-6">
-              {/* Header */}
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-heading font-bold bg-gradient-to-r from-accent-cyan to-accent-lavender bg-clip-text text-transparent">
-                  Piyush
+            <div className="relative flex flex-col h-full p-8">
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="mb-12"
+              >
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 via-cyan-300 to-lavender-400 bg-clip-text text-transparent mb-2">
+                  Navigation
                 </h2>
-                <motion.button
-                  onClick={onClose}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="p-2 rounded-full hover:bg-accent-cyan/10 transition-colors"
-                  aria-label="Close Menu"
-                >
-                  <motion.div
-                    animate={{ rotate: [0, 90, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <X size={24} className="text-accent-cyan" />
-                  </motion.div>
-                </motion.button>
-              </div>
+                <motion.div
+                  className="h-1 w-20 rounded-full"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, rgba(34,211,238,0.8), rgba(167,139,250,0.8))",
+                  }}
+                  animate={{
+                    width: ["80px", "120px", "80px"],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                />
+              </motion.div>
 
-              {/* Navigation Links */}
-              <nav className="flex flex-col gap-3 flex-1">
+              <nav className="flex flex-col gap-2 flex-1">
                 {items.map((item, index) => {
                   const isActive = pathname === item.href;
                   return (
                     <motion.div
                       key={item.href}
-                      initial={{ opacity: 0, x: -30 }}
+                      initial={{ opacity: 0, x: 50 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.08, duration: 0.4 }}
+                      transition={{
+                        delay: 0.1 + index * 0.05,
+                        duration: 0.4,
+                        ease: [0.22, 0.9, 0.36, 1],
+                      }}
                     >
                       <Link
                         href={item.href}
                         onClick={onClose}
                         className={cn(
-                          "block px-6 py-3 rounded-full text-base font-medium transition-all relative group",
-                          "border border-cyan-400/30 hover:border-cyan-400/60",
-                          "hover:bg-gradient-to-r hover:from-accent-cyan/10 hover:to-accent-lavender/10",
-                          isActive && "bg-gradient-to-r from-accent-cyan/20 to-accent-lavender/20 border-accent-cyan/60"
+                          "group relative block px-6 py-4 rounded-xl text-lg font-medium transition-all overflow-hidden",
+                          isActive
+                            ? "text-cyan-400"
+                            : "text-slate-300 hover:text-cyan-400"
                         )}
                       >
-                        <span className={cn(
-                          "transition-all",
-                          isActive ? "bg-gradient-to-r from-accent-cyan to-accent-lavender bg-clip-text text-transparent" : "text-foreground group-hover:bg-gradient-to-r group-hover:from-accent-cyan group-hover:to-accent-lavender group-hover:bg-clip-text group-hover:text-transparent"
-                        )}>
-                          {item.label}
+                        <motion.div
+                          className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          style={{
+                            background:
+                              "linear-gradient(135deg, rgba(34,211,238,0.1) 0%, rgba(167,139,250,0.1) 100%)",
+                          }}
+                        />
+
+                        <motion.div
+                          className="absolute inset-0 rounded-xl"
+                          animate={{
+                            boxShadow: isActive
+                              ? [
+                                  "inset 0 0 0px rgba(34,211,238,0.2)",
+                                  "inset 0 0 30px rgba(34,211,238,0.1)",
+                                  "inset 0 0 0px rgba(34,211,238,0.2)",
+                                ]
+                              : "inset 0 0 0px rgba(34,211,238,0)",
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                        />
+
+                        <span className="relative z-10 flex items-center justify-between">
+                          <span>{item.label}</span>
+                          <motion.span
+                            className="text-cyan-400 opacity-0 group-hover:opacity-100"
+                            animate={{ x: [0, 5, 0] }}
+                            transition={{
+                              duration: 1.5,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }}
+                          >
+                            →
+                          </motion.span>
                         </span>
+
                         {isActive && (
                           <motion.div
-                            layoutId="activeIndicator"
-                            className="absolute left-2 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent-cyan"
+                            layoutId="mobileActiveIndicator"
+                            className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-3/4 rounded-r-full"
+                            style={{
+                              background:
+                                "linear-gradient(180deg, rgba(34,211,238,0.8), rgba(167,139,250,0.8))",
+                            }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 300,
+                              damping: 30,
+                            }}
                           />
                         )}
+
+                        <motion.div
+                          className="absolute left-0 top-1/2 -translate-y-1/2 w-0 h-3/4 rounded-r-full bg-cyan-400/30 group-hover:w-1 transition-all duration-300"
+                          style={{ display: isActive ? "none" : "block" }}
+                        />
                       </Link>
                     </motion.div>
                   );
                 })}
-
-                {/* Mini Bio Badge */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: items.length * 0.08 + 0.2 }}
-                  className="mt-4 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 text-center"
-                >
-                  <p className="text-sm tracking-wide text-cyan-200">
-                    AI Innovator & Future Founder
-                  </p>
-                </motion.div>
               </nav>
 
-              {/* Footer Quote */}
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: items.length * 0.08 + 0.4 }}
-                className="mt-auto pt-6 border-t border-white/10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="mt-auto pt-8 border-t border-cyan-500/10"
               >
-                <p className="text-xs text-muted/60 italic text-center leading-relaxed">
-                  "Designing intelligence that empowers people — one idea at a time."
-                </p>
+                <motion.div
+                  className="px-6 py-4 rounded-xl relative overflow-hidden"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(34,211,238,0.05) 0%, rgba(167,139,250,0.05) 100%)",
+                    border: "1px solid rgba(34,211,238,0.1)",
+                  }}
+                >
+                  <motion.div
+                    className="absolute inset-0"
+                    animate={{
+                      background: [
+                        "radial-gradient(circle at 0% 0%, rgba(34,211,238,0.1) 0%, transparent 50%)",
+                        "radial-gradient(circle at 100% 100%, rgba(167,139,250,0.1) 0%, transparent 50%)",
+                        "radial-gradient(circle at 0% 0%, rgba(34,211,238,0.1) 0%, transparent 50%)",
+                      ],
+                    }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                  />
+                  <p className="relative text-sm text-slate-400 italic leading-relaxed">
+                    "Building intelligence with empathy — one idea at a time."
+                  </p>
+                </motion.div>
               </motion.div>
             </div>
           </motion.div>
