@@ -67,12 +67,12 @@ export default function VisionPage() {
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
 
   return (
-    <main ref={containerRef} className="relative min-h-screen pt-32 pb-20">
+    <main ref={containerRef} className="relative min-h-screen pt-32 pb-20 overflow-x-hidden">
       <div className="absolute inset-0 bg-glow opacity-30 pointer-events-none" />
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-cyan/10 rounded-full blur-3xl animate-float-slow" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-lavender/10 rounded-full blur-3xl animate-float-slow" style={{ animationDelay: '2s' }} />
 
-      <div className="container mx-auto px-6 max-w-6xl relative z-10">
+      <div className="container mx-auto px-6 max-w-6xl relative z-10 w-full">
         <motion.div
           style={{ opacity, scale }}
           className="text-center mb-32"

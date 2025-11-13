@@ -40,12 +40,12 @@ const principles = [
 
 export default function LabPage() {
   return (
-    <main className="relative min-h-screen pt-32 pb-20">
+    <main className="relative min-h-screen pt-32 pb-20 overflow-x-hidden">
       <div className="absolute inset-0 bg-glow opacity-30 pointer-events-none" />
       <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-accent-cyan/10 rounded-full blur-3xl animate-float-slow" />
       <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-accent-lavender/10 rounded-full blur-3xl animate-float-slow" style={{ animationDelay: '3s' }} />
 
-      <div className="container mx-auto px-6 max-w-6xl relative z-10">
+      <div className="container mx-auto px-6 max-w-6xl relative z-10 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
