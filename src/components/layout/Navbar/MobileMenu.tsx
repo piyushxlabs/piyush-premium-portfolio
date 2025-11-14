@@ -88,11 +88,21 @@ export function MobileMenu({ isOpen, onClose, items }: MobileMenuProps) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+      document.body.style.height = "100%";
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
+      document.body.style.height = "";
     }
+    
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
+      document.body.style.height = "";
     };
   }, [isOpen]);
 
@@ -107,49 +117,60 @@ export function MobileMenu({ isOpen, onClose, items }: MobileMenuProps) {
   }, [isOpen, onClose]);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
         <>
           <motion.div
+            key="backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
             onClick={onClose}
             className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-40 lg:hidden"
+            style={{ touchAction: "none" }}
           />
 
           <motion.div
-            initial={{ x: "100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "100%", opacity: 0 }}
+            key="menu"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
             transition={{
               type: "spring",
-              stiffness: 80,
-              damping: 20,
+              stiffness: 300,
+              damping: 30,
               mass: 0.8,
             }}
-            className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-slate-950/95 backdrop-blur-2xl border-l border-cyan-500/10 z-50 lg:hidden overflow-y-auto"
+            className="fixed top-0 right-0 bottom-0 w-full max-w-sm z-50 lg:hidden will-change-transform"
+            style={{
+              backgroundColor: "rgba(2, 6, 23, 0.95)",
+              backdropFilter: "blur(40px)",
+              WebkitBackdropFilter: "blur(40px)",
+              touchAction: "pan-y",
+            }}
             aria-modal="true"
             role="dialog"
           >
+            <div className="absolute inset-0 border-l border-cyan-500/10" />
+            
             <FloatingOrbs />
             <NeuralLines />
 
-            <motion.div
-              className="absolute inset-0 opacity-30"
+            <div
+              className="absolute inset-0 opacity-30 pointer-events-none"
               style={{
                 background:
                   "linear-gradient(135deg, rgba(34,211,238,0.05) 0%, transparent 50%, rgba(167,139,250,0.05) 100%)",
               }}
             />
 
-            <div className="relative flex flex-col h-full p-8">
+            <div className="relative flex flex-col h-full overflow-y-auto overscroll-contain p-8">
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="mb-12"
+                transition={{ delay: 0.15, duration: 0.4 }}
+                className="mb-12 flex-shrink-0"
               >
                 <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 via-cyan-300 to-lavender-400 bg-clip-text text-transparent mb-2">
                   Navigation
@@ -167,7 +188,7 @@ export function MobileMenu({ isOpen, onClose, items }: MobileMenuProps) {
                 />
               </motion.div>
 
-              <nav className="flex flex-col gap-2 flex-1">
+              <nav className="flex flex-col gap-2 flex-1 flex-shrink-0">
                 {items.map((item, index) => {
                   const isActive = pathname === item.href;
                   return (
@@ -191,7 +212,7 @@ export function MobileMenu({ isOpen, onClose, items }: MobileMenuProps) {
                             : "text-slate-300 hover:text-cyan-400"
                         )}
                       >
-                        <motion.div
+                        <div
                           className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                           style={{
                             background:
@@ -199,28 +220,28 @@ export function MobileMenu({ isOpen, onClose, items }: MobileMenuProps) {
                           }}
                         />
 
-                        <motion.div
-                          className="absolute inset-0 rounded-xl"
-                          animate={{
-                            boxShadow: isActive
-                              ? [
-                                  "inset 0 0 0px rgba(34,211,238,0.2)",
-                                  "inset 0 0 30px rgba(34,211,238,0.1)",
-                                  "inset 0 0 0px rgba(34,211,238,0.2)",
-                                ]
-                              : "inset 0 0 0px rgba(34,211,238,0)",
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                        />
+                        {isActive && (
+                          <motion.div
+                            className="absolute inset-0 rounded-xl"
+                            animate={{
+                              boxShadow: [
+                                "inset 0 0 0px rgba(34,211,238,0.2)",
+                                "inset 0 0 30px rgba(34,211,238,0.1)",
+                                "inset 0 0 0px rgba(34,211,238,0.2)",
+                              ],
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }}
+                          />
+                        )}
 
                         <span className="relative z-10 flex items-center justify-between">
                           <span>{item.label}</span>
                           <motion.span
-                            className="text-cyan-400 opacity-0 group-hover:opacity-100"
+                            className="text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                             animate={{ x: [0, 5, 0] }}
                             transition={{
                               duration: 1.5,
@@ -248,10 +269,11 @@ export function MobileMenu({ isOpen, onClose, items }: MobileMenuProps) {
                           />
                         )}
 
-                        <motion.div
-                          className="absolute left-0 top-1/2 -translate-y-1/2 w-0 h-3/4 rounded-r-full bg-cyan-400/30 group-hover:w-1 transition-all duration-300"
-                          style={{ display: isActive ? "none" : "block" }}
-                        />
+                        {!isActive && (
+                          <div
+                            className="absolute left-0 top-1/2 -translate-y-1/2 w-0 h-3/4 rounded-r-full bg-cyan-400/30 group-hover:w-1 transition-all duration-300"
+                          />
+                        )}
                       </Link>
                     </motion.div>
                   );
@@ -261,10 +283,10 @@ export function MobileMenu({ isOpen, onClose, items }: MobileMenuProps) {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="mt-auto pt-8 border-t border-cyan-500/10"
+                transition={{ delay: 0.4, duration: 0.4 }}
+                className="mt-auto pt-8 border-t border-cyan-500/10 flex-shrink-0"
               >
-                <motion.div
+                <div
                   className="px-6 py-4 rounded-xl relative overflow-hidden"
                   style={{
                     background:
@@ -273,7 +295,7 @@ export function MobileMenu({ isOpen, onClose, items }: MobileMenuProps) {
                   }}
                 >
                   <motion.div
-                    className="absolute inset-0"
+                    className="absolute inset-0 pointer-events-none"
                     animate={{
                       background: [
                         "radial-gradient(circle at 0% 0%, rgba(34,211,238,0.1) 0%, transparent 50%)",
@@ -286,7 +308,7 @@ export function MobileMenu({ isOpen, onClose, items }: MobileMenuProps) {
                   <p className="relative text-sm text-slate-400 italic leading-relaxed">
                     "Building intelligence with empathy — one idea at a time."
                   </p>
-                </motion.div>
+                </div>
               </motion.div>
             </div>
           </motion.div>
