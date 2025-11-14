@@ -52,37 +52,27 @@ function Particles() {
     }
   });
 
+  const geometry = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+    return geo;
+  }, [positions, colors, sizes]);
+
+  const material = useMemo(() => {
+    return new THREE.PointsMaterial({
+      size: 0.05,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.7,
+      sizeAttenuation: true,
+      blending: THREE.AdditiveBlending,
+    });
+  }, []);
+
   return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={particleCount}
-          array={positions}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          count={particleCount}
-          array={colors}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-size"
-          count={particleCount}
-          array={sizes}
-          itemSize={1}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.05}
-        vertexColors
-        transparent
-        opacity={0.7}
-        sizeAttenuation
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
+    <points ref={pointsRef} geometry={geometry} material={material} />
   );
 }
 
@@ -93,7 +83,10 @@ export function ParticleField() {
       role="img"
       aria-label="Dynamic particle field with thousands of floating points"
     >
-      <Canvas camera={{ position: [0, 0, 10], fov: 60 }} gl={{ antialias: true, alpha: true }}>
+      <Canvas 
+        camera={{ position: [0, 0, 10], fov: 60 }} 
+        gl={{ antialias: true, alpha: true }}
+      >
         <ambientLight intensity={0.2} />
         <pointLight position={[10, 10, 10]} intensity={0.5} color="#22d3ee" />
         <pointLight position={[-10, -10, -10]} intensity={0.3} color="#a78bfa" />
