@@ -11,6 +11,7 @@ import { siteMetadata, structuredDataRoot } from "./metadata";
 import { BackgroundEffects } from "@/components/layout/BackgroundEffects";
 import { Navbar } from "@/components/layout/Navbar/Navbar";
 import { Footer } from "@/components/layout/Footer/Footer";
+import { PageLoader } from "@/components/layout/PageLoader";
 
 const headingFont = Sora({
   variable: "--font-heading",
@@ -48,6 +49,7 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider>
+          <PageLoader />
           <BackgroundEffects />
           <div className="noise-overlay flex min-h-screen flex-col">
             <Navbar />
