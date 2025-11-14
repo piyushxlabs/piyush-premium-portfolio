@@ -38,15 +38,11 @@ function NeuralNodes() {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={nodeCount}
-          array={positions}
-          itemSize={3}
+          args={[positions, 3]}
         />
         <bufferAttribute
           attach="attributes-color"
-          count={nodeCount}
-          array={colors}
-          itemSize={3}
+          args={[colors, 3]}
         />
       </bufferGeometry>
       <pointsMaterial size={0.15} vertexColors transparent opacity={0.9} sizeAttenuation />
