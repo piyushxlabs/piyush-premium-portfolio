@@ -4,6 +4,8 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Rocket, Zap, Globe, Users, Brain, Sparkles, ArrowRight, Target } from 'lucide-react';
 import Link from 'next/link';
 import { useRef } from 'react';
+import { FloatingGeometry } from '@/components/3d/FloatingGeometry';
+import { NeuralNetwork } from '@/components/3d/NeuralNetwork';
 
 const manifesto = [
   'AI should amplify human creativity, not replace it',
@@ -67,7 +69,7 @@ export default function VisionPage() {
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
 
   return (
-    <main ref={containerRef} className="relative min-h-screen pt-32 pb-20 overflow-x-hidden">
+    <main ref={containerRef} className="relative min-h-screen pt-32 pb-20">
       <div className="absolute inset-0 bg-glow opacity-30 pointer-events-none" />
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-cyan/10 rounded-full blur-3xl animate-float-slow" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-lavender/10 rounded-full blur-3xl animate-float-slow" style={{ animationDelay: '2s' }} />
@@ -113,6 +115,19 @@ export default function VisionPage() {
           transition={{ duration: 1 }}
           className="mb-32"
         >
+          <div className="mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">Neural Vision</h2>
+              <p className="text-muted">The interconnected network of ideas shaping the future</p>
+            </motion.div>
+            <NeuralNetwork />
+          </div>
+
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -195,6 +210,19 @@ export default function VisionPage() {
           transition={{ duration: 1 }}
           className="mb-32"
         >
+          <div className="mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">Floating Ideas</h2>
+              <p className="text-muted">Concepts in motion, constantly evolving</p>
+            </motion.div>
+            <FloatingGeometry />
+          </div>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

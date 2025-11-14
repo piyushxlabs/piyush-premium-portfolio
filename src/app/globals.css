@@ -63,9 +63,12 @@
 }
 
 html {
-  scroll-behavior: smooth;
   background-color: var(--color-bg-primary);
   overflow-x: hidden;
+}
+
+html:not([data-scroll-behavior]) {
+  scroll-behavior: smooth;
 }
 
 body {

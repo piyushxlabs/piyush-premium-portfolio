@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Briefcase, ArrowRight, ExternalLink, Github, Sparkles, Target, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { useRef } from 'react';
+// import { InteractiveModel } from '@/components/3d/InteractiveModel';
 
 const projects = [
   {
@@ -55,7 +56,7 @@ export default function WorkPage() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.6]);
 
   return (
-    <main ref={containerRef} className="relative min-h-screen pt-32 pb-20 overflow-x-hidden">
+    <main ref={containerRef} className="relative min-h-screen pt-32 pb-20">
       <div className="absolute inset-0 bg-glow opacity-30 pointer-events-none" />
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-accent-cyan/10 rounded-full blur-3xl animate-float-slow" />
       <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-accent-lavender/10 rounded-full blur-3xl animate-float-slow" style={{ animationDelay: '2s' }} />
@@ -101,6 +102,19 @@ export default function WorkPage() {
           transition={{ duration: 1 }}
           className="mb-32"
         >
+          <div className="mb-24">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">Interactive Portfolio</h2>
+              <p className="text-muted">Explore my work through interactive 3D visualization</p>
+            </motion.div>
+            {/* <InteractiveModel /> */}
+          </div>
+
           <div className="space-y-24">
             {projects.map((project, index) => (
               <motion.article

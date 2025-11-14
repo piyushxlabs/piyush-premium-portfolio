@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import { Beaker, Code, Cpu, Sparkles, ArrowRight, Zap, GitBranch, Play } from 'lucide-react';
 import Link from 'next/link';
+import { ParticleField } from '@/components/3d/ParticleField';
+// import { DataSphere } from '@/components/3d/DataSphere';
 
 const experiments = [
   {
@@ -40,7 +42,7 @@ const principles = [
 
 export default function LabPage() {
   return (
-    <main className="relative min-h-screen pt-32 pb-20 overflow-x-hidden">
+    <main className="relative min-h-screen pt-32 pb-20">
       <div className="absolute inset-0 bg-glow opacity-30 pointer-events-none" />
       <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-accent-cyan/10 rounded-full blur-3xl animate-float-slow" />
       <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-accent-lavender/10 rounded-full blur-3xl animate-float-slow" style={{ animationDelay: '3s' }} />
@@ -71,6 +73,19 @@ export default function LabPage() {
           transition={{ duration: 1 }}
           className="mb-32"
         >
+          <div className="mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">Particle Experiments</h2>
+              <p className="text-muted">Thousands of data points in motion</p>
+            </motion.div>
+            <ParticleField />
+          </div>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -133,6 +148,19 @@ export default function LabPage() {
           transition={{ duration: 1 }}
           className="mb-32"
         >
+          <div className="mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">Data Visualization</h2>
+              <p className="text-muted">Exploring data through interactive 3D spheres</p>
+            </motion.div>
+            {/* <DataSphere /> */}
+          </div>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
