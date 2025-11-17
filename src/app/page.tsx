@@ -7,13 +7,16 @@ import { ContactSection } from "@/components/sections/contact/ContactSection";
 
 export default function Home() {
   return (
-    <main className="flex flex-1 flex-col">
-      <CinematicHero />
-      <AboutSection />
-      <SkillsSection />
-      <ProjectsSection />
-      <VisionSection />
-      <ContactSection />
+    <main className="relative flex flex-1 flex-col">
+      <div className="absolute inset-0 bg-glow opacity-30 pointer-events-none" />
+      <div className="relative z-10">
+        <CinematicHero />
+        <AboutSection />
+        <SkillsSection />
+        <ProjectsSection />
+        <VisionSection />
+        <ContactSection />
+      </div>
     </main>
   );
 }
