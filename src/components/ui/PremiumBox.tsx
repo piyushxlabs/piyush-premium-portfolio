@@ -5,15 +5,16 @@ import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/utils/helpers/cn";
 
-export interface PremiumBoxProps extends HTMLAttributes<HTMLDivElement> {
+export interface PremiumBoxProps {
   children: ReactNode;
   variant?: "default" | "large" | "card";
   hover?: boolean;
   glow?: boolean;
+  className?: string;
 }
 
 export const PremiumBox = forwardRef<HTMLDivElement, PremiumBoxProps>(
-  ({ className, children, variant = "default", hover = true, glow = false, ...props }, ref) => {
+  ({ className, children, variant = "default", hover = true, glow = false }, ref) => {
     const baseClasses = "relative overflow-hidden group";
     
     const variantClasses = {
@@ -25,12 +26,12 @@ export const PremiumBox = forwardRef<HTMLDivElement, PremiumBoxProps>(
     const hoverProps = hover ? {
       whileHover: { 
         y: -4,
-        scale: 1.015,
-        transition: {
-          type: "spring",
-          stiffness: 300,
-          damping: 30
-        }
+        scale: 1.015
+      },
+      transition: {
+        type: "spring" as const,
+        stiffness: 300,
+        damping: 30
       }
     } : {};
 
@@ -47,7 +48,7 @@ export const PremiumBox = forwardRef<HTMLDivElement, PremiumBoxProps>(
           WebkitPerspective: 1000
         }}
         {...hoverProps}
-        {...props}
+
       >
         {/* Consistent glow layer - always rendered, opacity controlled */}
         <div 

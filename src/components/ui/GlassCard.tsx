@@ -1,14 +1,15 @@
 "use client";
 
 import { forwardRef, type ReactNode } from "react";
-import { motion, type HTMLMotionProps } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/utils/helpers/cn";
 
-export interface GlassCardProps extends Omit<HTMLMotionProps<"div">, "ref"> {
+export interface GlassCardProps {
   children: ReactNode;
   variant?: "default" | "large" | "premium";
   hover?: boolean;
   glow?: boolean;
+  className?: string;
 }
 
 export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
@@ -24,12 +25,12 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
     const hoverProps = hover ? {
       whileHover: { 
         y: -4,
-        scale: 1.015,
-        transition: {
-          type: "spring",
-          stiffness: 300,
-          damping: 30
-        }
+        scale: 1.015
+      },
+      transition: {
+        type: "spring" as const,
+        stiffness: 300,
+        damping: 30
       }
     } : {};
 
@@ -41,7 +42,7 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
           willChange: 'transform, opacity'
         }}
         {...hoverProps}
-        {...props}
+
       >
         {/* Consistent glow layer - always rendered, opacity controlled */}
         <div 
