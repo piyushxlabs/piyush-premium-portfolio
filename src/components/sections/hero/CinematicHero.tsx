@@ -3,8 +3,10 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, ChevronDown, Zap, Code2, Brain } from "lucide-react";
 import Link from "next/link";
-import { useRef, useEffect, useState } from "react";
-import { ParticleField } from "@/components/3d/ParticleField";
+import { useRef, useEffect, useState, Suspense } from "react";
+import dynamic from "next/dynamic";
+
+const FloatingGeometry = dynamic(() => import("@/components/3d/FloatingGeometry").then(mod => ({ default: mod.FloatingGeometry })), { ssr: false });
 
 export function CinematicHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -57,9 +59,11 @@ export function CinematicHero() {
         />
       </div>
 
-      {/* 3D Particle Background - PRESERVED */}
-      <div className="hidden md:block absolute inset-0 z-0 opacity-30">
-        <ParticleField />
+      {/* 3D Floating Geometry Background */}
+      <div className="absolute inset-0 w-full h-full z-[-1] opacity-50 pointer-events-none select-none hidden md:block overflow-visible">
+        <Suspense fallback={null}>
+          <FloatingGeometry />
+        </Suspense>
       </div>
 
       {/* Main Content Container */}

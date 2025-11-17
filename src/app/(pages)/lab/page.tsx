@@ -210,10 +210,11 @@ export default function LabPage() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-neural text-white font-heading font-semibold shadow-glow hover:shadow-glow-soft transition-all duration-300"
+                  className="relative inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-accent-cyan via-accent-lavender to-accent-cyan bg-[length:200%_100%] text-background font-heading font-bold shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:bg-[position:100%_0] hover:shadow-[0_0_60px_rgba(34,211,238,0.6)] transition-all duration-300 overflow-hidden group"
                 >
-                  Collaborate on Experiments
-                  <ArrowRight className="w-5 h-5" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                  <span className="relative z-10">Collaborate on Experiments</span>
+                  <ArrowRight className="w-5 h-5 relative z-10" />
                 </motion.button>
               </Link>
             </div>

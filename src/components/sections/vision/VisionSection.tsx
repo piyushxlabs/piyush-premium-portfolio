@@ -3,8 +3,12 @@
 
 import { motion } from "framer-motion";
 import { Rocket, Target, Sparkles } from "lucide-react";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import { FadeIn } from "@/components/animations/core";
 import { GlassCard } from "@/components/ui/Card";
+
+// const InfinityLoop = dynamic(() => import("@/components/3d/InfinityLoop").then(mod => ({ default: mod.InfinityLoop })), { ssr: false });
 
 const visionPoints = [
   {
@@ -29,6 +33,13 @@ export function VisionSection() {
     <section className="relative py-32 overflow-hidden">
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent-cyan/5 to-transparent" />
+      
+      {/* 3D Background - InfinityLoop */}
+      <div className="absolute inset-0 w-full h-full z-[-1] opacity-75 pointer-events-none select-none hidden md:block overflow-visible">
+        {/* <Suspense fallback={null}>
+          <InfinityLoop />
+        </Suspense> */}
+      </div>
 
       <div className="container relative z-10 mx-auto px-6">
         <FadeIn>

@@ -3,8 +3,12 @@
 
 import { motion } from "framer-motion";
 import { Brain, Code, Database, Zap } from "lucide-react";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import { FadeIn } from "@/components/animations/core";
 import { GlassCard } from "@/components/ui/Card";
+
+const NeuralNetwork = dynamic(() => import("@/components/3d/NeuralNetwork").then(mod => ({ default: mod.NeuralNetwork })), { ssr: false });
 
 const skillCategories = [
   {
@@ -56,6 +60,12 @@ const skillCategories = [
 export function SkillsSection() {
   return (
     <section className="relative py-32 overflow-hidden">
+      {/* 3D Background - NeuralNetwork */}
+      <div className="absolute inset-0 w-full h-full z-[-1] opacity-60 pointer-events-none select-none hidden md:block overflow-visible">
+        <Suspense fallback={null}>
+          <NeuralNetwork />
+        </Suspense>
+      </div>
       <div className="container mx-auto px-6">
         <FadeIn>
           <div className="text-center mb-16">

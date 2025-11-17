@@ -169,16 +169,17 @@ export default function WorkPage() {
                           href={project.links.demo}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-neural text-white font-medium shadow-glow hover:shadow-glow-soft transition-all duration-300"
+                          className="relative inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-accent-cyan to-accent-lavender text-background font-heading font-semibold shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:shadow-[0_0_50px_rgba(34,211,238,0.6)] transition-all duration-300 overflow-hidden group"
                         >
-                          View Project
-                          <ExternalLink className="w-4 h-4" />
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                          <span className="relative z-10">View Project</span>
+                          <ExternalLink className="w-4 h-4 relative z-10" />
                         </motion.a>
                         <motion.a
                           href={project.links.github}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-glass border border-overlay-medium text-foreground font-medium hover:border-accent-cyan/40 transition-all duration-300"
+                          className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-glass backdrop-blur-xl border-2 border-overlay-medium text-foreground font-heading font-semibold hover:border-accent-cyan/60 hover:bg-glass-heavy hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300"
                         >
                           <Github className="w-4 h-4" />
                           Code
@@ -248,10 +249,11 @@ export default function WorkPage() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-neural text-white font-heading font-semibold shadow-glow hover:shadow-glow-soft transition-all duration-300"
+                  className="relative inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-accent-cyan via-accent-lavender to-accent-cyan bg-[length:200%_100%] text-background font-heading font-bold shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:bg-[position:100%_0] hover:shadow-[0_0_60px_rgba(34,211,238,0.6)] transition-all duration-300 overflow-hidden group"
                 >
-                  Start a Conversation
-                  <ArrowRight className="w-5 h-5" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                  <span className="relative z-10">Start a Conversation</span>
+                  <ArrowRight className="w-5 h-5 relative z-10" />
                 </motion.button>
               </Link>
             </div>

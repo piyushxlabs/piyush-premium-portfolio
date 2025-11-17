@@ -116,18 +116,20 @@ function PulsingCore() {
 export function NeuralNetwork() {
   return (
     <div
-      className="relative h-[600px] w-full"
+      className="absolute inset-0 w-full h-full overflow-visible"
       role="img"
       aria-label="3D neural network visualization with nodes and connections"
     >
-      <Canvas camera={{ position: [0, 0, 8], fov: 60 }} gl={{ antialias: true, alpha: true }}>
-        <ambientLight intensity={0.3} />
-        <pointLight position={[5, 5, 5]} intensity={0.8} color="#22d3ee" />
-        <pointLight position={[-5, -5, -5]} intensity={0.6} color="#a78bfa" />
+      <Canvas style={{ width: "100%", height: "100%" }} camera={{ position: [0, 0, 8], fov: 60 }} gl={{ antialias: true, alpha: true }}>
+        <ambientLight intensity={0.6} />
+        <pointLight position={[5, 5, 5]} intensity={1.4} color="#22d3ee" />
+        <pointLight position={[-5, -5, -5]} intensity={1.1} color="#a78bfa" />
 
-        <PulsingCore />
-        <NeuralNodes />
-        <NeuralConnections />
+        <group scale={[1.4, 1.4, 1.4]}>
+          <PulsingCore />
+          <NeuralNodes />
+          <NeuralConnections />
+        </group>
       </Canvas>
     </div>
   );

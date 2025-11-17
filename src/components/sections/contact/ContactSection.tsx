@@ -4,9 +4,12 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
 import { Mail, MessageSquare, Calendar, ArrowRight } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, Suspense } from "react";
+import dynamic from "next/dynamic";
 import { FadeIn } from "@/components/animations/core";
 import { GlassCard } from "@/components/ui/Card";
+
+// const InteractiveModel = dynamic(() => import("@/components/3d/InteractiveModel").then(mod => ({ default: mod.InteractiveModel })), { ssr: false });
 
 const contactMethods = [
   {
@@ -89,6 +92,13 @@ export function ContactSection() {
       <div className="absolute inset-0 bg-gradient-to-t from-accent-lavender/10 via-transparent to-transparent" />
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-gradient-glow opacity-40 blur-3xl" />
       <FloatingParticles />
+      
+      {/* 3D Background - InteractiveModel */}
+      <div className="absolute inset-0 w-full h-full z-[-1] opacity-65 pointer-events-none select-none hidden md:block overflow-visible">
+        {/* <Suspense fallback={null}>
+          <InteractiveModel />
+        </Suspense> */}
+      </div>
 
       <div className="container relative z-10 mx-auto px-6">
         <FadeIn>

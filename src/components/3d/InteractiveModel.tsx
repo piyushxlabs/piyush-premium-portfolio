@@ -481,11 +481,12 @@ export function InteractiveModel() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[500px] max-h-[500px] cursor-pointer"
+      className="absolute inset-0 w-full h-full overflow-visible cursor-pointer"
       role="img"
       aria-label="Interactive 3D holographic models featuring a DNA helix representing growth and evolution, a crystal lattice network symbolizing structured intelligence, and a neural network demonstrating AI connections. All models respond to mouse hover, drag, and click interactions with smooth animations, pulsing effects, and color transitions."
     >
       <Canvas
+        style={{ width: "100%", height: "100%" }}
         camera={{
           position: [0, 0, isMobile ? 8 : 7],
           fov: isMobile ? 60 : 50,
@@ -497,24 +498,26 @@ export function InteractiveModel() {
         }}
         dpr={isMobile ? [1, 1.5] : [1, 2]}
       >
-        <ambientLight intensity={0.3} />
-        <pointLight position={[5, 5, 5]} intensity={1} color="#22d3ee" />
-        <pointLight position={[-5, -5, -5]} intensity={0.7} color="#a78bfa" />
-        <pointLight position={[0, 5, 0]} intensity={0.5} color="#14b8a6" />
+        <ambientLight intensity={0.6} />
+        <pointLight position={[5, 5, 5]} intensity={1.6} color="#22d3ee" />
+        <pointLight position={[-5, -5, -5]} intensity={1.3} color="#a78bfa" />
+        <pointLight position={[0, 5, 0]} intensity={1.1} color="#14b8a6" />
         <spotLight
           position={[0, 8, 0]}
           angle={0.5}
           penumbra={1}
-          intensity={0.5}
+          intensity={1.2}
           color="#6366f1"
         />
 
         {!isMobile && <LightRays />}
         {!isMobile && <AmbientParticles />}
 
-        <DNAHelix />
-        <CrystalLattice />
-        <NeuralNetwork />
+        <group scale={[1.25, 1.25, 1.25]}>
+          <DNAHelix />
+          <CrystalLattice />
+          <NeuralNetwork />
+        </group>
 
         <OrbitControls
           enableZoom={!isMobile}

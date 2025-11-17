@@ -4,6 +4,47 @@ import { motion } from 'framer-motion';
 import { BookOpen, Calendar, Clock, ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
+// Floating Ideas Component
+function FloatingIdeas() {
+  const ideas = [
+    { text: "Innovation", x: "8%", y: "15%", delay: 0, duration: 28 },
+    { text: "Intelligence", x: "88%", y: "12%", delay: 2, duration: 32 },
+    { text: "Vision", x: "12%", y: "75%", delay: 1, duration: 30 },
+    { text: "Purpose", x: "85%", y: "70%", delay: 3, duration: 34 },
+    { text: "Creative Power", x: "50%", y: "20%", delay: 1.5, duration: 29 },
+    { text: "Future Architecture", x: "65%", y: "45%", delay: 2.5, duration: 31 },
+  ];
+
+  return (
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      {ideas.map((idea, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{
+            opacity: [0, 0.12, 0.12, 0],
+            y: [20, -20, -20, -60],
+          }}
+          transition={{
+            duration: idea.duration,
+            delay: idea.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          style={{
+            position: "absolute",
+            left: idea.x,
+            top: idea.y,
+          }}
+          className="text-xl md:text-3xl font-heading font-bold text-accent-lavender/25 blur-[0.5px]"
+        >
+          {idea.text}
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
 const thoughts = [
   {
     title: 'The Ethics of AI: Building Intelligence with Responsibility',
@@ -37,6 +78,9 @@ export default function ThoughtsPage() {
   return (
     <main className="relative min-h-screen pt-32 pb-20">
       <div className="absolute inset-0 bg-glow opacity-30 pointer-events-none" />
+      
+      {/* Floating Ideas Background */}
+      <FloatingIdeas />
       
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
         <motion.div 

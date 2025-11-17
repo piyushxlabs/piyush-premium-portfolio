@@ -83,17 +83,22 @@ export function ProjectsSection() {
           className="flex flex-wrap justify-center gap-3 mb-12"
         >
           {categories.map((category) => (
-            <button
+            <motion.button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-6 py-2 rounded-lg font-medium transition-all ${
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`relative px-7 py-3 rounded-xl font-heading font-semibold transition-all duration-300 overflow-hidden group ${
                 activeCategory === category
-                  ? "bg-accent-cyan text-background"
-                  : "bg-glass hover:bg-glass-heavy"
+                  ? "bg-gradient-to-r from-accent-cyan to-accent-lavender text-background shadow-[0_0_30px_rgba(34,211,238,0.4)]"
+                  : "bg-glass backdrop-blur-xl border border-overlay-medium hover:border-accent-cyan/60 hover:bg-glass-heavy hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]"
               }`}
             >
-              {category}
-            </button>
+              {activeCategory === category && (
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              )}
+              <span className="relative z-10">{category}</span>
+            </motion.button>
           ))}
         </motion.div>
 
@@ -170,10 +175,18 @@ export function ProjectsSection() {
           className="text-center"
         >
           <Link href="/work">
-            <Button variant="outline" size="lg">
-              View All Projects
-              <ArrowRight size={20} />
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button variant="outline" size="lg">
+                View All Projects
+                <motion.div
+                  className="inline-block"
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <ArrowRight size={20} />
+                </motion.div>
+              </Button>
+            </motion.div>
           </Link>
         </motion.div>
       </div>

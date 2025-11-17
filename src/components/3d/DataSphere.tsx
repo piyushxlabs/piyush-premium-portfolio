@@ -161,7 +161,7 @@ function EnergyCore() {
   });
 
   return (
-    <group>
+    <group scale={[1.0, 1.0, 1.0]}>
       {/* Outer glow */}
       <mesh ref={glowRef}>
         <sphereGeometry args={[1.5, 32, 32]} />
@@ -357,12 +357,12 @@ export function DataSphere() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[600px] max-h-[600px]"
-      style={{ position: 'relative' }}
+      className="absolute inset-0 w-full h-full overflow-visible"
       role="img"
       aria-label="Interactive 3D data visualization sphere with neural network particles, pulsing energy core, and dynamic connections responding to mouse movement"
     >
       <Canvas
+        style={{ width: "100%", height: "100%" }}
         camera={{ position: [0, 0, isMobile ? 8 : 6], fov: isMobile ? 60 : 50 }}
         gl={{ 
           antialias: !isMobile, 
@@ -371,10 +371,10 @@ export function DataSphere() {
         }}
         dpr={isMobile ? [1, 1.5] : [1, 2]}
       >
-        <ambientLight intensity={0.4} />
-        <pointLight position={[10, 10, 10]} intensity={1} color="#22d3ee" />
-        <pointLight position={[-10, -10, -10]} intensity={0.6} color="#a78bfa" />
-        <pointLight position={[0, 0, 0]} intensity={0.8} color="#6366f1" />
+        <ambientLight intensity={0.7} />
+        <pointLight position={[10, 10, 10]} intensity={1.5} color="#22d3ee" />
+        <pointLight position={[-10, -10, -10]} intensity={1.2} color="#a78bfa" />
+        <pointLight position={[0, 0, 0]} intensity={1.3} color="#6366f1" />
         
         <EnergyCore />
         <DataParticles />

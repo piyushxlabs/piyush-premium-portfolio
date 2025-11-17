@@ -4,8 +4,8 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Rocket, Zap, Globe, Users, Brain, Sparkles, ArrowRight, Target } from 'lucide-react';
 import Link from 'next/link';
 import { useRef } from 'react';
-import { FloatingGeometry } from '@/components/3d/FloatingGeometry';
-import { NeuralNetwork } from '@/components/3d/NeuralNetwork';
+// import { FloatingGeometry } from '@/components/3d/FloatingGeometry';
+// import { NeuralNetwork } from '@/components/3d/NeuralNetwork';
 
 const manifesto = [
   'AI should amplify human creativity, not replace it',
@@ -125,7 +125,7 @@ export default function VisionPage() {
               <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">Neural Vision</h2>
               <p className="text-muted">The interconnected network of ideas shaping the future</p>
             </motion.div>
-            <NeuralNetwork />
+            {/* <NeuralNetwork /> */}
           </div>
 
           <div className="max-w-4xl mx-auto">
@@ -220,7 +220,7 @@ export default function VisionPage() {
               <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">Floating Ideas</h2>
               <p className="text-muted">Concepts in motion, constantly evolving</p>
             </motion.div>
-            <FloatingGeometry />
+              {/* <FloatingGeometry /> */}
           </div>
 
           <motion.div
@@ -283,10 +283,11 @@ export default function VisionPage() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-neural text-white font-heading font-semibold shadow-glow hover:shadow-glow-soft transition-all duration-300"
+                  className="relative inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-accent-cyan via-accent-lavender to-accent-cyan bg-[length:200%_100%] text-background font-heading font-bold shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:bg-[position:100%_0] hover:shadow-[0_0_60px_rgba(34,211,238,0.6)] transition-all duration-300 overflow-hidden group"
                 >
-                  Let's Build Together
-                  <ArrowRight className="w-5 h-5" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                  <span className="relative z-10">Let's Build Together</span>
+                  <ArrowRight className="w-5 h-5 relative z-10" />
                 </motion.button>
               </Link>
             </div>

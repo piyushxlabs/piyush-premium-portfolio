@@ -165,7 +165,7 @@ function InfinityShape() {
   });
 
   return (
-    <group ref={groupRef}>
+    <group ref={groupRef} scale={[1.3, 1.3, 1.3]}>
       {/* Outer glow rings */}
       <mesh ref={glowRing1Ref}>
         <tubeGeometry args={[path1, 64, 0.12, 8, false]} />
@@ -372,11 +372,12 @@ export function InfinityLoop() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[400px] max-h-[400px]"
+      className="absolute inset-0 w-full h-full overflow-visible"
       role="img"
       aria-label="3D animated infinity symbol representing continuous learning, limitless creativity, and infinite growth. The symbol features flowing cyan and lavender tubes with particle trails, pulsing glow effects, and interactive rotation that responds to mouse movement."
     >
       <Canvas
+        style={{ width: "100%", height: "100%" }}
         camera={{ 
           position: [0, 0, isMobile ? 5 : 4], 
           fov: isMobile ? 60 : 50 
@@ -388,10 +389,10 @@ export function InfinityLoop() {
         }}
         dpr={isMobile ? [1, 1.5] : [1, 2]}
       >
-        <ambientLight intensity={0.3} />
-        <pointLight position={[3, 3, 3]} intensity={1.2} color="#22d3ee" />
-        <pointLight position={[-3, -3, -3]} intensity={0.8} color="#a78bfa" />
-        <pointLight position={[0, 0, 2]} intensity={0.6} color="#6366f1" />
+        <ambientLight intensity={0.6} />
+        <pointLight position={[3, 3, 3]} intensity={1.8} color="#22d3ee" />
+        <pointLight position={[-3, -3, -3]} intensity={1.4} color="#a78bfa" />
+        <pointLight position={[0, 0, 2]} intensity={1.2} color="#6366f1" />
 
         {!isMobile && <LightRays />}
         {!isMobile && <BackgroundParticles />}

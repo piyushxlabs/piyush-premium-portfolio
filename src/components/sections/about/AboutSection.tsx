@@ -3,8 +3,12 @@
 
 import { motion } from "framer-motion";
 import { Sparkles, Heart, Lightbulb, Target, Compass } from "lucide-react";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import { FadeIn, SlideUp } from "@/components/animations/core";
 import { GlassCard } from "@/components/ui/Card";
+
+const DataSphere = dynamic(() => import("@/components/3d/DataSphere").then(mod => ({ default: mod.DataSphere })), { ssr: false });
 
 const values = [
   {
@@ -36,8 +40,31 @@ const values = [
 
 export function AboutSection() {
   return (
-    <section className="relative py-32 overflow-hidden">
-      <div className="container mx-auto px-6">
+<section className="relative py-32 overflow-visible isolate">
+  {/* 3D Background - DataSphere */}
+  <div
+    className="
+      absolute 
+      top-0 
+      right-[-25vw]     /* ❗ Moved further right to be fully visible */
+      w-[70vw]          /* ❗ Increased width for full visibility */
+      h-[90vh]          /* ❗ Increased height so sphere does not cut */
+      z-[-2] 
+      opacity-70 
+      pointer-events-none 
+      select-none 
+      hidden lg:block
+    "
+  >
+    <div className="sticky top-24 w-full h-full overflow-visible">
+      <Suspense fallback={null}>
+        <DataSphere />
+      </Suspense>
+    </div>
+  </div>
+
+  <div className="container relative z-10 mx-auto px-6">
+
         <FadeIn>
           <div className="text-center mb-16">
             <motion.span
