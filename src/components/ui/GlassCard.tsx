@@ -1,10 +1,10 @@
 "use client";
 
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
-import { motion } from "framer-motion";
+import { forwardRef, type ReactNode } from "react";
+import { motion, type HTMLMotionProps } from "framer-motion";
 import { cn } from "@/utils/helpers/cn";
 
-export interface GlassCardProps extends HTMLAttributes<HTMLDivElement> {
+export interface GlassCardProps extends Omit<HTMLMotionProps<"div">, "ref"> {
   children: ReactNode;
   variant?: "default" | "large" | "premium";
   hover?: boolean;
