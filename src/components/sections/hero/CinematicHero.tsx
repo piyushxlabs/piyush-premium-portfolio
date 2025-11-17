@@ -246,8 +246,8 @@ export function CinematicHero() {
               whileHover={{
                 y: -6,
                 scale: 1.02,
+                transition: { duration: 0.2 }
               }}
-              transition={{ duration: 0.2 }}
               className="relative bg-slate-800/60 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-cyan-500/20 hover:border-accent-cyan/60 shadow-xl shadow-cyan-500/5 hover:shadow-cyan-500/20 transition-all duration-200 group cursor-pointer overflow-hidden"
             >
               <div className="relative z-10 flex flex-col items-center justify-center gap-3 text-center h-full">

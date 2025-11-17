@@ -23,12 +23,13 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
 
     const hoverProps = hover ? {
       whileHover: { 
-        y: -8,
-        scale: 1.01
-      },
-      transition: {
-        duration: 0.6,
-        ease: [0.19, 1.0, 0.22, 1.0] // Smooth easeOutExpo
+        y: -4,
+        scale: 1.015,
+        transition: {
+          type: "spring",
+          stiffness: 300,
+          damping: 30
+        }
       }
     } : {};
 
@@ -37,12 +38,7 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
         ref={ref}
         className={cn(baseClasses, variantClasses[variant], className)}
         style={{
-          transform: 'translate3d(0, 0, 0)',
-          willChange: 'transform',
-          backfaceVisibility: 'hidden',
-          WebkitBackfaceVisibility: 'hidden',
-          perspective: 1000,
-          WebkitPerspective: 1000
+          willChange: 'transform, opacity'
         }}
         {...hoverProps}
         {...props}

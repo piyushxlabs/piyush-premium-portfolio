@@ -24,12 +24,13 @@ export const PremiumBox = forwardRef<HTMLDivElement, PremiumBoxProps>(
 
     const hoverProps = hover ? {
       whileHover: { 
-        y: -8,
-        scale: 1.01
-      },
-      transition: {
-        duration: 0.6,
-        ease: [0.19, 1.0, 0.22, 1.0] // Smooth easeOutExpo
+        y: -4,
+        scale: 1.015,
+        transition: {
+          type: "spring",
+          stiffness: 300,
+          damping: 30
+        }
       }
     } : {};
 
