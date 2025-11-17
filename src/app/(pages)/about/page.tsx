@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import { Sparkles, Heart, Lightbulb, Target, Rocket } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { PremiumBox } from '@/components/ui/PremiumBox';
 
 const values = [
   { icon: Sparkles, title: 'Curiosity', description: 'Always exploring how intelligence works in humans and machines' },
@@ -50,17 +51,16 @@ export default function AboutPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <div className="relative rounded-3xl overflow-hidden bg-glass border border-overlay-medium p-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/20 via-transparent to-accent-lavender/20 animate-pulse-glow" />
+            <PremiumBox variant="large" className="p-2" hover={false}>
               <Image
                 src="/images/about/Piyush.png"
                 alt="Piyush - AI Innovator"
                 width={600}
                 height={600}
-                className="relative z-10 rounded-2xl w-full h-auto"
+                className="rounded-2xl w-full h-auto"
                 priority
               />
-            </div>
+            </PremiumBox>
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent-cyan/20 rounded-full blur-3xl" />
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-accent-lavender/20 rounded-full blur-3xl" />
           </motion.div>
@@ -106,13 +106,14 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-glass rounded-2xl p-8 border border-overlay-medium backdrop-blur-xl hover:border-accent-cyan/40 transition-all duration-300 group"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-2 h-2 rounded-full bg-accent-cyan group-hover:scale-150 transition-transform" />
-                  <h3 className="text-xl font-heading font-semibold text-gradient">{item.phase}</h3>
-                </div>
-                <p className="text-muted leading-relaxed">{item.story}</p>
+                <PremiumBox variant="card">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-2 h-2 rounded-full bg-accent-cyan group-hover:scale-150 transition-transform" />
+                    <h3 className="text-xl font-heading font-semibold text-gradient-heading">{item.phase}</h3>
+                  </div>
+                  <p className="text-slate-300 leading-relaxed">{item.story}</p>
+                </PremiumBox>
               </motion.div>
             ))}
           </div>
@@ -137,14 +138,14 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -8 }}
-                className="bg-glass rounded-2xl p-6 border border-overlay-medium backdrop-blur-xl text-center group hover:border-accent-cyan/40 transition-all duration-300"
               >
-                <div className="w-14 h-14 rounded-xl bg-accent-cyan/10 border border-accent-cyan/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-accent-cyan/20 transition-all duration-300">
-                  <value.icon className="w-7 h-7 text-accent-cyan" />
-                </div>
-                <h3 className="font-heading font-semibold text-lg mb-2">{value.title}</h3>
-                <p className="text-sm text-muted leading-relaxed">{value.description}</p>
+                <PremiumBox className="text-center">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-4 mx-auto mb-4 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
+                    <value.icon className="w-full h-full text-slate-900" />
+                  </div>
+                  <h3 className="font-heading font-semibold text-lg mb-2 text-slate-100">{value.title}</h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">{value.description}</p>
+                </PremiumBox>
               </motion.div>
             ))}
           </div>
@@ -157,12 +158,12 @@ export default function AboutPage() {
           transition={{ duration: 0.8 }}
           className="mt-32 text-center"
         >
-          <div className="inline-block px-8 py-6 rounded-3xl bg-glass border border-overlay-medium backdrop-blur-xl max-w-3xl">
-            <p className="text-xl md:text-2xl font-heading text-muted italic leading-relaxed">
+          <PremiumBox variant="large" className="max-w-3xl mx-auto text-center" hover={false}>
+            <p className="text-xl md:text-2xl font-heading text-slate-300 italic leading-relaxed">
               "The future belongs to those who teach machines how to care."
             </p>
-            <p className="text-sm text-muted/60 mt-4">— My philosophy on AI</p>
-          </div>
+            <p className="text-sm text-slate-400 mt-4">— My philosophy on AI</p>
+          </PremiumBox>
         </motion.div>
       </div>
     </main>

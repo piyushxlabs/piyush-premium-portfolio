@@ -7,7 +7,7 @@ import { Mail, MessageSquare, Calendar, ArrowRight } from "lucide-react";
 import { useState, useRef, Suspense } from "react";
 import dynamic from "next/dynamic";
 import { FadeIn } from "@/components/animations/core";
-import { GlassCard } from "@/components/ui/Card";
+import { GlassCard } from "@/components/ui/GlassCard";
 
 // const InteractiveModel = dynamic(() => import("@/components/3d/InteractiveModel").then(mod => ({ default: mod.InteractiveModel })), { ssr: false });
 
@@ -87,11 +87,10 @@ export function ContactSection() {
   };
 
   return (
-    <section className="relative py-32 overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-t from-accent-lavender/10 via-transparent to-transparent" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-gradient-glow opacity-40 blur-3xl" />
-      <FloatingParticles />
+    <section className="relative section-padding overflow-hidden">
+      {/* Spotlight Background Effect */}
+      <div className="absolute inset-0 bg-gradient-radial from-accent-cyan/8 via-transparent to-transparent opacity-60 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-gradient-radial from-accent-lavender/5 to-transparent blur-3xl opacity-40 pointer-events-none" />
       
       {/* 3D Background - InteractiveModel */}
       <div className="absolute inset-0 w-full h-full z-[-1] opacity-65 pointer-events-none select-none hidden md:block overflow-visible">
@@ -100,7 +99,7 @@ export function ContactSection() {
         </Suspense> */}
       </div>
 
-      <div className="container relative z-10 mx-auto px-6">
+      <div className="container relative z-10 mx-auto container-padding max-w-7xl">
         <FadeIn>
           <div className="text-center mb-16">
             <motion.span
@@ -116,7 +115,7 @@ export function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1, duration: 0.6 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6"
+              className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight tracking-tight"
             >
               Let's Build Something <span className="text-gradient-heading">Extraordinary</span> Together
             </motion.h2>
@@ -125,7 +124,7 @@ export function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="text-lg text-muted max-w-2xl mx-auto leading-relaxed mb-4"
+              className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed mb-4"
             >
               Open to meaningful collaborations, AI innovation, and visionary projects shaping the future.
             </motion.p>
@@ -156,49 +155,43 @@ export function ContactSection() {
           </p>
         </motion.div>
 
-        {/* Contact Methods */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-16">
+        {/* Contact Methods - Unified Premium Styling */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto mb-16">
           {contactMethods.map((method, index) => (
             <motion.div
               key={method.title}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
-              whileHover={{ 
-                scale: 1.05,
-                rotateY: 5,
-                rotateX: 5,
+              transition={{ 
+                delay: 0.5 + index * 0.08, 
+                duration: 0.5,
+                type: "spring",
+                stiffness: 100
               }}
-              style={{ perspective: 1000 }}
+              whileHover={{ 
+                y: -6, 
+                scale: 1.02,
+                rotateX: 2,
+                rotateY: -2
+              }}
+              style={{ transformStyle: 'preserve-3d' }}
+              className="group"
             >
-              <Link href={method.href} className="block group">
-                <motion.div
-                  whileHover={{ boxShadow: "0 0 30px rgba(34, 211, 238, 0.3)" }}
-                  className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl shadow-lg p-6 text-center h-full transition-all relative overflow-hidden"
-                >
-                  {/* Hover glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/0 via-accent-cyan/5 to-accent-lavender/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  <div className="relative z-10">
-                    <div className="inline-flex p-3 rounded-xl bg-accent-cyan/10 text-accent-cyan mb-4 group-hover:bg-accent-cyan group-hover:text-background transition-all">
-                      <method.icon size={24} />
-                    </div>
-                    <h3 className="font-heading font-semibold mb-2">{method.title}</h3>
-                    <p className="text-sm text-muted">{method.description}</p>
+              <Link href={method.href} className="block focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-slate-900 rounded-2xl">
+                <GlassCard variant="premium" glow className="p-8 text-center h-full">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-4 mx-auto mb-6 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
+                    <method.icon className="w-full h-full text-slate-900" />
                   </div>
-                  
-                  {/* Tooltip */}
-                  <div className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-background/90 backdrop-blur-sm border border-accent-cyan/30 rounded-lg text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                    Piyush — AI Innovator & Creative Technologist
-                  </div>
-                </motion.div>
+                  <h3 className="font-heading font-semibold text-xl mb-3 text-slate-100">{method.title}</h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">{method.description}</p>
+                </GlassCard>
               </Link>
             </motion.div>
           ))}
         </div>
 
-        {/* Interactive CTA Orb */}
+        {/* Premium CTA Orb - Enhanced */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -218,11 +211,25 @@ export function ContactSection() {
               style={{ x: orbX, y: orbY }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 text-white font-semibold shadow-lg relative overflow-hidden group cursor-pointer"
+              transition={{ duration: 0.14 }}
+              className="inline-flex items-center gap-3 px-10 py-5 text-xl font-semibold rounded-full bg-gradient-to-r from-accent-cyan via-accent-lavender to-accent-cyan bg-[length:200%_100%] text-background shadow-[0_0_60px_rgba(34,211,238,0.6)] hover:bg-[position:100%_0] hover:shadow-[0_0_80px_rgba(34,211,238,0.8)] transition-all duration-300 relative overflow-hidden group cursor-pointer focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-slate-900"
               aria-label="Start the conversation"
             >
+              {/* Animated shimmer effect */}
+              <motion.div
+                animate={{
+                  x: ['-100%', '100%'],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'linear',
+                }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+              />
+              
               {/* Pulsing glow */}
               <motion.div
                 animate={{
@@ -230,11 +237,11 @@ export function ContactSection() {
                   opacity: [0.5, 0.8, 0.5],
                 }}
                 transition={{
-                  duration: 2,
+                  duration: 3,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 blur-xl -z-10"
+                className="absolute inset-0 bg-gradient-to-r from-accent-cyan to-accent-lavender blur-xl -z-10"
               />
               
               {/* Ripple effect on click */}

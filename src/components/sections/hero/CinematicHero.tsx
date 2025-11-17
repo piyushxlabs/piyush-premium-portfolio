@@ -10,14 +10,6 @@ const FloatingGeometry = dynamic(() => import("@/components/3d/FloatingGeometry"
 
 export function CinematicHero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.96]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
 
   // Dynamic word rotation
   const words = ["Impact", "Empathy", "Purpose", "Innovation", "Vision"];
@@ -67,10 +59,7 @@ export function CinematicHero() {
       </div>
 
       {/* Main Content Container */}
-      <motion.div
-        style={{ opacity, scale, y }}
-        className="container relative z-10 mx-auto px-4 sm:px-6 py-16 sm:py-20 md:py-32 text-center"
-      >
+      <div className="container relative z-10 mx-auto px-6 md:px-8 lg:px-12 py-20 sm:py-24 md:py-32 text-center max-w-7xl">
         {/* Premium Floating Badge - FIXED VISIBILITY */}
         <motion.div
           initial={{ opacity: 0, y: -30, scale: 0.8 }}
@@ -94,9 +83,9 @@ export function CinematicHero() {
           </span>
         </motion.div>
 
-        {/* Cinematic Typography Hero - PARALLAX REMOVED */}
-        <div className="mb-6 sm:mb-8 space-y-2 sm:space-y-3">
-          {/* Line 1: Building Intelligence */}
+        {/* Enhanced Cinematic Typography Hero */}
+        <div className="mb-8 sm:mb-10 space-y-3 sm:space-y-4">
+          {/* Line 1: Building Intelligence - ENHANCED HIERARCHY */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
@@ -106,17 +95,17 @@ export function CinematicHero() {
               ease: [0.22, 0.9, 0.36, 1],
             }}
           >
-            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-heading font-bold leading-[1.1] tracking-tight">
-              <span className="inline-block text-white">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-bold leading-[1.05] tracking-tight">
+              <span className="inline-block text-slate-100">
                 Building{" "}
               </span>
-              <span className="inline-block text-gradient-heading">
+              <span className="inline-block text-gradient-heading relative text-[1.15em] drop-shadow-[0_0_30px_rgba(34,211,238,0.5)]">
                 Intelligence
               </span>
             </h1>
           </motion.div>
           
-          {/* Line 2: with [Rotating Word] */}
+          {/* Line 2: with [Rotating Word] - ENHANCED */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
@@ -125,9 +114,9 @@ export function CinematicHero() {
               delay: 0.7,
               ease: [0.22, 0.9, 0.36, 1],
             }}
-            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-[1.1] tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold leading-[1.1] tracking-tight"
           >
-            <span className="text-white">with </span>
+            <span className="text-slate-100">with </span>
             <AnimatePresence mode="wait">
               <motion.span
                 key={currentWord}
@@ -158,124 +147,124 @@ export function CinematicHero() {
           </motion.div>
         </div>
 
-        {/* Premium Subtitle - FIXED "PIYUSH" VISIBILITY */}
+        {/* Spotlight Background Behind Headline */}
+        <div className="absolute inset-0 bg-gradient-radial from-accent-cyan/5 via-transparent to-transparent opacity-60 pointer-events-none" />
+        
+        {/* Enhanced Premium Subtitle - Improved Visibility */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.9, ease: [0.22, 0.9, 0.36, 1] }}
-          className="mb-10 sm:mb-12"
+          transition={{ duration: 1.2, delay: 1.0, ease: [0.22, 0.9, 0.36, 1] }}
+          className="mb-12 sm:mb-14 relative z-10"
         >
-          <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-muted max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-4">
-            I'm <span className="text-white font-semibold">Piyush</span>, an 18-year-old AI & Data Science learner
+          <p className="text-xl md:text-2xl lg:text-3xl text-slate-200 max-w-[60ch] mx-auto leading-relaxed px-4 font-light">
+            I'm <span className="text-slate-100 font-semibold">Piyush</span>, an 18-year-old AI & Data Science learner
             <br className="hidden sm:block" />
             exploring how technology can create meaningful impact
           </p>
         </motion.div>
 
-        {/* Premium CTA Buttons - MATCHED THEME */}
+        {/* Premium CTA Buttons - ENHANCED DESIGN */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 1.1, ease: [0.22, 0.9, 0.36, 1] }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-16 sm:mb-20 px-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-16 sm:mb-20 px-4"
         >
-          {/* Primary CTA - Explore My Work - GHOST STYLE */}
+          {/* Primary CTA - Premium Gradient Button with Magnetic Effect */}
           <Link href="/work" className="w-full sm:w-auto">
             <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="group relative w-full sm:w-auto px-8 sm:px-10 py-4 rounded-2xl bg-gradient-to-r from-accent-cyan to-accent-lavender font-heading font-semibold text-base overflow-hidden shadow-[0_0_40px_rgba(34,211,238,0.3)] hover:shadow-[0_0_60px_rgba(34,211,238,0.5)] transition-shadow"
+              whileHover={{ 
+                scale: 1.04, 
+                y: -4,
+                boxShadow: "0 0 60px rgba(34, 211, 238, 0.6)"
+              }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 400, 
+                damping: 17 
+              }}
+              className="group relative w-full sm:w-auto px-10 py-4 text-lg font-semibold rounded-full bg-gradient-to-r from-accent-cyan via-accent-lavender to-accent-cyan bg-[length:200%_100%] text-background shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:bg-[position:100%_0] transition-all duration-300 overflow-hidden"
             >
-              <span className="relative z-10 flex items-center justify-center gap-2 text-background">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              <span className="relative z-10 flex items-center justify-center gap-2">
                 Explore My Work
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </span>
-              <motion.div
-                className="absolute inset-0 bg-white/20"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: "100%" }}
-                transition={{ duration: 0.6 }}
-              />
             </motion.button>
           </Link>
           
-          {/* Secondary CTA - Let's Connect - GHOST STYLE */}
+          {/* Secondary CTA - Ghost Button with Animated Border */}
           <Link href="/connect" className="w-full sm:w-auto">
             <motion.button
               whileHover={{ 
                 scale: 1.05,
-                borderColor: "rgba(34, 211, 238, 1)",
+                y: -4,
                 boxShadow: "0 0 30px rgba(34, 211, 238, 0.4)",
               }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full sm:w-auto px-7 sm:px-9 py-3.5 sm:py-4 rounded-xl border-2 border-accent-cyan/40 bg-transparent backdrop-blur-xl hover:bg-accent-cyan/5 transition-all duration-300 font-heading font-semibold text-sm sm:text-base group"
+              whileTap={{ scale: 0.96 }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 400, 
+                damping: 17 
+              }}
+              className="group relative w-full sm:w-auto px-8 py-4 text-lg font-semibold rounded-full border-2 border-accent-cyan/30 bg-transparent backdrop-blur-xl hover:bg-accent-cyan/5 hover:border-accent-cyan transition-all duration-300 overflow-hidden"
             >
-              <span className="text-white group-hover:text-accent-cyan transition-colors">
+              <div className="absolute inset-0 bg-gradient-to-r from-accent-cyan/10 via-accent-lavender/10 to-accent-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className="relative z-10 text-slate-100 group-hover:text-accent-cyan transition-colors">
                 Let's Connect
               </span>
             </motion.button>
           </Link>
         </motion.div>
 
-        {/* Premium Stats Grid - FULLY REDESIGNED */}
-        {/* Stats Grid */}
+        {/* Enhanced Premium Stats Grid */}
         <motion.div
-  // कंटेनर एनिमेशन की गति वही रखी गई है
-  initial={{ opacity: 0, y: 60 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 1.5, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-  className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto px-6"
->
-  {[
-    { value: "18", label: "Years Old", icon: Sparkles },
-    { value: "AI/ML", label: "Focus Area", icon: Brain },
-    { value: "∞", label: "Learning", icon: Zap },
-    { value: "Future", label: "Founder", icon: Code2 },
-  ].map((stat, index) => (
-    <motion.div
-      key={stat.label}
-      // एंट्री एनिमेशन की गति वही रखी गई है
-      initial={{ opacity: 0, scale: 0.9, y: 30 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{
-        delay: 0.0 + index * 0.05,
-        duration: 1.5,
-        type: "spring",
-        stiffness: 100,
-        damping: 14,
-      }}
-      whileHover={{
-        y: -8, // थोड़ा कम ऊपर उठे
-        scale: 1.025, // थोड़ा कम बड़ा हो
-        boxShadow: "0 15px 30px rgba(34, 211, 238, 0.2)",
-      }}
-      // FASTEST REACTION FIX: CSS ट्रांज़िशन को सबसे तेज़ 'duration-75' (75ms) पर सेट किया गया है
-      className="relative bg-glass backdrop-blur-xl rounded-2xl p-4 border border-overlay-medium hover:border-accent-cyan/60 transition-all duration-75 group cursor-pointer overflow-hidden transform-gpu"
-    >
-      
-      <div className="relative z-10 flex flex-col items-center justify-center gap-2 text-center h-full"> 
-        
-        <motion.div
-          whileHover={{ rotate: 360, scale: 1.1 }}
-          // ICON REACTION FIX: आइकन मोशन को सबसे तेज़ 0.1s पर सेट किया गया है
-          transition={{ duration: 0.1 }} 
-          className="p-2 rounded-full bg-overlay-medium/50 mb-2"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.5, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 max-w-6xl mx-auto px-6"
         >
-          <stat.icon className="w-5 h-5 text-accent-cyan" /> 
+          {[
+            { value: "18", label: "Years Old", icon: Sparkles },
+            { value: "AI/ML", label: "Focus Area", icon: Brain },
+            { value: "∞", label: "Learning", icon: Zap },
+            { value: "Future", label: "Founder", icon: Code2 },
+          ].map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{
+                delay: index * 0.08,
+                duration: 0.6,
+                type: "spring",
+                stiffness: 100,
+                damping: 14,
+              }}
+              whileHover={{
+                y: -6,
+                scale: 1.02,
+              }}
+              transition={{ duration: 0.2 }}
+              className="relative bg-slate-800/60 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-cyan-500/20 hover:border-accent-cyan/60 shadow-xl shadow-cyan-500/5 hover:shadow-cyan-500/20 transition-all duration-200 group cursor-pointer overflow-hidden"
+            >
+              <div className="relative z-10 flex flex-col items-center justify-center gap-3 text-center h-full">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-3 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-200">
+                  <stat.icon className="w-full h-full text-slate-900" />
+                </div>
+                <div className="text-4xl md:text-5xl font-heading font-bold text-gradient-heading mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-base text-slate-300">
+                  {stat.label}
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
-        
-        <div className="text-4xl md:text-5xl font-heading font-black text-gradient-heading mb-1 transition-colors duration-75">
-          {stat.value}
-        </div>
-        
-        <div className="text-sm text-muted">
-          {stat.label}
-        </div>
       </div>
-    </motion.div>
-  ))}
-</motion.div>
-      </motion.div>
 
       {/* Premium Scroll Indicator */}
       <motion.div

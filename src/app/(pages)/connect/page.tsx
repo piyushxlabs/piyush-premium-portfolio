@@ -3,6 +3,7 @@
 import { useState, FormEvent } from 'react';
 import { Send, Sparkles } from 'lucide-react';
 import { socialLinks } from '@/config/social-links';
+import { PremiumBox } from '@/components/ui/PremiumBox';
 
 const contactCards = [
   { color: 'cyan', description: 'piyushjaguri13@gmail.com' },
@@ -49,12 +50,9 @@ export default function ConnectPage() {
 
         <div className="grid lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
           <div className="lg:col-span-3 order-2 lg:order-1">
-            <div className="bg-glass rounded-3xl p-8 md:p-10 border border-overlay-medium backdrop-blur-xl shadow-card relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              
-              <div className="relative z-10">
-                <h2 className="text-2xl font-heading font-semibold mb-2">Send a Message</h2>
-                <p className="text-muted mb-8">Share your ideas, questions, or just say hello.</p>
+            <PremiumBox variant="large" hover={false}>
+              <h2 className="text-2xl font-heading font-semibold mb-2 text-slate-100">Send a Message</h2>
+              <p className="text-slate-300 mb-8">Share your ideas, questions, or just say hello.</p>
 
                 {submitted ? (
                   <div className="py-16 text-center animate-scale-in">
@@ -133,8 +131,7 @@ export default function ConnectPage() {
                     </button>
                   </form>
                 )}
-              </div>
-            </div>
+            </PremiumBox>
           </div>
 
           <div className="lg:col-span-2 order-1 lg:order-2 space-y-4">
@@ -148,36 +145,36 @@ export default function ConnectPage() {
               };
               const color = colorMap[index];
               return (
-                <div key={social.label} className="bg-glass rounded-2xl p-6 border border-overlay-medium backdrop-blur-xl hover:border-accent-cyan/40 transition-all duration-300 group">
+                <PremiumBox key={social.label}>
                   <div className="flex items-start gap-4">
-                    <div className={`w-12 h-12 rounded-xl bg-accent-${color}/10 border border-accent-${color}/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                      <social.icon className={`w-6 h-6 text-accent-${color}`} />
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-4 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
+                      <social.icon className="w-full h-full text-slate-900" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-heading font-semibold mb-1">{social.label}</h3>
+                      <h3 className="font-heading font-semibold mb-1 text-slate-100">{social.label}</h3>
                       <a 
                         href={social.href} 
                         target={social.label !== 'Email' ? '_blank' : undefined}
                         rel={social.label !== 'Email' ? 'noopener noreferrer' : undefined}
-                        className={`text-sm text-muted hover:text-accent-${color} transition-colors`}
+                        className="text-sm text-slate-300 hover:text-accent-cyan transition-colors"
                         aria-label={social.label}
                       >
                         {contactCards[index].description}
                       </a>
                     </div>
                   </div>
-                </div>
+                </PremiumBox>
               );
             })}
           </div>
         </div>
 
         <div className="mt-20 text-center max-w-3xl mx-auto">
-          <div className="inline-block px-6 py-3 rounded-2xl bg-glass border border-overlay-medium backdrop-blur-xl">
-            <p className="text-muted text-sm leading-relaxed">
+          <PremiumBox className="max-w-3xl mx-auto text-center" hover={false}>
+            <p className="text-slate-300 text-sm leading-relaxed">
               <span className="text-accent-cyan font-medium">Currently exploring:</span> AI automation, intelligent systems, and human-centered design. Always open to meaningful conversations about technology and innovation.
             </p>
-          </div>
+          </PremiumBox>
         </div>
       </div>
 

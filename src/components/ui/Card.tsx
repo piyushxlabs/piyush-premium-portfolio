@@ -9,6 +9,7 @@ export {
   type CardProps 
 } from "./Card/Card";
 export { GlassCard, type GlassCardProps } from "./Card/GlassCard";
+export { PremiumCard, type PremiumCardProps } from "./Card/PremiumCard";
 export { HoverCard } from "./Card/HoverCard";
 export { InfoCard } from "./Card/InfoCard";
 export { ProjectCard } from "./Card/ProjectCard";

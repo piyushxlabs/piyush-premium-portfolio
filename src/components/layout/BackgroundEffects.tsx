@@ -1,139 +1,143 @@
-// BackgroundEffects — Premium cinematic ambient system with enhanced gradient orbs
+// BackgroundEffects — Premium Cinematic Aurora Background System
 "use client";
 
-import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export function BackgroundEffects() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Set canvas size
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    // Enhanced particle system
-    const particles: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      opacity: number;
-      color: string;
-    }> = [];
-
-    // Create particles with varied colors
-    const colors = [
-      'rgba(34, 211, 238, ',
-      'rgba(167, 139, 250, ',
-      'rgba(20, 184, 166, '
-    ];
-
-    for (let i = 0; i < 60; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        size: Math.random() * 2.5 + 0.5,
-        opacity: Math.random() * 0.6 + 0.2,
-        color: colors[Math.floor(Math.random() * colors.length)]
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100,
       });
-    }
-
-    // Animation loop
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Update and draw particles
-      particles.forEach((particle) => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-
-        // Wrap around edges
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
-
-        // Draw particle with glow effect
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `${particle.color}${particle.opacity})`;
-        ctx.fill();
-        
-        // Add subtle glow
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size * 2, 0, Math.PI * 2);
-        ctx.fillStyle = `${particle.color}${particle.opacity * 0.3})`;
-        ctx.fill();
-      });
-
-      // Draw enhanced connections
-      particles.forEach((p1, i) => {
-        particles.slice(i + 1).forEach((p2) => {
-          const dx = p1.x - p2.x;
-          const dy = p1.y - p2.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 180) {
-            const opacity = 0.2 * (1 - distance / 180);
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(34, 211, 238, ${opacity})`;
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-          }
-        });
-      });
-
-      requestAnimationFrame(animate);
     };
 
-    animate();
-
-    return () => {
-      window.removeEventListener("resize", resizeCanvas);
-    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   return (
-    <>
-      {/* Enhanced Background Glow */}
-      <div className="fixed inset-0 bg-glow opacity-30 pointer-events-none z-0" />
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      {/* Base Gradient Foundation */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
       
-      {/* Premium Particle Canvas */}
-      <canvas
-        ref={canvasRef}
-        className="fixed inset-0 pointer-events-none z-0"
-        style={{ opacity: 0.5 }}
+      {/* Aurora Layer 1 - Primary */}
+      <motion.div
+        className="absolute inset-0 opacity-60"
+        animate={{
+          background: [
+            'radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.12) 0%, transparent 50%)',
+            'radial-gradient(circle at 80% 30%, rgba(34, 211, 238, 0.18) 0%, transparent 50%), radial-gradient(circle at 20% 70%, rgba(167, 139, 250, 0.15) 0%, transparent 50%)',
+            'radial-gradient(circle at 50% 10%, rgba(34, 211, 238, 0.12) 0%, transparent 50%), radial-gradient(circle at 50% 90%, rgba(167, 139, 250, 0.18) 0%, transparent 50%)',
+            'radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.12) 0%, transparent 50%)'
+          ]
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear"
+        }}
       />
+
+      {/* Aurora Layer 2 - Secondary Flow */}
+      <motion.div
+        className="absolute inset-0 opacity-40"
+        animate={{
+          background: [
+            'radial-gradient(ellipse at 30% 60%, rgba(20, 184, 166, 0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 40%, rgba(99, 102, 241, 0.06) 0%, transparent 60%)',
+            'radial-gradient(ellipse at 60% 20%, rgba(20, 184, 166, 0.10) 0%, transparent 60%), radial-gradient(ellipse at 40% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 60%)',
+            'radial-gradient(ellipse at 80% 70%, rgba(20, 184, 166, 0.06) 0%, transparent 60%), radial-gradient(ellipse at 20% 30%, rgba(99, 102, 241, 0.10) 0%, transparent 60%)',
+            'radial-gradient(ellipse at 30% 60%, rgba(20, 184, 166, 0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 40%, rgba(99, 102, 241, 0.06) 0%, transparent 60%)'
+          ]
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      />
+
+      {/* Interactive Mouse Glow */}
+      <motion.div
+        className="absolute w-96 h-96 rounded-full opacity-20"
+        style={{
+          background: 'radial-gradient(circle, rgba(34, 211, 238, 0.3) 0%, rgba(34, 211, 238, 0.1) 30%, transparent 70%)',
+          left: `${mousePosition.x}%`,
+          top: `${mousePosition.y}%`,
+          transform: 'translate(-50%, -50%)'
+        }}
+        transition={{ type: "spring", damping: 30, stiffness: 200 }}
+      />
+
+      {/* Floating Atmospheric Orbs */}
+      <motion.div
+        className="absolute top-1/4 left-1/6 w-72 h-72 rounded-full opacity-30"
+        style={{
+          background: 'radial-gradient(circle, rgba(34, 211, 238, 0.2) 0%, rgba(34, 211, 238, 0.05) 40%, transparent 70%)',
+          filter: 'blur(40px)'
+        }}
+        animate={{
+          y: [-20, 20, -20],
+          x: [-10, 10, -10],
+          scale: [1, 1.1, 1]
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+
+      <motion.div
+        className="absolute bottom-1/3 right-1/6 w-80 h-80 rounded-full opacity-25"
+        style={{
+          background: 'radial-gradient(circle, rgba(167, 139, 250, 0.18) 0%, rgba(167, 139, 250, 0.04) 40%, transparent 70%)',
+          filter: 'blur(50px)'
+        }}
+        animate={{
+          y: [20, -20, 20],
+          x: [10, -10, 10],
+          scale: [1.1, 1, 1.1]
+        }}
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+
+      <motion.div
+        className="absolute top-2/3 left-2/3 w-64 h-64 rounded-full opacity-20"
+        style={{
+          background: 'radial-gradient(circle, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.03) 40%, transparent 70%)',
+          filter: 'blur(35px)'
+        }}
+        animate={{
+          y: [-15, 15, -15],
+          x: [-15, 15, -15],
+          scale: [1, 1.2, 1]
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+
+      {/* Depth Layers */}
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/20 to-slate-950/60" />
       
-      {/* Enhanced Gradient Orbs - Premium Cinematic Layout */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Primary orbs */}
-        <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-accent-cyan/10 rounded-full blur-3xl animate-float-slow" />
-        <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-accent-lavender/10 rounded-full blur-3xl animate-float-slow" style={{ animationDelay: '3s' }} />
-        
-        {/* Secondary accent orbs */}
-        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-accent-teal/8 rounded-full blur-2xl animate-float-slow" style={{ animationDelay: '1.5s' }} />
-        <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-accent-indigo/8 rounded-full blur-2xl animate-float-slow" style={{ animationDelay: '4.5s' }} />
-        
-        {/* Ambient corner orbs */}
-        <div className="absolute top-0 left-0 w-48 h-48 bg-accent-cyan/6 rounded-full blur-xl animate-float-slow" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-0 right-0 w-48 h-48 bg-accent-lavender/6 rounded-full blur-xl animate-float-slow" style={{ animationDelay: '5s' }} />
-      </div>
-    </>
+      {/* Subtle Noise Texture */}
+      <div 
+        className="absolute inset-0 opacity-[0.015] mix-blend-soft-light"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+        }}
+      />
+    </div>
   );
 }

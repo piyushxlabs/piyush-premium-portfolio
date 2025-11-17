@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Rocket, Zap, Globe, Users, Brain, Sparkles, ArrowRight, Target } from 'lucide-react';
 import Link from 'next/link';
 import { useRef } from 'react';
+import { PremiumBox } from '@/components/ui/PremiumBox';
 // import { FloatingGeometry } from '@/components/3d/FloatingGeometry';
 // import { NeuralNetwork } from '@/components/3d/NeuralNetwork';
 
@@ -187,17 +188,14 @@ export default function VisionPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="bg-glass rounded-3xl p-8 border border-overlay-medium backdrop-blur-xl hover:border-accent-cyan/40 transition-all duration-300 group relative overflow-hidden"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative z-10">
-                  <div className="w-16 h-16 rounded-2xl bg-accent-cyan/10 border border-accent-cyan/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-accent-cyan/20 transition-all duration-300">
+                <PremiumBox variant="card">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-accent-cyan/20 to-accent-lavender/20 border border-accent-cyan/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-300">
                     <belief.icon className="w-8 h-8 text-accent-cyan" />
                   </div>
                   <h3 className="text-2xl font-heading font-bold mb-3">{belief.title}</h3>
                   <p className="text-muted leading-relaxed">{belief.description}</p>
-                </div>
+                </PremiumBox>
               </motion.div>
             ))}
           </div>
@@ -242,25 +240,25 @@ export default function VisionPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02 }}
-                className="bg-glass rounded-3xl p-8 md:p-10 border border-overlay-medium backdrop-blur-xl hover:border-accent-cyan/40 transition-all duration-300 group"
               >
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-2xl font-heading font-bold">{project.title}</h3>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium bg-accent-${project.color}/10 text-accent-${project.color} border border-accent-${project.color}/20`}>
-                        {project.status}
-                      </span>
+                <PremiumBox variant="large">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-3">
+                        <h3 className="text-2xl font-heading font-bold">{project.title}</h3>
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium bg-accent-${project.color}/10 text-accent-${project.color} border border-accent-${project.color}/20`}>
+                          {project.status}
+                        </span>
+                      </div>
+                      <p className="text-muted leading-relaxed">{project.description}</p>
                     </div>
-                    <p className="text-muted leading-relaxed">{project.description}</p>
-                  </div>
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 rounded-xl bg-accent-cyan/10 border border-accent-cyan/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <ArrowRight className="w-6 h-6 text-accent-cyan" />
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-accent-cyan/20 to-accent-lavender/20 border border-accent-cyan/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <ArrowRight className="w-6 h-6 text-accent-cyan" />
+                      </div>
                     </div>
                   </div>
-                </div>
+                </PremiumBox>
               </motion.div>
             ))}
           </div>
@@ -273,25 +271,22 @@ export default function VisionPage() {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <div className="inline-block px-10 py-8 rounded-3xl bg-glass border border-overlay-medium backdrop-blur-xl max-w-3xl relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/10 via-transparent to-accent-lavender/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <div className="relative z-10">
-              <p className="text-2xl md:text-3xl font-heading text-foreground leading-relaxed mb-6">
-                "The best way to predict the future is to <span className="text-gradient">build it</span>—with intelligence, empathy, and purpose."
-              </p>
-              <Link href="/connect">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="relative inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-accent-cyan via-accent-lavender to-accent-cyan bg-[length:200%_100%] text-background font-heading font-bold shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:bg-[position:100%_0] hover:shadow-[0_0_60px_rgba(34,211,238,0.6)] transition-all duration-300 overflow-hidden group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                  <span className="relative z-10">Let's Build Together</span>
-                  <ArrowRight className="w-5 h-5 relative z-10" />
-                </motion.button>
-              </Link>
-            </div>
-          </div>
+          <PremiumBox variant="large" className="inline-block max-w-3xl" hover={false}>
+            <p className="text-2xl md:text-3xl font-heading text-foreground leading-relaxed mb-6">
+              "The best way to predict the future is to <span className="text-gradient">build it</span>—with intelligence, empathy, and purpose."
+            </p>
+            <Link href="/connect">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-accent-cyan via-accent-lavender to-accent-cyan bg-[length:200%_100%] text-background font-heading font-bold shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:bg-[position:100%_0] hover:shadow-[0_0_60px_rgba(34,211,238,0.6)] transition-all duration-300 overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                <span className="relative z-10">Let's Build Together</span>
+                <ArrowRight className="w-5 h-5 relative z-10" />
+              </motion.button>
+            </Link>
+          </PremiumBox>
         </motion.section>
       </div>
     </main>

@@ -12,6 +12,7 @@ import { BackgroundEffects } from "@/components/layout/BackgroundEffects";
 import { Navbar } from "@/components/layout/Navbar/Navbar";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { PageLoader } from "@/components/layout/PageLoader";
+import { ReadingProgress } from "@/components/ui/ReadingProgress";
 
 const headingFont = Sora({
   variable: "--font-heading",
@@ -50,10 +51,11 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <PageLoader />
+          <ReadingProgress />
           <BackgroundEffects />
-          <div className="noise-overlay flex min-h-screen flex-col">
+          <div className="relative flex min-h-screen flex-col">
             <Navbar />
-            <div className="flex-1">{children}</div>
+            <div className="flex-1 relative z-10">{children}</div>
             <Footer />
           </div>
         </ThemeProvider>

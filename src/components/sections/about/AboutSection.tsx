@@ -6,7 +6,7 @@ import { Sparkles, Heart, Lightbulb, Target, Compass } from "lucide-react";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { FadeIn, SlideUp } from "@/components/animations/core";
-import { GlassCard } from "@/components/ui/Card";
+import { GlassCard } from "@/components/ui/GlassCard";
 
 const DataSphere = dynamic(() => import("@/components/3d/DataSphere").then(mod => ({ default: mod.DataSphere })), { ssr: false });
 
@@ -40,7 +40,7 @@ const values = [
 
 export function AboutSection() {
   return (
-<section className="relative py-32 overflow-visible isolate">
+<section className="relative section-padding overflow-visible isolate">
   {/* 3D Background - DataSphere */}
   <div
     className="
@@ -63,7 +63,7 @@ export function AboutSection() {
     </div>
   </div>
 
-  <div className="container relative z-10 mx-auto px-6">
+  <div className="container relative z-10 mx-auto container-padding max-w-7xl">
 
         <FadeIn>
           <div className="text-center mb-16">
@@ -75,93 +75,140 @@ export function AboutSection() {
             >
               About Me
             </motion.span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6 leading-tight tracking-tight">
               The <span className="text-gradient-heading">Spark</span> Behind the Journey
             </h2>
-            <p className="text-lg text-muted max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
               My journey into AI began with a simple curiosity — how can machines think,
               learn, and understand like humans?
             </p>
           </div>
         </FadeIn>
 
-        {/* Story */}
-        <SlideUp delay={0.2}>
-          <div className="max-w-4xl mx-auto mb-20">
-            <GlassCard className="p-8 md:p-12">
-              <div className="prose prose-invert max-w-none">
-                <p className="text-lg text-muted leading-relaxed mb-6">
-                  As a teenager, I was fascinated by how data could reveal patterns that
-                  even humans miss. Watching how AI could write, create, and solve problems
-                  made me realize one thing — intelligence isn't just something we use,
-                  it's something we can build.
-                </p>
-                <p className="text-lg text-muted leading-relaxed mb-6">
-                  That spark turned into a deep desire to understand the science behind
-                  intelligence — not just to use AI tools, but to create them with purpose.
-                </p>
-                <p className="text-lg text-muted leading-relaxed">
-                  I believe AI is not just technology — it's a reflection of how humans
-                  think, decide, and dream. My purpose is to create ethical, human-centered
-                  AI systems that enhance creativity, productivity, and opportunity.
-                </p>
-              </div>
-            </GlassCard>
-          </div>
-        </SlideUp>
+        {/* Story - Enhanced with Staggered Reveal */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="max-w-4xl mx-auto mb-20"
+        >
+          <GlassCard variant="large" glow>
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                visible: {
+                  transition: {
+                    staggerChildren: 0.3,
+                    delayChildren: 0.4
+                  }
+                }
+              }}
+              className="space-y-6 md:space-y-8"
+            >
+              <motion.p 
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-[60ch]"
+              >
+                As a teenager, I was fascinated by how data could reveal patterns that
+                even humans miss. Watching how AI could write, create, and solve problems
+                made me realize one thing — intelligence isn't just something we use,
+                it's something we can build.
+              </motion.p>
+              <motion.p 
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-[60ch]"
+              >
+                That spark turned into a deep desire to understand the science behind
+                intelligence — not just to use AI tools, but to create them with purpose.
+              </motion.p>
+              <motion.p 
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-[60ch]"
+              >
+                I believe AI is not just technology — it's a reflection of how humans
+                think, decide, and dream. My purpose is to create ethical, human-centered
+                AI systems that enhance creativity, productivity, and opportunity.
+              </motion.p>
+            </motion.div>
+          </GlassCard>
+        </motion.div>
 
-        {/* Values */}
+        {/* Values - Enhanced */}
         <FadeIn delay={0.4}>
-          <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-heading font-bold mb-4">
+          <div className="text-center mb-16">
+            <h3 className="text-3xl md:text-4xl font-heading font-bold mb-4 leading-tight tracking-tight">
               Core <span className="text-gradient-heading">Values</span>
             </h3>
-            <p className="text-muted max-w-2xl mx-auto">
+            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
               The principles that guide how I think, create, and build
             </p>
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 max-w-6xl mx-auto">
           {values.map((value, index) => (
             <motion.div
               key={value.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
+              transition={{ 
+                delay: index * 0.08, 
+                duration: 0.5,
+                type: "spring",
+                stiffness: 100
+              }}
+              whileHover={{ 
+                y: -6, 
+                scale: 1.02,
+                rotateX: 2,
+                rotateY: -2
+              }}
+              style={{ transformStyle: 'preserve-3d' }}
+              className="group"
             >
-              <GlassCard className="p-6 h-full hover:scale-105 transition-transform">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-accent-cyan/10 text-accent-cyan">
-                    <value.icon size={24} />
-                  </div>
-                  <div>
-                    <h4 className="font-heading font-semibold text-lg mb-2">
-                      {value.title}
-                    </h4>
-                    <p className="text-sm text-muted leading-relaxed">
-                      {value.description}
-                    </p>
-                  </div>
+              <GlassCard variant="premium" glow className="h-full">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-3 mb-4 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
+                  <value.icon className="w-full h-full text-slate-900" />
                 </div>
+                <h4 className="font-heading font-semibold text-lg mb-3 text-slate-100">
+                  {value.title}
+                </h4>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  {value.description}
+                </p>
               </GlassCard>
             </motion.div>
           ))}
         </div>
 
-        {/* Quote */}
+        {/* Quote - Enhanced */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.6, duration: 0.8 }}
           className="mt-20 text-center"
         >
-          <blockquote className="text-2xl md:text-3xl font-heading font-medium text-gradient-heading max-w-4xl mx-auto">
-            "I design intelligence with empathy — blending data, emotion, and purpose
-            into a calm futuristic experience."
-          </blockquote>
+          <GlassCard variant="large" glow className="inline-block max-w-4xl">
+            <div className="absolute inset-0 bg-gradient-radial from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <blockquote className="text-2xl md:text-3xl font-heading font-medium text-gradient-heading leading-relaxed relative z-10">
+              "I design intelligence with empathy — blending data, emotion, and purpose
+              into a calm futuristic experience."
+            </blockquote>
+          </GlassCard>
         </motion.div>
       </div>
     </section>

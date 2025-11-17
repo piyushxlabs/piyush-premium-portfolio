@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { BookOpen, Calendar, Clock, ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+import { PremiumBox } from '@/components/ui/PremiumBox';
 
 // Floating Ideas Component
 function FloatingIdeas() {
@@ -137,38 +138,34 @@ export default function ThoughtsPage() {
               className="group"
             >
               <Link href={`/thoughts/${thought.slug}`}>
-                <div className="bg-glass rounded-3xl p-8 md:p-10 border border-overlay-medium backdrop-blur-xl hover:border-accent-cyan/40 transition-all duration-300 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  <div className="relative z-10">
-                    <div className="flex flex-wrap items-center gap-4 mb-4 text-sm text-muted">
-                      <span className="px-3 py-1 rounded-full bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/20">
-                        {thought.category}
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
-                        <span>{thought.date}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4" />
-                        <span>{thought.readTime}</span>
-                      </div>
+                <PremiumBox variant="large">
+                  <div className="flex flex-wrap items-center gap-4 mb-4 text-sm text-slate-300">
+                    <span className="px-3 py-1 rounded-full bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/20">
+                      {thought.category}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>{thought.date}</span>
                     </div>
-
-                    <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4 group-hover:text-gradient transition-all duration-300">
-                      {thought.title}
-                    </h2>
-
-                    <p className="text-muted leading-relaxed mb-6">
-                      {thought.excerpt}
-                    </p>
-
-                    <div className="flex items-center gap-2 text-accent-cyan font-medium group-hover:gap-4 transition-all duration-300">
-                      <span>Read more</span>
-                      <ArrowRight className="w-5 h-5" />
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4" />
+                      <span>{thought.readTime}</span>
                     </div>
                   </div>
-                </div>
+
+                  <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4 text-slate-100 group-hover:text-gradient-heading transition-all duration-300">
+                    {thought.title}
+                  </h2>
+
+                  <p className="text-slate-300 leading-relaxed mb-6">
+                    {thought.excerpt}
+                  </p>
+
+                  <div className="flex items-center gap-2 text-accent-cyan font-medium group-hover:gap-4 transition-all duration-300">
+                    <span>Read more</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </div>
+                </PremiumBox>
               </Link>
             </motion.article>
           ))}
@@ -181,12 +178,12 @@ export default function ThoughtsPage() {
           transition={{ duration: 0.8 }}
           className="mt-20 text-center"
         >
-          <div className="inline-block px-8 py-6 rounded-3xl bg-glass border border-overlay-medium backdrop-blur-xl max-w-2xl">
+          <PremiumBox variant="large" className="max-w-2xl mx-auto text-center" hover={false}>
             <Sparkles className="w-8 h-8 text-accent-cyan mx-auto mb-4" />
-            <p className="text-lg text-muted leading-relaxed">
+            <p className="text-lg text-slate-300 leading-relaxed">
               More thoughts coming soon. Subscribe to stay updated on my journey exploring AI, innovation, and the future of intelligent systems.
             </p>
-          </div>
+          </PremiumBox>
         </motion.div>
       </div>
     </main>

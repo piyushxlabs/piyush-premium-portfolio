@@ -6,9 +6,16 @@ import { Brain, Code, Database, Zap } from "lucide-react";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { FadeIn } from "@/components/animations/core";
-import { GlassCard } from "@/components/ui/Card";
+import { GlassCard } from "@/components/ui/GlassCard";
 
 const NeuralNetwork = dynamic(() => import("@/components/3d/NeuralNetwork").then(mod => ({ default: mod.NeuralNetwork })), { ssr: false });
+
+const coreSkills = [
+  { name: "Python", level: 90, color: "accent-cyan" },
+  { name: "Machine Learning", level: 85, color: "accent-lavender" },
+  { name: "React/Next.js", level: 85, color: "accent-teal" },
+  { name: "Data Science", level: 80, color: "accent-indigo" },
+];
 
 const skillCategories = [
   {
@@ -87,6 +94,60 @@ export function SkillsSection() {
           </div>
         </FadeIn>
 
+        {/* Core Expertise - Circular Progress */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
+        >
+          <h3 className="text-2xl md:text-3xl font-heading font-bold text-center mb-12">
+            Core <span className="text-gradient-heading">Expertise</span>
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            {coreSkills.map((skill, index) => (
+              <motion.div
+                key={skill.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                className="text-center"
+              >
+                <GlassCard variant="premium" className="p-6 hover:scale-105 transition-transform duration-300">
+                  <div className="relative w-20 h-20 mx-auto mb-4">
+                    <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.1)"
+                        strokeWidth="2"
+                      />
+                      <motion.path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke={`rgb(var(--${skill.color}))`}
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        initial={{ strokeDasharray: "0 100" }}
+                        whileInView={{ strokeDasharray: `${skill.level} 100` }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1 + 0.5, duration: 1.2, ease: "easeOut" }}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-lg font-bold text-gradient-heading">{skill.level}%</span>
+                    </div>
+                  </div>
+                  <h4 className="font-heading font-semibold text-sm">{skill.name}</h4>
+                </GlassCard>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Detailed Skills Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
@@ -96,9 +157,9 @@ export function SkillsSection() {
               viewport={{ once: true }}
               transition={{ delay: categoryIndex * 0.1, duration: 0.5 }}
             >
-              <GlassCard className="p-8 h-full">
+              <GlassCard variant="premium" className="p-8 h-full">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className={`p-3 rounded-xl bg-accent-cyan/10 ${category.color}`}>
+                  <div className={`p-3 rounded-xl bg-gradient-to-tr from-accent-cyan/20 to-accent-lavender/20 ${category.color}`}>
                     <category.icon size={24} />
                   </div>
                   <h3 className="text-xl font-heading font-semibold">
@@ -187,3 +248,4 @@ export function SkillsSection() {
     </section>
   );
 }
+

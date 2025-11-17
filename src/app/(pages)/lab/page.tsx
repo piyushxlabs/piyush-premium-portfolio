@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Beaker, Code, Cpu, Sparkles, ArrowRight, Zap, GitBranch, Play } from 'lucide-react';
 import Link from 'next/link';
 import { ParticleField } from '@/components/3d/ParticleField';
+import { PremiumBox } from '@/components/ui/PremiumBox';
 // import { DataSphere } from '@/components/3d/DataSphere';
 
 const experiments = [
@@ -105,27 +106,23 @@ export default function LabPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="bg-glass rounded-3xl p-8 border border-overlay-medium backdrop-blur-xl hover:border-accent-cyan/40 transition-all duration-300 group relative overflow-hidden"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div className="relative z-10">
+                <PremiumBox variant="large">
                   <div className="flex items-start justify-between mb-6">
-                    <div className={`w-14 h-14 rounded-2xl bg-accent-${experiment.color}/10 border border-accent-${experiment.color}/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                      <experiment.icon className={`w-7 h-7 text-accent-${experiment.color}`} />
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-4 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
+                      <experiment.icon className="w-full h-full text-slate-900" />
                     </div>
                     <span className={`px-3 py-1 rounded-full text-xs font-medium bg-accent-${experiment.color}/10 text-accent-${experiment.color} border border-accent-${experiment.color}/20`}>
                       {experiment.status}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-heading font-bold mb-3">{experiment.title}</h3>
-                  <p className="text-muted text-sm leading-relaxed mb-6">{experiment.description}</p>
+                  <h3 className="text-xl font-heading font-bold mb-3 text-slate-100">{experiment.title}</h3>
+                  <p className="text-slate-300 text-sm leading-relaxed mb-6">{experiment.description}</p>
 
                   <div className="flex flex-wrap gap-2 mb-4">
                     {experiment.tech.map((tech) => (
-                      <span key={tech} className="px-3 py-1 rounded-full bg-overlay-light text-xs text-muted border border-overlay-medium">
+                      <span key={tech} className="px-3 py-1 rounded-full bg-slate-800/60 border border-slate-700/50 text-xs text-slate-300">
                         {tech}
                       </span>
                     ))}
@@ -135,7 +132,7 @@ export default function LabPage() {
                     <Play className="w-4 h-4" />
                     <span>View Details</span>
                   </button>
-                </div>
+                </PremiumBox>
               </motion.div>
             ))}
           </div>
@@ -183,10 +180,10 @@ export default function LabPage() {
                 whileHover={{ x: 8 }}
                 className="group"
               >
-                <div className="flex items-start gap-4 p-6 rounded-2xl bg-glass border border-overlay-medium backdrop-blur-xl hover:border-accent-cyan/40 transition-all duration-300">
+                <PremiumBox className="flex items-start gap-4" hover={false}>
                   <div className="w-2 h-2 rounded-full bg-accent-cyan mt-2 group-hover:scale-150 transition-transform" />
-                  <p className="text-lg md:text-xl text-foreground leading-relaxed flex-1">{principle}</p>
-                </div>
+                  <p className="text-lg md:text-xl text-slate-100 leading-relaxed flex-1">{principle}</p>
+                </PremiumBox>
               </motion.div>
             ))}
           </div>
@@ -199,26 +196,23 @@ export default function LabPage() {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <div className="inline-block px-10 py-8 rounded-3xl bg-glass border border-overlay-medium backdrop-blur-xl max-w-3xl relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/10 via-transparent to-accent-lavender/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <div className="relative z-10">
-              <Sparkles className="w-10 h-10 text-accent-cyan mx-auto mb-4" />
-              <p className="text-2xl md:text-3xl font-heading text-foreground leading-relaxed mb-6">
-                "Every experiment is a step toward understanding—even the ones that fail teach us something profound."
-              </p>
-              <Link href="/connect">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="relative inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-accent-cyan via-accent-lavender to-accent-cyan bg-[length:200%_100%] text-background font-heading font-bold shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:bg-[position:100%_0] hover:shadow-[0_0_60px_rgba(34,211,238,0.6)] transition-all duration-300 overflow-hidden group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                  <span className="relative z-10">Collaborate on Experiments</span>
-                  <ArrowRight className="w-5 h-5 relative z-10" />
-                </motion.button>
-              </Link>
-            </div>
-          </div>
+          <PremiumBox variant="large" className="max-w-3xl mx-auto text-center" hover={false}>
+            <Sparkles className="w-10 h-10 text-accent-cyan mx-auto mb-4" />
+            <p className="text-2xl md:text-3xl font-heading text-slate-100 leading-relaxed mb-6">
+              "Every experiment is a step toward understanding—even the ones that fail teach us something profound."
+            </p>
+            <Link href="/connect">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-accent-cyan via-accent-lavender to-accent-cyan bg-[length:200%_100%] text-background font-heading font-bold shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:bg-[position:100%_0] hover:shadow-[0_0_60px_rgba(34,211,238,0.6)] transition-all duration-300 overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                <span className="relative z-10">Collaborate on Experiments</span>
+                <ArrowRight className="w-5 h-5 relative z-10" />
+              </motion.button>
+            </Link>
+          </PremiumBox>
         </motion.section>
       </div>
     </main>

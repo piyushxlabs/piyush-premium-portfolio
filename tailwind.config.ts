@@ -46,6 +46,23 @@ const config = {
           medium: "var(--layer-overlay-medium)",
           heavy: "var(--layer-overlay-heavy)",
         },
+        slate: {
+          100: "#f1f5f9",
+          200: "#e2e8f0",
+          300: "#cbd5e1",
+          400: "#94a3b8",
+          700: "#334155",
+          800: "#1e293b",
+          900: "#0f172a",
+          950: "#020617",
+        },
+        cyan: {
+          400: "#22d3ee",
+          500: "#06b6d4",
+        },
+        purple: {
+          500: "#a855f7",
+        },
       },
       fontFamily: {
         heading: ["var(--font-heading)", "sans-serif"],
@@ -77,6 +94,10 @@ const config = {
         infinity: "var(--gradient-infinity)",
         depth: "var(--gradient-depth)",
         glow: "var(--gradient-glow)",
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "aurora-flow": "linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(167, 139, 250, 0.08) 50%, rgba(20, 184, 166, 0.06) 100%)",
+        "cinematic-depth": "radial-gradient(ellipse at center, rgba(34, 211, 238, 0.05) 0%, transparent 70%)",
+        "atmospheric-glow": "radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.15) 0%, rgba(167, 139, 250, 0.1) 50%, transparent 100%)",
       },
       transitionTimingFunction: {
         smooth: "var(--animation-ease)",
@@ -131,6 +152,45 @@ const config = {
           "border": "1px solid var(--layer-overlay-heavy)",
           "backdrop-filter": "blur(28px)",
         },
+        ".glass-premium": {
+          "background": "rgba(255, 255, 255, 0.08)",
+          "border": "1px solid rgba(255, 255, 255, 0.12)",
+          "backdrop-filter": "blur(24px) saturate(180%)",
+          "box-shadow": "0 8px 32px rgba(0, 0, 0, 0.12)",
+        },
+        ".glass-heavy": {
+          "background": "rgba(15, 23, 42, 0.6)",
+          "border": "1px solid rgba(34, 211, 238, 0.2)",
+          "backdrop-filter": "blur(32px) saturate(200%)",
+          "box-shadow": "0 16px 64px rgba(34, 211, 238, 0.1)",
+        },
+        ".premium-shadow": {
+          "box-shadow": "0 32px 80px rgba(15, 23, 42, 0.4), 0 8px 32px rgba(34, 211, 238, 0.1)",
+        },
+        ".section-padding": {
+          "padding-top": "6rem",
+          "padding-bottom": "6rem",
+          "@media (min-width: 768px)": {
+            "padding-top": "7rem",
+            "padding-bottom": "7rem",
+          },
+          "@media (min-width: 1024px)": {
+            "padding-top": "8rem",
+            "padding-bottom": "8rem",
+          },
+        },
+        ".container-padding": {
+          "padding-left": "1.5rem",
+          "padding-right": "1.5rem",
+          "@media (min-width: 768px)": {
+            "padding-left": "2rem",
+            "padding-right": "2rem",
+          },
+          "@media (min-width: 1024px)": {
+            "padding-left": "3rem",
+            "padding-right": "3rem",
+          },
+        },
         ".text-gradient": {
           "background-image": "var(--gradient-neural)",
           "-webkit-background-clip": "text",
@@ -144,6 +204,15 @@ const config = {
           display: "grid",
           gap: "1.5rem",
           "grid-template-columns": "repeat(auto-fit, minmax(240px, 1fr))",
+        },
+        ".bg-aurora": {
+          "background": "radial-gradient(ellipse at top, rgba(34, 211, 238, 0.1) 0%, transparent 50%), radial-gradient(ellipse at bottom, rgba(167, 139, 250, 0.08) 0%, transparent 50%)",
+        },
+        ".bg-cinematic": {
+          "background": "linear-gradient(135deg, rgba(2, 6, 23, 0.95) 0%, rgba(15, 23, 42, 0.9) 50%, rgba(2, 6, 23, 0.95) 100%)",
+        },
+        ".bg-depth": {
+          "background": "linear-gradient(180deg, rgba(2, 6, 23, 0.8) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(2, 6, 23, 0.9) 100%)",
         },
       });
     }),

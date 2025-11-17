@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Briefcase, ArrowRight, ExternalLink, Github, Sparkles, Target, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { useRef } from 'react';
+import { PremiumBox } from '@/components/ui/PremiumBox';
 // import { InteractiveModel } from '@/components/3d/InteractiveModel';
 
 const projects = [
@@ -126,16 +127,14 @@ export default function WorkPage() {
                 className="group"
               >
                 <div className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.4 }}
-                    className={`relative rounded-3xl overflow-hidden bg-glass border border-overlay-medium ${index % 2 === 1 ? 'lg:order-2' : ''}`}
+                  <PremiumBox
+                    variant="large"
+                    className={`aspect-video ${index % 2 === 1 ? 'lg:order-2' : ''}`}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/10 via-transparent to-accent-lavender/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    <div className="aspect-video bg-overlay-light flex items-center justify-center">
-                      <Sparkles className="w-16 h-16 text-accent-cyan/40" />
+                    <div className="aspect-video bg-gradient-to-br from-accent-cyan/10 to-accent-lavender/10 flex items-center justify-center rounded-2xl">
+                      <Sparkles className="w-16 h-16 text-accent-cyan/60" />
                     </div>
-                  </motion.div>
+                  </PremiumBox>
 
                   <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
                     <motion.div
@@ -219,14 +218,14 @@ export default function WorkPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -8 }}
-                className="bg-glass rounded-2xl p-6 border border-overlay-medium backdrop-blur-xl hover:border-accent-cyan/40 transition-all duration-300 text-center group"
               >
-                <div className="w-12 h-12 rounded-full bg-accent-cyan/10 border border-accent-cyan/20 flex items-center justify-center mx-auto mb-4 text-accent-cyan font-heading font-bold group-hover:scale-110 transition-transform">
-                  {index + 1}
-                </div>
-                <h3 className="font-heading font-bold text-lg mb-2">{item.step}</h3>
-                <p className="text-sm text-muted leading-relaxed">{item.description}</p>
+                <PremiumBox className="text-center">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-4 mx-auto mb-4 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-slate-900 font-heading font-bold text-lg">{index + 1}</span>
+                  </div>
+                  <h3 className="font-heading font-bold text-lg mb-2 text-slate-100">{item.step}</h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">{item.description}</p>
+                </PremiumBox>
               </motion.div>
             ))}
           </div>
@@ -239,25 +238,22 @@ export default function WorkPage() {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <div className="inline-block px-10 py-8 rounded-3xl bg-glass border border-overlay-medium backdrop-blur-xl max-w-3xl relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/10 via-transparent to-accent-lavender/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <div className="relative z-10">
-              <p className="text-2xl md:text-3xl font-heading text-foreground leading-relaxed mb-6">
-                Have a project in mind? Let's create something <span className="text-gradient">extraordinary</span> together.
-              </p>
-              <Link href="/connect">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="relative inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-accent-cyan via-accent-lavender to-accent-cyan bg-[length:200%_100%] text-background font-heading font-bold shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:bg-[position:100%_0] hover:shadow-[0_0_60px_rgba(34,211,238,0.6)] transition-all duration-300 overflow-hidden group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                  <span className="relative z-10">Start a Conversation</span>
-                  <ArrowRight className="w-5 h-5 relative z-10" />
-                </motion.button>
-              </Link>
-            </div>
-          </div>
+          <PremiumBox variant="large" className="max-w-3xl mx-auto text-center" hover={false}>
+            <p className="text-2xl md:text-3xl font-heading text-slate-100 leading-relaxed mb-6">
+              Have a project in mind? Let's create something <span className="text-gradient-heading">extraordinary</span> together.
+            </p>
+            <Link href="/connect">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-accent-cyan via-accent-lavender to-accent-cyan bg-[length:200%_100%] text-background font-heading font-bold shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:bg-[position:100%_0] hover:shadow-[0_0_60px_rgba(34,211,238,0.6)] transition-all duration-300 overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                <span className="relative z-10">Start a Conversation</span>
+                <ArrowRight className="w-5 h-5 relative z-10" />
+              </motion.button>
+            </Link>
+          </PremiumBox>
         </motion.section>
       </div>
     </main>

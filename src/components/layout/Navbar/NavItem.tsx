@@ -21,32 +21,29 @@ export function NavItem({ href, label }: NavItemProps) {
     <Link href={href} className="relative group">
       <motion.div
         className={cn(
-          "relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 overflow-hidden",
+          "relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 overflow-hidden focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-slate-900",
           isActive
-            ? "text-cyan-400"
+            ? "text-cyan-400 bg-cyan-500/10"
             : "text-slate-300 hover:text-cyan-400"
         )}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ y: -2, scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ duration: 0.12 }}
       >
         <motion.div
-          className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"
           style={{
             background:
-              "linear-gradient(135deg, rgba(34,211,238,0.1) 0%, rgba(167,139,250,0.1) 100%)",
+              "linear-gradient(135deg, rgba(34,211,238,0.15) 0%, rgba(167,139,250,0.15) 100%)",
           }}
         />
 
         <motion.div
-          className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100"
-          animate={{
-            boxShadow: [
-              "0 0 0px rgba(34, 211, 238, 0)",
-              "0 0 20px rgba(34, 211, 238, 0.2)",
-              "0 0 0px rgba(34, 211, 238, 0)",
-            ],
+          className="absolute inset-0 rounded-lg"
+          whileHover={{
+            boxShadow: "0 0 8px rgba(34, 211, 238, 0.6)",
           }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 0.2 }}
         />
 
         <span className="relative z-10">{label}</span>
