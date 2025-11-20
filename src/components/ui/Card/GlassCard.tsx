@@ -1,4 +1,4 @@
-// GlassCard — Glassmorphism card with backdrop blur
+// GlassCard — Glassmorphism card with backdrop blur (Mobile Optimized)
 "use client";
 
 import { forwardRef, type HTMLAttributes } from "react";
@@ -12,9 +12,11 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
       <div
         ref={ref}
         className={cn(
-          "glass-premium rounded-2xl p-6 hover:border-accent-cyan/40 transition-all duration-300 relative overflow-hidden group",
+          "glass-premium rounded-2xl p-6 transition-colors duration-300 relative overflow-hidden",
+          "md:hover:border-accent-cyan/40",
           className
         )}
+        style={{ transform: 'translateZ(0)' }}
         {...props}
       />
     );
