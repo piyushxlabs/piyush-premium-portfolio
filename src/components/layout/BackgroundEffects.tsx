@@ -6,7 +6,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 
 export function BackgroundEffects() {
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
-  const rafRef = useRef<number>();
+  const rafRef = useRef<number | undefined>(undefined);
   const lastUpdateRef = useRef<number>(0);
 
   // Perf: Throttled mouse tracking - update max 30fps instead of 60fps
