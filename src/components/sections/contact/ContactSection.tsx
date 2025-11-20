@@ -171,21 +171,21 @@ export function ContactSection() {
               }}
               whileHover={{ 
                 y: -6, 
-                scale: 1.02,
-                rotateX: 2,
-                rotateY: -2
+                scale: 1.02
               }}
-              style={{ transformStyle: 'preserve-3d' }}
               className="group"
             >
               <Link href={method.href} className="block focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-slate-900 rounded-2xl">
-                <GlassCard variant="premium" glow className="p-8 text-center h-full">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-4 mx-auto mb-6 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
-                    <method.icon className="w-full h-full text-slate-900" />
+                <div className="glass-premium rounded-2xl p-8 text-center h-full hover:border-accent-cyan/40 transition-all duration-300 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative z-10">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-4 mx-auto mb-6 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
+                      <method.icon className="w-full h-full text-slate-900" />
+                    </div>
+                    <h3 className="font-heading font-semibold text-xl mb-3 text-slate-100">{method.title}</h3>
+                    <p className="text-sm text-slate-300 leading-relaxed">{method.description}</p>
                   </div>
-                  <h3 className="font-heading font-semibold text-xl mb-3 text-slate-100">{method.title}</h3>
-                  <p className="text-sm text-slate-300 leading-relaxed">{method.description}</p>
-                </GlassCard>
+                </div>
               </Link>
             </motion.div>
           ))}

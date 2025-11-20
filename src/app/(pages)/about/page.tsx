@@ -106,14 +106,19 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="group"
               >
-                <PremiumBox variant="card">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-2 h-2 rounded-full bg-accent-cyan group-hover:scale-150 transition-transform" />
-                    <h3 className="text-xl font-heading font-semibold text-gradient-heading">{item.phase}</h3>
+                <div className="glass-premium rounded-2xl p-8 h-full hover:border-accent-cyan/40 transition-all duration-300 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-3 h-3 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 shadow-lg shadow-cyan-500/30 group-hover:scale-150 transition-transform" />
+                      <h3 className="text-xl font-heading font-semibold text-gradient-heading">{item.phase}</h3>
+                    </div>
+                    <p className="text-slate-300 leading-relaxed">{item.story}</p>
                   </div>
-                  <p className="text-slate-300 leading-relaxed">{item.story}</p>
-                </PremiumBox>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -138,14 +143,19 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="group"
               >
-                <PremiumBox className="text-center">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-4 mx-auto mb-4 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
-                    <value.icon className="w-full h-full text-slate-900" />
+                <div className="glass-premium rounded-2xl p-8 text-center h-full hover:border-accent-cyan/40 transition-all duration-300 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative z-10">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-4 mx-auto mb-6 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
+                      <value.icon className="w-full h-full text-slate-900" />
+                    </div>
+                    <h3 className="font-heading font-semibold text-xl mb-3 text-slate-100">{value.title}</h3>
+                    <p className="text-sm text-slate-300 leading-relaxed">{value.description}</p>
                   </div>
-                  <h3 className="font-heading font-semibold text-lg mb-2 text-slate-100">{value.title}</h3>
-                  <p className="text-sm text-slate-300 leading-relaxed">{value.description}</p>
-                </PremiumBox>
+                </div>
               </motion.div>
             ))}
           </div>

@@ -113,35 +113,39 @@ export function SkillsSection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="text-center"
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="text-center group"
               >
-                <GlassCard variant="premium" className="p-6 hover:scale-105 transition-transform duration-300">
-                  <div className="relative w-20 h-20 mx-auto mb-4">
-                    <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
-                      <path
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                        fill="none"
-                        stroke="rgba(255,255,255,0.1)"
-                        strokeWidth="2"
-                      />
-                      <motion.path
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                        fill="none"
-                        stroke={`rgb(var(--${skill.color}))`}
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        initial={{ strokeDasharray: "0 100" }}
-                        whileInView={{ strokeDasharray: `${skill.level} 100` }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 + 0.5, duration: 1.2, ease: "easeOut" }}
-                      />
-                    </svg>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-lg font-bold text-gradient-heading">{skill.level}%</span>
+                <div className="glass-premium rounded-2xl p-8 hover:border-accent-cyan/40 transition-all duration-300 relative overflow-hidden h-full">
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative z-10">
+                    <div className="relative w-20 h-20 mx-auto mb-4">
+                      <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
+                        <path
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                          fill="none"
+                          stroke="rgba(255,255,255,0.1)"
+                          strokeWidth="2"
+                        />
+                        <motion.path
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                          fill="none"
+                          stroke={`rgb(var(--${skill.color}))`}
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          initial={{ strokeDasharray: "0 100" }}
+                          whileInView={{ strokeDasharray: `${skill.level} 100` }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.1 + 0.5, duration: 1.2, ease: "easeOut" }}
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-lg font-bold text-gradient-heading">{skill.level}%</span>
+                      </div>
                     </div>
+                    <h4 className="font-heading font-semibold text-base text-slate-100">{skill.name}</h4>
                   </div>
-                  <h4 className="font-heading font-semibold text-sm">{skill.name}</h4>
-                </GlassCard>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -156,49 +160,54 @@ export function SkillsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: categoryIndex * 0.1, duration: 0.5 }}
+              whileHover={{ y: -6, scale: 1.02 }}
+              className="group"
             >
-              <GlassCard variant="premium" className="p-8 h-full">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className={`p-3 rounded-xl bg-gradient-to-tr from-accent-cyan/20 to-accent-lavender/20 ${category.color}`}>
-                    <category.icon size={24} />
-                  </div>
-                  <h3 className="text-xl font-heading font-semibold">
-                    {category.title}
-                  </h3>
-                </div>
-
-                <div className="space-y-4">
-                  {category.skills.map((skill, skillIndex) => (
-                    <div key={skill.name}>
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-sm font-medium">{skill.name}</span>
-                        <span className="text-sm text-muted">{skill.level}%</span>
-                      </div>
-                      <div className="h-2 bg-overlay-light rounded-full overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{
-                            delay: categoryIndex * 0.1 + skillIndex * 0.05,
-                            duration: 0.8,
-                            ease: [0.22, 0.9, 0.36, 1],
-                          }}
-                          className={`h-full bg-gradient-to-r ${
-                            categoryIndex === 0
-                              ? "from-accent-cyan to-accent-cyan/60"
-                              : categoryIndex === 1
-                              ? "from-accent-lavender to-accent-lavender/60"
-                              : categoryIndex === 2
-                              ? "from-accent-teal to-accent-teal/60"
-                              : "from-accent-indigo to-accent-indigo/60"
-                          }`}
-                        />
-                      </div>
+              <div className="glass-premium rounded-2xl p-8 h-full hover:border-accent-cyan/40 transition-all duration-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-3 shadow-lg shadow-cyan-500/30">
+                      <category.icon className="w-full h-full text-slate-900" />
                     </div>
-                  ))}
+                    <h3 className="text-xl font-heading font-semibold text-slate-100">
+                      {category.title}
+                    </h3>
+                  </div>
+
+                  <div className="space-y-4">
+                    {category.skills.map((skill, skillIndex) => (
+                      <div key={skill.name}>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm font-medium text-slate-200">{skill.name}</span>
+                          <span className="text-sm text-slate-400">{skill.level}%</span>
+                        </div>
+                        <div className="h-2 bg-overlay-light rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.level}%` }}
+                            viewport={{ once: true }}
+                            transition={{
+                              delay: categoryIndex * 0.1 + skillIndex * 0.05,
+                              duration: 0.8,
+                              ease: [0.22, 0.9, 0.36, 1],
+                            }}
+                            className={`h-full bg-gradient-to-r ${
+                              categoryIndex === 0
+                                ? "from-accent-cyan to-accent-cyan/60"
+                                : categoryIndex === 1
+                                ? "from-accent-lavender to-accent-lavender/60"
+                                : categoryIndex === 2
+                                ? "from-accent-teal to-accent-teal/60"
+                                : "from-accent-indigo to-accent-indigo/60"
+                            }`}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </GlassCard>
+              </div>
             </motion.div>
           ))}
         </div>

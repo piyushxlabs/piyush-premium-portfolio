@@ -116,7 +116,7 @@ export default function VisionPage() {
           transition={{ duration: 1 }}
           className="mb-32"
         >
-          <div className="mb-20">
+          {/* <div className="mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -126,8 +126,8 @@ export default function VisionPage() {
               <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">Neural Vision</h2>
               <p className="text-muted">The interconnected network of ideas shaping the future</p>
             </motion.div>
-            {/* <NeuralNetwork /> */}
-          </div>
+            <NeuralNetwork />
+          </div> */}
 
           <div className="max-w-4xl mx-auto">
             <motion.div
@@ -208,7 +208,7 @@ export default function VisionPage() {
           transition={{ duration: 1 }}
           className="mb-32"
         >
-          <div className="mb-20">
+          {/* <div className="mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -218,8 +218,8 @@ export default function VisionPage() {
               <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">Floating Ideas</h2>
               <p className="text-muted">Concepts in motion, constantly evolving</p>
             </motion.div>
-              {/* <FloatingGeometry /> */}
-          </div>
+              <FloatingGeometry />
+          </div> */}
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}

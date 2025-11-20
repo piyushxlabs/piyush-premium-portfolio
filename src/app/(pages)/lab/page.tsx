@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Beaker, Code, Cpu, Sparkles, ArrowRight, Zap, GitBranch, Play } from 'lucide-react';
 import Link from 'next/link';
-import { ParticleField } from '@/components/3d/ParticleField';
+// import { ParticleField } from '@/components/3d/ParticleField';
 import { PremiumBox } from '@/components/ui/PremiumBox';
 // import { DataSphere } from '@/components/3d/DataSphere';
 
@@ -74,7 +74,7 @@ export default function LabPage() {
           transition={{ duration: 1 }}
           className="mb-32"
         >
-          <div className="mb-20">
+          {/* <div className="mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -85,7 +85,7 @@ export default function LabPage() {
               <p className="text-muted">Thousands of data points in motion</p>
             </motion.div>
             <ParticleField />
-          </div>
+          </div> */}
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}

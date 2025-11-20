@@ -218,14 +218,19 @@ export default function WorkPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="group"
               >
-                <PremiumBox className="text-center">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-4 mx-auto mb-4 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-slate-900 font-heading font-bold text-lg">{index + 1}</span>
+                <div className="glass-premium rounded-2xl p-8 text-center h-full hover:border-accent-cyan/40 transition-all duration-300 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative z-10">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-slate-900 font-heading font-bold text-xl">{index + 1}</span>
+                    </div>
+                    <h3 className="font-heading font-bold text-xl mb-3 text-slate-100">{item.step}</h3>
+                    <p className="text-sm text-slate-300 leading-relaxed">{item.description}</p>
                   </div>
-                  <h3 className="font-heading font-bold text-lg mb-2 text-slate-100">{item.step}</h3>
-                  <p className="text-sm text-slate-300 leading-relaxed">{item.description}</p>
-                </PremiumBox>
+                </div>
               </motion.div>
             ))}
           </div>
