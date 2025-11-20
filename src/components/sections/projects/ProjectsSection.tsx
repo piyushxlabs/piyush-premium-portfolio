@@ -423,25 +423,22 @@ function MobileProjectCard({ project, index }: { project: typeof projects[0]; in
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       onViewportEnter={() => setIsInView(true)}
-      transition={{ duration: 0.6, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
       className="flex-shrink-0 w-[85vw] snap-center"
     >
       <a href={project.href}>
         <div className="relative group h-full">
           {/* Glow effect */}
           <motion.div
-            animate={isInView ? {
-              opacity: [0.2, 0.4, 0.2],
-              scale: [1, 1.05, 1],
-            } : {}}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -inset-4 rounded-3xl blur-2xl"
+            animate={isInView ? { opacity: 0.3 } : {}}
+            transition={{ duration: 0.3 }}
+            className="absolute -inset-4 rounded-3xl blur-xl lg:blur-2xl"
             style={{ 
               background: `radial-gradient(circle, ${project.gradient.from}40, transparent 70%)`,
             }}
           />
 
-          <div className="relative backdrop-blur-xl bg-gradient-to-br from-slate-900/90 to-slate-950/90 rounded-3xl border border-white/10 overflow-hidden p-6">
+          <div className="relative backdrop-blur-md lg:backdrop-blur-xl bg-gradient-to-br from-slate-900/90 to-slate-950/90 rounded-3xl border border-white/10 overflow-hidden p-6">
             {/* Image */}
             <div className="aspect-video mb-4 rounded-2xl overflow-hidden relative">
               <div 
@@ -570,7 +567,7 @@ export function ProjectsSection() {
             rotate: [0, 90, 0],
           }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-[100px]"
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-[40px] lg:blur-[100px]"
           style={{ 
             background: `radial-gradient(circle, ${bgGradient.from}30, transparent 70%)`,
           }}
@@ -582,7 +579,7 @@ export function ProjectsSection() {
             rotate: [0, -90, 0],
           }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-[100px]"
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-[40px] lg:blur-[100px]"
           style={{ 
             background: `radial-gradient(circle, ${bgGradient.to}30, transparent 70%)`,
           }}
@@ -590,7 +587,7 @@ export function ProjectsSection() {
       </motion.div>
 
       {/* Floating particles */}
-      <FloatingParticles color={currentProject.accent} count={30} />
+      <div className="hidden lg:block"><FloatingParticles color={currentProject.accent} count={30} /></div>
 
       <div className="container relative z-10 mx-auto px-6 max-w-7xl">
         {/* Header */}
@@ -598,14 +595,14 @@ export function ProjectsSection() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center mb-24"
         >
           <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.3 }}
             className="inline-block px-5 py-2.5 rounded-full backdrop-blur-xl bg-white/5 border border-white/10 text-sm font-medium mb-6"
           >
             Featured Projects
@@ -730,7 +727,7 @@ export function ProjectsSection() {
 
         {/* Mobile: Horizontal scroll */}
         <div className="lg:hidden mb-20 -mx-6 px-6">
-          <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4">
+          <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4" style={{ willChange: 'scroll-position' }}>
             {projects.map((project, index) => (
               <MobileProjectCard key={project.id} project={project} index={index} />
             ))}
@@ -742,7 +739,7 @@ export function ProjectsSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.3 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
           className="text-center"
         >
           <a href="/work">
