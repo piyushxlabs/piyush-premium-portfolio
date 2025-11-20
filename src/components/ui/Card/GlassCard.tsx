@@ -1,12 +1,13 @@
-// GlassCard — Glassmorphism card with backdrop blur (Mobile Optimized)
+// GlassCard — Glassmorphism card (60fps Mobile Optimized)
 "use client";
 
-import { forwardRef, type HTMLAttributes } from "react";
+import { forwardRef, type HTMLAttributes, memo } from "react";
 import { cn } from "@/utils/helpers/cn";
 
 export interface GlassCardProps extends HTMLAttributes<HTMLDivElement> {}
 
-export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
+// Perf: Memoized to prevent unnecessary re-renders
+const GlassCardComponent = forwardRef<HTMLDivElement, GlassCardProps>(
   ({ className, ...props }, ref) => {
     return (
       <div
@@ -16,11 +17,14 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
           "md:hover:border-accent-cyan/40",
           className
         )}
-        style={{ transform: 'translateZ(0)' }}
+        // Perf: translate3d forces GPU acceleration without will-change overhead
+        style={{ transform: 'translate3d(0, 0, 0)' }}
         {...props}
       />
     );
   }
 );
 
-GlassCard.displayName = "GlassCard";
+GlassCardComponent.displayName = "GlassCard";
+
+export const GlassCard = memo(GlassCardComponent);

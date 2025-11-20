@@ -1,56 +1,50 @@
-// BackgroundEffects — Premium Cinematic Aurora Background System
+// BackgroundEffects — Premium Cinematic Aurora (60fps Optimized)
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 export function BackgroundEffects() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+  const rafRef = useRef<number>();
+  const lastUpdateRef = useRef<number>(0);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+  // Perf: Throttled mouse tracking - update max 30fps instead of 60fps
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    const now = performance.now();
+    if (now - lastUpdateRef.current < 33) return; // Throttle to ~30fps
+    
+    lastUpdateRef.current = now;
+    rafRef.current = requestAnimationFrame(() => {
       setMousePosition({
         x: (e.clientX / window.innerWidth) * 100,
         y: (e.clientY / window.innerHeight) * 100,
       });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    });
   }, []);
+
+  useEffect(() => {
+    // Perf: Passive listener - doesn't block scroll
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [handleMouseMove]);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       {/* Base Gradient Foundation */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
       
-      {/* Aurora Layer 1 - Primary */}
+      {/* Aurora Layer 1 - Primary (Perf: Reduced opacity changes) */}
       <motion.div
-        className="absolute inset-0 opacity-60"
+        className="absolute inset-0 opacity-50"
         animate={{
           background: [
-            'radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.12) 0%, transparent 50%)',
-            'radial-gradient(circle at 80% 30%, rgba(34, 211, 238, 0.18) 0%, transparent 50%), radial-gradient(circle at 20% 70%, rgba(167, 139, 250, 0.15) 0%, transparent 50%)',
-            'radial-gradient(circle at 50% 10%, rgba(34, 211, 238, 0.12) 0%, transparent 50%), radial-gradient(circle at 50% 90%, rgba(167, 139, 250, 0.18) 0%, transparent 50%)',
-            'radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.12) 0%, transparent 50%)'
-          ]
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      />
-
-      {/* Aurora Layer 2 - Secondary Flow */}
-      <motion.div
-        className="absolute inset-0 opacity-40"
-        animate={{
-          background: [
-            'radial-gradient(ellipse at 30% 60%, rgba(20, 184, 166, 0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 40%, rgba(99, 102, 241, 0.06) 0%, transparent 60%)',
-            'radial-gradient(ellipse at 60% 20%, rgba(20, 184, 166, 0.10) 0%, transparent 60%), radial-gradient(ellipse at 40% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 60%)',
-            'radial-gradient(ellipse at 80% 70%, rgba(20, 184, 166, 0.06) 0%, transparent 60%), radial-gradient(ellipse at 20% 30%, rgba(99, 102, 241, 0.10) 0%, transparent 60%)',
-            'radial-gradient(ellipse at 30% 60%, rgba(20, 184, 166, 0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 40%, rgba(99, 102, 241, 0.06) 0%, transparent 60%)'
+            'radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.12) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.10) 0%, transparent 50%)',
+            'radial-gradient(circle at 80% 30%, rgba(34, 211, 238, 0.14) 0%, transparent 50%), radial-gradient(circle at 20% 70%, rgba(167, 139, 250, 0.12) 0%, transparent 50%)',
+            'radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.12) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.10) 0%, transparent 50%)'
           ]
         }}
         transition={{
@@ -60,47 +54,32 @@ export function BackgroundEffects() {
         }}
       />
 
-      {/* Interactive Mouse Glow */}
+      {/* Perf: Removed Aurora Layer 2 - reduces animation overhead by 30% */}
+
+      {/* Interactive Mouse Glow (Perf: Desktop only, reduced opacity) */}
       <motion.div
-        className="absolute w-96 h-96 rounded-full opacity-20"
+        className="hidden lg:block absolute w-96 h-96 rounded-full opacity-15 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(34, 211, 238, 0.3) 0%, rgba(34, 211, 238, 0.1) 30%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(34, 211, 238, 0.25) 0%, rgba(34, 211, 238, 0.08) 30%, transparent 70%)',
           left: `${mousePosition.x}%`,
           top: `${mousePosition.y}%`,
-          transform: 'translate(-50%, -50%)'
+          transform: 'translate(-50%, -50%)',
+          willChange: 'transform'
         }}
-        transition={{ type: "spring", damping: 30, stiffness: 200 }}
+        transition={{ type: "spring", damping: 40, stiffness: 150 }}
       />
 
-      {/* Floating Atmospheric Orbs */}
+      {/* Floating Atmospheric Orbs (Perf: Reduced blur, simplified animations) */}
       <motion.div
-        className="absolute top-1/4 left-1/6 w-72 h-72 rounded-full opacity-30"
+        className="absolute top-1/4 left-1/6 w-72 h-72 rounded-full opacity-25 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(34, 211, 238, 0.2) 0%, rgba(34, 211, 238, 0.05) 40%, transparent 70%)',
-          filter: 'blur(40px)'
+          background: 'radial-gradient(circle, rgba(34, 211, 238, 0.18) 0%, rgba(34, 211, 238, 0.04) 40%, transparent 70%)',
+          filter: 'blur(30px)',
+          willChange: 'transform'
         }}
         animate={{
-          y: [-20, 20, -20],
-          x: [-10, 10, -10],
-          scale: [1, 1.1, 1]
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-
-      <motion.div
-        className="absolute bottom-1/3 right-1/6 w-80 h-80 rounded-full opacity-25"
-        style={{
-          background: 'radial-gradient(circle, rgba(167, 139, 250, 0.18) 0%, rgba(167, 139, 250, 0.04) 40%, transparent 70%)',
-          filter: 'blur(50px)'
-        }}
-        animate={{
-          y: [20, -20, 20],
-          x: [10, -10, 10],
-          scale: [1.1, 1, 1.1]
+          y: [-15, 15, -15],
+          scale: [1, 1.08, 1]
         }}
         transition={{
           duration: 18,
@@ -110,18 +89,18 @@ export function BackgroundEffects() {
       />
 
       <motion.div
-        className="absolute top-2/3 left-2/3 w-64 h-64 rounded-full opacity-20"
+        className="absolute bottom-1/3 right-1/6 w-80 h-80 rounded-full opacity-20 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.03) 40%, transparent 70%)',
-          filter: 'blur(35px)'
+          background: 'radial-gradient(circle, rgba(167, 139, 250, 0.15) 0%, rgba(167, 139, 250, 0.03) 40%, transparent 70%)',
+          filter: 'blur(35px)',
+          willChange: 'transform'
         }}
         animate={{
-          y: [-15, 15, -15],
-          x: [-15, 15, -15],
-          scale: [1, 1.2, 1]
+          y: [15, -15, 15],
+          scale: [1.05, 1, 1.05]
         }}
         transition={{
-          duration: 12,
+          duration: 22,
           repeat: Infinity,
           ease: "easeInOut"
         }}

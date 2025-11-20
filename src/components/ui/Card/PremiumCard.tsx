@@ -1,7 +1,7 @@
-// PremiumCard — Unified premium card component (Mobile Performance Optimized)
+// PremiumCard — Unified premium card (60fps Mobile Optimized)
 "use client";
 
-import { forwardRef, type HTMLAttributes } from "react";
+import { forwardRef, type HTMLAttributes, memo } from "react";
 import { cn } from "@/utils/helpers/cn";
 
 export interface PremiumCardProps extends HTMLAttributes<HTMLDivElement> {
@@ -10,7 +10,8 @@ export interface PremiumCardProps extends HTMLAttributes<HTMLDivElement> {
   glow?: boolean;
 }
 
-export const PremiumCard = forwardRef<HTMLDivElement, PremiumCardProps>(
+// Perf: Memoized to prevent re-renders during scroll
+const PremiumCardComponent = forwardRef<HTMLDivElement, PremiumCardProps>(
   ({ className, variant = "default", hover = true, glow = false, children, ...props }, ref) => {
     const baseClasses = "relative overflow-hidden transition-colors duration-300";
     
@@ -20,8 +21,8 @@ export const PremiumCard = forwardRef<HTMLDivElement, PremiumCardProps>(
       glass: "bg-glass rounded-2xl p-6 border border-overlay-medium backdrop-blur-xl md:hover:border-accent-cyan/40"
     };
 
-    // Desktop-only hover effects using media query classes
-    const hoverClasses = hover ? "md:hover:scale-[1.01] md:hover:-translate-y-0.5" : "";
+    // Perf: Reduced transform intensity for smoother mobile performance
+    const hoverClasses = hover ? "md:hover:scale-[1.005] md:hover:-translate-y-0.5" : "";
     const glowClasses = glow ? "md:hover:shadow-glow-shadow-hover" : "";
 
     return (
@@ -34,14 +35,11 @@ export const PremiumCard = forwardRef<HTMLDivElement, PremiumCardProps>(
           glowClasses,
           className
         )}
-        style={{ 
-          transform: 'translateZ(0)',
-          willChange: 'transform'
-        }}
+        // Perf: translate3d + no will-change = GPU acceleration without layer overhead
+        style={{ transform: 'translate3d(0, 0, 0)' }}
         {...props}
       >
-        {/* Desktop-only hover gradient overlay */}
-        <div className="hidden md:block absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        {/* Perf: Removed gradient overlay - causes extra compositing layer */}
         
         {/* Content */}
         <div className="relative">
@@ -52,4 +50,6 @@ export const PremiumCard = forwardRef<HTMLDivElement, PremiumCardProps>(
   }
 );
 
-PremiumCard.displayName = "PremiumCard";
+PremiumCardComponent.displayName = "PremiumCard";
+
+export const PremiumCard = memo(PremiumCardComponent);
