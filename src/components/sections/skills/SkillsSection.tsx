@@ -5,7 +5,7 @@ import { Brain, Code, Database, Zap, ArrowRight } from "lucide-react";
 import { Suspense, useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 
-const NeuralNetwork = dynamic(() => import("@/components/3d/NeuralNetwork").then(mod => ({ default: mod.NeuralNetwork })), { ssr: false });
+// const NeuralNetwork = dynamic(() => import("@/components/3d/NeuralNetwork").then(mod => ({ default: mod.NeuralNetwork })), { ssr: false });
 
 const coreSkills = [
   { name: "Python", level: 90, color: "accent-cyan", colorRgb: "6, 182, 212", connections: [1, 3] },
@@ -322,7 +322,7 @@ export function SkillsSection() {
 
   return (
     <section className="relative py-40 md:py-48 overflow-hidden">
-      <motion.div 
+      {/* <motion.div 
         className="absolute inset-0 w-full h-full z-[-1] opacity-50 pointer-events-none select-none hidden md:block"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 0.5 }}
@@ -332,7 +332,7 @@ export function SkillsSection() {
         <Suspense fallback={null}>
           <NeuralNetwork />
         </Suspense>
-      </motion.div>
+      </motion.div> */}
 
       <div 
         className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-0"
