@@ -103,7 +103,7 @@ export default function WorkPage() {
           transition={{ duration: 1 }}
           className="mb-32"
         >
-          <div className="mb-24">
+          {/* <div className="mb-24">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -113,8 +113,8 @@ export default function WorkPage() {
               <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4">Interactive Portfolio</h2>
               <p className="text-muted">Explore my work through interactive 3D visualization</p>
             </motion.div>
-            {/* <InteractiveModel /> */}
-          </div>
+            <InteractiveModel />
+          </div> */}
 
           <div className="space-y-24">
             {projects.map((project, index) => (
