@@ -39,29 +39,43 @@ const projects = [
 ];
 
 // Particle system for ambient atmosphere
+const PARTICLE_POSITIONS = Array.from({ length: 30 }, (_, i) => {
+  const seed = i * 137.508;
+  return {
+    id: i,
+    left: (seed % 100),
+    top: ((seed * 1.618) % 100),
+    xOffset: (seed % 20) - 10,
+    duration: 3 + ((seed % 2)),
+    delay: (seed % 2),
+  };
+});
+
 function FloatingParticles({ color, count = 20 }: { color: string; count?: number }) {
+  const particles = PARTICLE_POSITIONS.slice(0, count);
+
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {Array.from({ length: count }).map((_, i) => (
+      {particles.map((particle) => (
         <motion.div
-          key={i}
+          key={particle.id}
           className="absolute w-1 h-1 rounded-full"
           style={{ 
             background: color,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            left: `${particle.left}%`,
+            top: `${particle.top}%`,
             filter: 'blur(1px)',
           }}
           animate={{
             y: [0, -30, 0],
-            x: [0, Math.random() * 20 - 10, 0],
+            x: [0, particle.xOffset, 0],
             opacity: [0, 0.6, 0],
             scale: [0, 1.5, 0],
           }}
           transition={{
-            duration: 3 + Math.random() * 2,
+            duration: particle.duration,
             repeat: Infinity,
-            delay: Math.random() * 2,
+            delay: particle.delay,
             ease: "easeInOut",
           }}
         />
@@ -564,7 +578,6 @@ export function ProjectsSection() {
           animate={{
             scale: [1, 1.3, 1],
             opacity: [0.15, 0.3, 0.15],
-            rotate: [0, 90, 0],
           }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-[40px] lg:blur-[100px]"
@@ -576,7 +589,6 @@ export function ProjectsSection() {
           animate={{
             scale: [1.3, 1, 1.3],
             opacity: [0.1, 0.25, 0.1],
-            rotate: [0, -90, 0],
           }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
           className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-[40px] lg:blur-[100px]"

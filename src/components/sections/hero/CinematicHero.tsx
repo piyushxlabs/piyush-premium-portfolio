@@ -15,13 +15,30 @@ export function CinematicHero() {
   const words = ["Impact", "Empathy", "Purpose", "Innovation", "Vision"];
 
   const [currentWord, setCurrentWord] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const interval = setInterval(() => {
       setCurrentWord((prev) => (prev + 1) % words.length);
     }, 2800);
     return () => clearInterval(interval);
   }, []);
+
+  if (!mounted) {
+    return (
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="container relative z-10 mx-auto px-6 md:px-8 lg:px-12 py-20 sm:py-24 md:py-32 text-center max-w-7xl">
+          <div className="mb-8 sm:mb-10 space-y-3 sm:space-y-4">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-bold leading-[1.05] tracking-tight">
+              <span className="inline-block text-slate-100">Building </span>
+              <span className="inline-block text-gradient-heading relative text-[1.15em]">Intelligence</span>
+            </h1>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section 
@@ -73,8 +90,8 @@ export function CinematicHero() {
           className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white/5 border border-accent-cyan/30 backdrop-blur-xl mb-6 sm:mb-8 shadow-[0_0_30px_rgba(34,211,238,0.2)] hover:shadow-[0_0_50px_rgba(34,211,238,0.3)] transition-all duration-500 cursor-default"
         >
           <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
             <Sparkles size={16} className="text-accent-cyan" />
           </motion.div>
