@@ -324,7 +324,7 @@ export function CinematicHero() {
     setMounted(true);
     const interval = setInterval(() => {
       setCurrentWordIndex((prev) => (prev + 1) % words.length);
-    }, 3000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
