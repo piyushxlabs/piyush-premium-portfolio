@@ -321,12 +321,32 @@ export function CinematicHero() {
   // const opacity = useTransform(scrollY, [0, 1400], [1, 0]); // COMMENTED OUT - Causing scroll fade/invisibility
 
   useEffect(() => {
-    setMounted(true);
+    // ROOT CAUSE FIX:
+    // The original code called 'setMounted(true)' immediately on load.
+    // This caused the 'if (!mounted)' block (the "Portfolio Header") to be skipped instantly.
+    // The app would then try to render the main hero, which has 'initial={{ opacity: 0 }}' animations,
+    // causing a hydration mismatch and making the content invisible on deployment.
+    //
+    // THE FIX:
+    // 1. This 'useEffect' now *only* handles the 5-second timer for the Portfolio Header.
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 5000); // 5000ms = 5 seconds (as requested)
+    
+    return () => clearTimeout(timer);
+  }, []); // Empty dependency array, runs once on mount
+
+  useEffect(() => {
+    // 2. This *new* 'useEffect' handles the word-swapping animation.
+    //    It will *only* run AFTER 'mounted' becomes true (i.e., after the 5s header is gone).
+    if (!mounted) return; // Do nothing if the header is still showing
+
     const interval = setInterval(() => {
       setCurrentWordIndex((prev) => (prev + 1) % words.length);
-    }, 5000);
+    }, 3000);
+    
     return () => clearInterval(interval);
-  }, []);
+  }, [mounted]); // Dependency on 'mounted'
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
