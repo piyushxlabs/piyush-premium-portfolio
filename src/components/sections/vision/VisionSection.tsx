@@ -478,66 +478,65 @@ function VisionPillarCard({ point, index }: { point: typeof visionPoints[0]; ind
             ))}
           </div>
           
-          {/* FIX: Counter-rotate content to prevent text reversal */}
-          <div style={{ transform: 'scaleX(-1)' }} className="w-full h-full">
-            <div className="relative z-10 p-10 h-full flex flex-col items-center justify-center text-center">
-              <motion.div 
-                className="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-400/20 to-purple-500/20 flex items-center justify-center mb-8"
-                animate={{
-                  boxShadow: [
-                    `0 0 30px ${point.particleColor}50`,
-                    `0 0 60px ${point.particleColor}70`,
-                    `0 0 30px ${point.particleColor}50`,
-                  ],
-                  rotate: [0, 360],
-                }}
-                transition={{
-                  boxShadow: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-                  rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                }}
-              >
-                <Icon className="w-12 h-12 text-cyan-400" />
-              </motion.div>
-              
-              <h4 className="text-3xl font-heading font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-                The Vision
-              </h4>
-              
-              <p className="text-slate-200 leading-relaxed text-lg font-medium">
-                {point.backContent}
-              </p>
+          {/* FIX: Counter-rotate ONLY text content to prevent reversal */}
+          <div className="relative z-10 p-10 h-full flex flex-col items-center justify-center text-center">
+            <motion.div 
+              className="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-400/20 to-purple-500/20 flex items-center justify-center mb-8"
+              animate={{
+                boxShadow: [
+                  `0 0 30px ${point.particleColor}50`,
+                  `0 0 60px ${point.particleColor}70`,
+                  `0 0 30px ${point.particleColor}50`,
+                ],
+                rotate: [0, 360],
+              }}
+              transition={{
+                boxShadow: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+                rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+              }}
+            >
+              <Icon className="w-12 h-12 text-cyan-400" />
+            </motion.div>
+            
+            <h4 className="text-3xl font-heading font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+              The Vision
+            </h4>
+            
+            <p className="text-slate-200 leading-relaxed text-lg font-medium">
+              {point.backContent}
+            </p>
 
-              {/* Decorative Elements */}
-              <div className="mt-8 flex gap-2">
-                {[...Array(3)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-2 h-2 rounded-full"
-                    style={{ background: point.particleColor }}
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.4, 1, 0.4],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: i * 0.3,
-                    }}
-                  />
-                ))}
-              </div>
+            {/* Decorative Elements */}
+            <div className="mt-8 flex gap-2">
+              {[...Array(3)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="w-2 h-2 rounded-full"
+                  style={{ background: point.particleColor }}
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [0.4, 1, 0.4],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: i * 0.3,
+                  }}
+                />
+              ))}
             </div>
           </div>
         </motion.div>
       </motion.div>
 
-      {/* Connection Line Between Cards - ENHANCED */}
+      {/* Connection Line Between Cards - ENHANCED (Continuous Flow) */}
       {index < 2 && (
         <motion.div
-          className="absolute top-1/2 -right-16 w-16 h-1 hidden lg:block z-20"
+          className="absolute top-1/2 -right-14 w-15 h-1 hidden lg:block z-30"
+          // Line appears when scrolled into view (One time)
           initial={{ scaleX: 0, opacity: 0 }}
           whileInView={{ scaleX: 1, opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: true }} 
           transition={{ 
             delay: 1.2 + index * 0.3, 
             duration: 1, 
@@ -546,41 +545,43 @@ function VisionPillarCard({ point, index }: { point: typeof visionPoints[0]; ind
           }}
           style={{ 
             transformOrigin: "left",
-            background: `linear-gradient(to right, ${visionPoints[index].particleColor}100, ${visionPoints[index + 1].particleColor}80)`,
+            background: `linear-gradient(to right, ${visionPoints[index].particleColor}80, ${visionPoints[index + 1].particleColor}80)`,
             boxShadow: `0 0 25px ${visionPoints[index].particleColor}70`,
           }}
         >
-          {/* Flowing Dot 1 */}
+          {/* Flowing Dot 1 - Forever Loop */}
           <motion.div
             className="absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-cyan-400"
             animate={{
-              left: ["-5%", "105%"],
+              left: ["-10%", "110%"], // थोड़ा ज्यादा रेंज दी ताकि स्मूथ दिखे
             }}
             transition={{
               duration: 2.5,
-              repeat: Infinity,
+              repeat: Infinity, // यह सुनिश्चित करता है कि यह कभी न रुके
               ease: "linear",
-              delay: index * 0.6,
+              delay: 0, // Delay सिर्फ रेंडर पर, लूप में नहीं
             }}
             style={{
               boxShadow: "0 0 20px #22d3ee, 0 0 40px #22d3ee",
+              willChange: "left" // Performance के लिए (ताकि ब्राउज़र इसे रोके नहीं)
             }}
           />
           
-          {/* Flowing Dot 2 */}
+          {/* Flowing Dot 2 - Forever Loop */}
           <motion.div
             className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-purple-400"
             animate={{
-              left: ["-5%", "105%"],
+              left: ["-10%", "110%"],
             }}
             transition={{
               duration: 3,
               repeat: Infinity,
               ease: "linear",
-              delay: index * 0.6 + 0.7,
+              delay: 0.7,
             }}
             style={{
               boxShadow: "0 0 15px #a78bfa, 0 0 30px #a78bfa",
+              willChange: "left"
             }}
           />
         </motion.div>
@@ -742,9 +743,9 @@ function QuoteCard() {
             viewport={{ once: true }}
           >
             {[
-              "\"I want to be known as the founder who makes AI human",
-              "— blending logic with empathy,",
-              "and intelligence with purpose.\""
+              "\“𝐈 𝐖𝐀𝐍𝐓 𝐓𝐎 𝐁𝐄 𝐊𝐍𝐎𝐖𝐍 𝐀𝐒 𝐓𝐇𝐄 𝐅𝐎𝐔𝐍𝐃𝐄𝐑 𝐖𝐇𝐎 𝐌𝐀𝐊𝐄𝐒 𝐀𝐈 𝐇𝐔𝐌𝐀𝐍,",
+              "— 𝐁𝐋𝐄𝐍𝐃𝐈𝐍𝐆 𝐋𝐎𝐆𝐈𝐂 𝐖𝐈𝐓𝐇 𝐄𝐌𝐏𝐀𝐓𝐇𝐘,",
+              "𝐀𝐍𝐃 𝐈𝐍𝐓𝐄𝐋𝐋𝐈𝐆𝐄𝐍𝐂𝐄 𝐖𝐈𝐓𝐇 𝐏𝐔𝐑𝐏𝐎𝐒𝐄.\""
             ].map((phrase, i) => (
               <motion.span
                 key={i}
