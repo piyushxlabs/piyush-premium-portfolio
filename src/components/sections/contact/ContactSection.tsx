@@ -363,14 +363,10 @@ function ContactCard({ method, index, onHover, isHovered, hoveredCard }: any) {
                 <feMergeNode in="SourceGraphic"/>
               </feMerge>
             </filter>
-            <motion.path
+            <path
               id={`line-path-${index}`}
-              d={`M ${lineX1_base} ${lineY1_base} L 0 0`}
+              d={`M ${lineX1_base} ${hoveredCard === index ? lineY1_hover : lineY1_base} L 0 0`}
               fill="none"
-              animate={{
-                d: `M ${lineX1_base} ${hoveredCard === index ? lineY1_hover : lineY1_base} L 0 0`
-              }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             />
           </defs>
           <motion.line
