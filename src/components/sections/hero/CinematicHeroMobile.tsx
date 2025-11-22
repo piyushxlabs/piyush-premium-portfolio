@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, ChevronDown, Zap, Code2, Brain, Cpu } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 
 function AnimatedNumber({ value, delay }: { value: string | number; delay: number }) {
   const [displayValue, setDisplayValue] = useState(0);
@@ -114,6 +115,7 @@ export function CinematicHeroMobile() {
     <motion.section
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950"
     >
+      <SectionDivider position="top" />
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5" />
 
@@ -308,6 +310,7 @@ export function CinematicHeroMobile() {
           </div>
         </motion.div>
       </motion.div>
+      <SectionDivider position="bottom" />
     </motion.section>
   );
 }

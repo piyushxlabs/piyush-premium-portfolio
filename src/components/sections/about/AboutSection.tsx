@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { FadeIn, SlideUp } from "@/components/animations/core";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 
 const DataSphere = dynamic(() => import("@/components/3d/DataSphere").then(mod => ({ default: mod.DataSphere })), { ssr: false });
 
@@ -41,6 +42,7 @@ const values = [
 export function AboutSection() {
   return (
 <section className="relative section-padding overflow-visible isolate bg-slate-950">
+  <SectionDivider position="top" />
   {/* Cinematic Background Theme */}
   <div className="absolute inset-0">
     <motion.div
@@ -248,6 +250,7 @@ export function AboutSection() {
           </GlassCard>
         </motion.div>
       </div>
+      <SectionDivider position="bottom" />
     </section>
   );
 }

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence, useVelocity, useAnimationFrame } from "framer-motion";
 import { ArrowRight, Sparkles, ChevronLeft, ChevronRight, Eye } from "lucide-react";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 
 // Featured projects with enhanced visual data
 const projects = [
@@ -566,6 +567,7 @@ export function ProjectsSection() {
       role="region" 
       aria-label="Featured projects carousel"
     >
+      <SectionDivider position="top" />
       {/* Cinematic Background Theme */}
       <div className="absolute inset-0">
         <motion.div
@@ -835,8 +837,7 @@ export function ProjectsSection() {
         </motion.div>
       </div>
 
-      {/* Bottom ambient glow */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <SectionDivider position="bottom" />
     </section>
   );
 }

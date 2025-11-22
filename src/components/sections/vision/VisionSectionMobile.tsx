@@ -4,6 +4,7 @@
 import { motion } from "framer-motion";
 import { Rocket, Target, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 
 const visionPoints = [
   {
@@ -547,6 +548,7 @@ export function VisionSectionMobile() {
     <section 
       className="relative min-h-screen py-20 overflow-hidden bg-slate-950"
     >
+      <SectionDivider position="top" />
       {/* Cinematic Background Theme */}
       <div className="absolute inset-0">
         <motion.div
@@ -582,47 +584,6 @@ export function VisionSectionMobile() {
             className={`absolute ${orb.size} ${orb.pos} bg-${orb.color}-500/20 rounded-full ${orb.blur}`}
           />
         ))}
-      </div>
-      {/* Background Grid */}
-      <div className="absolute inset-0 opacity-25">
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(34, 211, 238, 0.12) 1.5px, transparent 1.5px),
-              linear-gradient(90deg, rgba(34, 211, 238, 0.12) 1.5px, transparent 1.5px)
-            `,
-            backgroundSize: "35px 35px",
-          }}
-        />
-      </div>
-      
-      {/* Gradient Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
-          className="absolute top-20 left-0 w-[200px] h-[200px] bg-cyan-500/12 rounded-full blur-[70px]"
-          animate={{
-            // scale: [1, 1.25, 1], // COMMENTED OUT - Causing zoom
-            opacity: [0.5, 0.75, 0.5],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-20 right-0 w-[200px] h-[200px] bg-purple-500/12 rounded-full blur-[70px]"
-          animate={{
-            // scale: [1.25, 1, 1.25], // COMMENTED OUT - Causing zoom
-            opacity: [0.6, 0.85, 0.6],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
       </div>
 
       <div className="container relative z-10 mx-auto px-6 max-w-3xl">
@@ -684,6 +645,7 @@ export function VisionSectionMobile() {
         {/* Philosophy */}
         <PhilosophySectionMobile />
       </div>
+      <SectionDivider position="bottom" />
     </section>
   );
 }

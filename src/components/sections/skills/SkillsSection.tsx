@@ -4,6 +4,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Brain, Code, Database, Zap, ArrowRight } from "lucide-react";
 import { Suspense, useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 
 // const NeuralNetwork = dynamic(() => import("@/components/3d/NeuralNetwork").then(mod => ({ default: mod.NeuralNetwork })), { ssr: false });
 
@@ -322,6 +323,7 @@ export function SkillsSection() {
 
   return (
     <section className="relative py-40 md:py-48 overflow-hidden bg-slate-950">
+      <SectionDivider position="top" />
       {/* Cinematic Background Theme */}
       <div className="absolute inset-0">
         <motion.div
@@ -371,12 +373,7 @@ export function SkillsSection() {
         </Suspense>
       </motion.div> */}
 
-      <div 
-        className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-0"
-        style={{
-          opacity: 0.6,
-        }}
-      />
+
 
       <div className="container mx-auto px-6 relative">
         <div className="text-center mb-20 md:mb-28">
@@ -725,7 +722,7 @@ export function SkillsSection() {
         </motion.div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent" />
+      <SectionDivider position="bottom" />
     </section>
   );
 }

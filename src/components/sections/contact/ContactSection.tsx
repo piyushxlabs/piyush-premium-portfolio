@@ -4,6 +4,7 @@ import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from
 import Link from "next/link";
 import { Mail, MessageSquare, Calendar, ArrowRight, Check, User, AtSign, Send } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 
 const contactMethods = [
   {
@@ -1065,6 +1066,7 @@ export function ContactSection() {
       onMouseEnter={() => setSectionHovered(true)}
       onMouseLeave={() => setSectionHovered(false)}
     >
+      <SectionDivider position="top" />
       {/* Cinematic Background Theme */}
       <div className="absolute inset-0">
         <motion.div
@@ -1616,7 +1618,7 @@ export function ContactSection() {
 
       <DirectMessageForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
 
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent" />
+      <SectionDivider position="bottom" />
     </section>
   );
 }

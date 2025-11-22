@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useSpring, useMotionValue, useAnimatio
 import { Rocket, Target, Sparkles } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 
 const VisionSectionMobile = dynamic(() => import("./VisionSectionMobile").then(mod => ({ default: mod.VisionSectionMobile })), { ssr: false });
 
@@ -1077,6 +1078,7 @@ export function VisionSection() {
       ref={sectionRef}
       className="relative min-h-screen py-32 overflow-hidden bg-slate-950"
     >
+      <SectionDivider position="top" />
       {/* Cinematic Background Theme */}
       <div className="absolute inset-0">
         <motion.div
@@ -1367,6 +1369,7 @@ export function VisionSection() {
         {/* Philosophy with Portal Effect */}
         <PhilosophySection />
       </motion.div>
+      <SectionDivider position="bottom" />
     </section>
   );
 }

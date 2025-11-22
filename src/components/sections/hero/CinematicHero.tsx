@@ -5,6 +5,7 @@ import { ArrowRight, Sparkles, ChevronDown, Zap, Code2, Brain, Cpu } from "lucid
 import Link from "next/link";
 import { useRef, useEffect, useState, Suspense } from "react";
 import dynamic from "next/dynamic";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 
 // const FloatingGeometry = dynamic(() => import("@/components/3d/FloatingGeometry").then(mod => ({ default: mod.FloatingGeometry })), { ssr: false });
 
@@ -409,6 +410,7 @@ export function CinematicHero() {
         // style={{ opacity }} // COMMENTED OUT - Causing scroll fade/invisibility
         className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950"
       >
+        <SectionDivider position="top" />
         <div className="absolute inset-0">
           <motion.div
             className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5"
@@ -1096,6 +1098,7 @@ export function CinematicHero() {
             />
           ))}
         </div>
+        <SectionDivider position="bottom" />
       </motion.section>
     </>
   );
