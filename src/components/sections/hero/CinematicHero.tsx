@@ -60,7 +60,8 @@ function ConstellationParticles() {
     setCanvasSize();
     window.addEventListener('resize', setCanvasSize);
 
-    particlesRef.current = Array.from({ length: 150 }, () => {
+    const isMobile = window.innerWidth < 768;
+    particlesRef.current = Array.from({ length: isMobile ? 60 : 150 }, () => {
       const z = Math.random() * 100;
       return {
         x: Math.random() * canvas.width,
@@ -118,7 +119,7 @@ function ConstellationParticles() {
           const dy = otherParticle.y - particle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 80) {
+          if (distance < 80 && !isMobile) {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
@@ -274,13 +275,14 @@ function OrbitalBadge() {
             AI Innovator & Future Founder
           </motion.span>
 
-          {[...Array(12)].map((_, i) => (
+          {[...Array(typeof window !== "undefined" && window.innerWidth < 768 ? 6 : 12)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-cyan-400 rounded-full"
               style={{
                 left: "50%",
                 top: "50%",
+                willChange: "transform, opacity",
               }}
               animate={{
                 x: [0, Math.cos(i * Math.PI / 6) * 70],
@@ -429,13 +431,14 @@ export function CinematicHero() {
 
           <ConstellationParticles />
 
-          {[...Array(25)].map((_, i) => (
+          {[...Array(typeof window !== "undefined" && window.innerWidth < 768 ? 10 : 25)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-px h-24 bg-gradient-to-b from-transparent via-cyan-400/40 to-transparent"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `-30px`,
+                willChange: "transform, opacity",
               }}
               animate={{
                 y: ["0vh", "110vh"],
@@ -750,13 +753,14 @@ export function CinematicHero() {
                   }}
                 />
 
-                {[...Array(15)].map((_, i) => (
+                {[...Array(typeof window !== "undefined" && window.innerWidth < 768 ? 8 : 15)].map((_, i) => (
                   <motion.div
                     key={i}
                     className="absolute w-1 h-1 bg-white rounded-full"
                     style={{
                       left: `${10 + i * 5.5}%`,
                       top: "50%",
+                      willChange: "transform, opacity",
                     }}
                     animate={{
                       y: [0, -35, 0],
@@ -923,13 +927,14 @@ export function CinematicHero() {
                       <div className="absolute inset-0 bg-gradient-to-tr from-white/30 to-transparent rounded-2xl" />
                       <stat.icon className="w-full h-full text-slate-900 relative z-10" strokeWidth={2.5} />
 
-                      {[...Array(10)].map((_, i) => (
+                      {[...Array(typeof window !== "undefined" && window.innerWidth < 768 ? 5 : 10)].map((_, i) => (
                         <motion.div
                           key={i}
                           className={`absolute w-1 h-1 bg-${stat.color}-400 rounded-full`}
                           style={{
                             left: "50%",
                             top: "50%",
+                            willChange: "transform, opacity",
                           }}
                           animate={{
                             x: [0, Math.cos(i * Math.PI / 5) * 35],
