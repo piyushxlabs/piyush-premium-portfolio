@@ -4,6 +4,9 @@
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useAnimationFrame } from "framer-motion";
 import { Rocket, Target, Sparkles } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+
+const VisionSectionMobile = dynamic(() => import("./VisionSectionMobile").then(mod => ({ default: mod.VisionSectionMobile })), { ssr: false });
 
 const visionPoints = [
   {
@@ -47,7 +50,6 @@ function FloatingParticle({
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   useEffect(() => {
     setPosition({
@@ -57,7 +59,7 @@ function FloatingParticle({
   }, []);
 
   useEffect(() => {
-    if (!ref.current || !cursorPos || isMobile) return;
+    if (!ref.current || !cursorPos) return;
     
     const rect = ref.current.getBoundingClientRect();
     const particleX = rect.left + rect.width / 2;
@@ -86,20 +88,18 @@ function FloatingParticle({
         left: `${position.x}%`,
         top: `${position.y}%`,
         background: color,
-        boxShadow: isMobile ? `0 0 15px ${color}` : `0 0 30px ${color}, 0 0 50px ${color}40`,
+        boxShadow: `0 0 30px ${color}, 0 0 50px ${color}40`,
         x: offset.x,
         y: offset.y,
-        willChange: "transform, opacity",
-        transform: "translateZ(0)",
       }}
       animate={{
-        y: isMobile ? [0, -20, 0] : [0, -40, 0],
-        x: isMobile ? [0, 10, 0] : [0, 20, 0],
+        y: [0, -40, 0],
+        x: [0, 20, 0],
         opacity: [0.5, 0.9, 0.5],
-        scale: isMobile ? [1, 1.3, 1] : [1, 1.6, 1],
+        scale: [1, 1.6, 1],
       }}
       transition={{
-        duration: isMobile ? 15 / speed : 10 / speed,
+        duration: 10 / speed,
         delay,
         repeat: Infinity,
         ease: "easeInOut",
@@ -1026,6 +1026,7 @@ function PhilosophySection() {
 
 // Main VisionSection Component
 export function VisionSection() {
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   
@@ -1049,12 +1050,27 @@ export function VisionSection() {
 
   // Track cursor for particle repulsion
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
     const handleMouseMove = (e: MouseEvent) => {
       setCursorPos({ x: e.clientX, y: e.clientY });
     };
+    
+    window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
+
+  if (isMobile) {
+    return <VisionSectionMobile />;
+  }
 
   return (
     <section 
@@ -1137,7 +1153,7 @@ export function VisionSection() {
 
       {/* Enhanced Floating Particles Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(typeof window !== "undefined" && window.innerWidth < 768 ? 20 : 45)].map((_, i) => (
+        {[...Array(45)].map((_, i) => (
           <FloatingParticle 
             key={i} 
             delay={i * 0.12} 
@@ -1150,7 +1166,7 @@ export function VisionSection() {
 
       {/* Geometric Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(typeof window !== "undefined" && window.innerWidth < 768 ? 5 : 12)].map((_, i) => (
+        {[...Array(12)].map((_, i) => (
           <GeometricParticle 
             key={i} 
             delay={i * 0.8} 
