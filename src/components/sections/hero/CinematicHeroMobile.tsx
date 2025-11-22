@@ -140,11 +140,8 @@ export function CinematicHeroMobile() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold leading-tight">
-              <span className="text-slate-100">Building </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">
-                Intelligence
-              </span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold leading-tight text-slate-100">
+              Building Intelligence
             </h1>
           </motion.div>
 
