@@ -321,7 +321,44 @@ export function SkillsSection() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   return (
-    <section className="relative py-40 md:py-48 overflow-hidden">
+    <section className="relative py-40 md:py-48 overflow-hidden bg-slate-950">
+      {/* Cinematic Background Theme */}
+      <div className="absolute inset-0">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5"
+          animate={{
+            backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          style={{ backgroundSize: "200% 200%", backgroundPosition: "0% 0%" }}
+        />
+
+        {[
+          { size: "w-[500px] h-[500px]", pos: "top-10 -left-20", color: "cyan", delay: 0, blur: "blur-[100px]" },
+          { size: "w-[400px] h-[400px]", pos: "bottom-20 -right-20", color: "purple", delay: 1, blur: "blur-[90px]" },
+          { size: "w-[350px] h-[350px]", pos: "top-1/3 right-10", color: "pink", delay: 2, blur: "blur-[80px]" },
+        ].map((orb, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{
+              opacity: [0.15, 0.35, 0.15],
+              scale: [0.95, 1.05, 0.95],
+            }}
+            transition={{
+              delay: orb.delay,
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className={`absolute ${orb.size} ${orb.pos} bg-${orb.color}-500/20 rounded-full ${orb.blur}`}
+          />
+        ))}
+      </div>
       {/* <motion.div 
         className="absolute inset-0 w-full h-full z-[-1] opacity-50 pointer-events-none select-none hidden md:block"
         initial={{ opacity: 0 }}

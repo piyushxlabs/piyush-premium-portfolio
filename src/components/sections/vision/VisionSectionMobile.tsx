@@ -545,11 +545,44 @@ function PhilosophySectionMobile() {
 export function VisionSectionMobile() {
   return (
     <section 
-      className="relative min-h-screen py-20 overflow-hidden"
-      style={{
-        background: "linear-gradient(to bottom, transparent, rgba(6, 182, 212, 0.03), transparent)",
-      }}
+      className="relative min-h-screen py-20 overflow-hidden bg-slate-950"
     >
+      {/* Cinematic Background Theme */}
+      <div className="absolute inset-0">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5"
+          animate={{
+            backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          style={{ backgroundSize: "200% 200%", backgroundPosition: "0% 0%" }}
+        />
+
+        {[
+          { size: "w-[300px] h-[300px]", pos: "top-10 -left-10", color: "cyan", delay: 0, blur: "blur-[80px]" },
+          { size: "w-[250px] h-[250px]", pos: "bottom-20 -right-10", color: "purple", delay: 1, blur: "blur-[70px]" },
+        ].map((orb, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{
+              opacity: [0.15, 0.35, 0.15],
+              scale: [0.95, 1.05, 0.95],
+            }}
+            transition={{
+              delay: orb.delay,
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className={`absolute ${orb.size} ${orb.pos} bg-${orb.color}-500/20 rounded-full ${orb.blur}`}
+          />
+        ))}
+      </div>
       {/* Background Grid */}
       <div className="absolute inset-0 opacity-25">
         <div 
