@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRef, useEffect, useState, Suspense } from "react";
 import dynamic from "next/dynamic";
 
-const FloatingGeometry = dynamic(() => import("@/components/3d/FloatingGeometry").then(mod => ({ default: mod.FloatingGeometry })), { ssr: false });
+// const FloatingGeometry = dynamic(() => import("@/components/3d/FloatingGeometry").then(mod => ({ default: mod.FloatingGeometry })), { ssr: false });
 
 function AnimatedNumber({ value, delay }: { value: string | number; delay: number }) {
   const [displayValue, setDisplayValue] = useState(0);
@@ -312,14 +312,13 @@ export function CinematicHero() {
 
   const words = ["Impact", "Innovation", "Purpose", "Vision", "Future"];
 
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, -150]);
-  const yBuilding = useTransform(scrollY, [0, 500], [0, -100]);
-  const yIntelligence = useTransform(scrollY, [0, 500], [0, -50]);
-  const yWith = useTransform(scrollY, [0, 500], [0, -30]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -80]);
-  // for scroll animation 
-  const opacity = useTransform(scrollY, [0, 1400], [1, 0]);
+  // const { scrollY } = useScroll(); // COMMENTED OUT - Causing scroll jitter
+  // const y1 = useTransform(scrollY, [0, 500], [0, -150]); // COMMENTED OUT - Causing scroll jitter
+  // const yBuilding = useTransform(scrollY, [0, 500], [0, -100]); // COMMENTED OUT - Causing scroll jitter
+  // const yIntelligence = useTransform(scrollY, [0, 500], [0, -50]); // COMMENTED OUT - Causing scroll jitter
+  // const yWith = useTransform(scrollY, [0, 500], [0, -30]); // COMMENTED OUT - Causing scroll jitter
+  // const y2 = useTransform(scrollY, [0, 500], [0, -80]); // COMMENTED OUT - Causing scroll jitter
+  // const opacity = useTransform(scrollY, [0, 1400], [1, 0]); // COMMENTED OUT - Causing scroll fade/invisibility
 
   useEffect(() => {
     setMounted(true);
@@ -349,9 +348,32 @@ export function CinematicHero() {
     return (
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950">
         <div className="container relative z-10 mx-auto px-6 py-32 text-center">
-          <h1 className="text-6xl lg:text-8xl font-heading font-bold">
-            <span className="text-slate-100">Building </span>
-            <span className="text-gradient-heading">Intelligence</span>
+          
+          {/* NOTE: 
+            1. h1 ko 'flex flex-col' bana diya hai taaki content stack ho.
+            2. 'items-center' se text horizontally centered rahega.
+            3. 'gap-y-4' dono lines ke beech vertical spacing add karta hai.
+          */}
+          <h1 className="text-6xl lg:text-8xl font-heading font-bold flex flex-col items-center gap-y-4">
+            
+            {/* Pehli line: "Hey I Am Piyush" */}
+            {/* Isko ek div mein wrap kiya hai taaki yeh ek saath rahe */}
+            <div className="leading-tight">
+              <span className="text-slate-100">𝓗𝓔𝓨 𝓘 𝓐𝓜 </span>
+              {/* '/n' hata diya hai */}
+              <span className="text-gradient-heading">𝓟𝓘𝓨𝓤𝓢𝓗</span>
+            </div>
+            
+            {/* Doosri line: "Welcome To My Portfolio" */}
+            {/* NOTE:
+              Iski font size thodi choti kar di hai (text-4xl lg:text-6xl)
+              aur weight normal (font-normal) kar diya hai.
+              Yeh visual hierarchy ke liye accha lagta hai (title bada, subtitle thoda chota).
+            */}
+            <span className="text-4xl lg:text-6xl text-slate-100 font-normal">
+            𝓦𝓔𝓛𝓒𝓞𝓜𝓔 𝓣𝓞 𝓜𝓨 𝓟𝓞𝓡𝓣𝓕𝓞𝓛𝓘𝓞
+            </span>
+  
           </h1>
         </div>
       </section>
@@ -364,7 +386,7 @@ export function CinematicHero() {
       
       <motion.section
         ref={containerRef}
-        style={{ opacity }}
+        // style={{ opacity }} // COMMENTED OUT - Causing scroll fade/invisibility
         className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950"
       >
         <div className="absolute inset-0">
@@ -451,14 +473,14 @@ export function CinematicHero() {
           ))}
         </div>
 
-        <div className="absolute inset-0 hidden md:block">
+        {/* <div className="absolute inset-0 hidden md:block">
           <Suspense fallback={null}>
             <FloatingGeometry />
           </Suspense>
-        </div>
+        </div> */}
 
         <motion.div
-          style={{ y: y1 }}
+          // style={{ y: y1 }} // COMMENTED OUT - Causing scroll jitter
           className="container relative z-10 mx-auto px-6 md:px-12 py-32 text-center max-w-7xl"
         >
           <OrbitalBadge />
@@ -481,7 +503,7 @@ export function CinematicHero() {
                 }}
               >
                 <motion.span
-                  style={{ y: yBuilding }}
+                  // style={{ y: yBuilding }} // COMMENTED OUT - Causing scroll jitter
                   className="inline-block text-slate-100/90 blur-[0.3px]"
                 >
                   {"Building".split("").map((char, i) => (
@@ -503,7 +525,7 @@ export function CinematicHero() {
                 {" "}
                 
                 <motion.span
-                  style={{ y: yIntelligence }}
+                  // style={{ y: yIntelligence }} // COMMENTED OUT - Causing scroll jitter
                   initial={{ opacity: 0, y: 80 }}
                   animate={{ opacity: 1, y: 0 }}
                   onHoverStart={() => setIsHoveringIntelligence(true)}
@@ -596,7 +618,7 @@ export function CinematicHero() {
             </motion.div>
 
             <motion.div
-              style={{ y: yWith }}
+              // style={{ y: yWith }} // COMMENTED OUT - Causing scroll jitter
               initial={{ opacity: 0, y: 60, filter: "blur(20px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{
@@ -669,7 +691,7 @@ export function CinematicHero() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            style={{ y: y2 }}
+            // style={{ y: y2 }} // COMMENTED OUT - Causing scroll jitter
             className="mb-16 relative"
           >
             <motion.div

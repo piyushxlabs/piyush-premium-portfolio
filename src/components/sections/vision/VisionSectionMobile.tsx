@@ -85,8 +85,8 @@ function VisionPillarCardMobile({ point, index }: { point: typeof visionPoints[0
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 50 }} // scale: 0.95 COMMENTED OUT - Causing zoom
+      whileInView={{ opacity: 1, y: 0 }} // scale: 1 COMMENTED OUT - Causing zoom
       viewport={{ once: true, amount: 0.3 }}
       transition={{ 
         delay: 0.15 + index * 0.12, 
@@ -189,7 +189,7 @@ function VisionPillarCardMobile({ point, index }: { point: typeof visionPoints[0
                 className="absolute inset-0 rounded-full border-2"
                 style={{ borderColor: point.particleColor }}
                 animate={{
-                  scale: [1, 1.4, 1],
+                  // scale: [1, 1.4, 1], // COMMENTED OUT - Causing zoom
                   opacity: [0.6, 0, 0.6],
                 }}
                 transition={{
@@ -204,7 +204,7 @@ function VisionPillarCardMobile({ point, index }: { point: typeof visionPoints[0
                 className="absolute inset-0 rounded-full border-2"
                 style={{ borderColor: point.particleColor }}
                 animate={{
-                  scale: [1, 1.6, 1],
+                  // scale: [1, 1.6, 1], // COMMENTED OUT - Causing zoom
                   opacity: [0.4, 0, 0.4],
                 }}
                 transition={{
@@ -235,7 +235,7 @@ function VisionPillarCardMobile({ point, index }: { point: typeof visionPoints[0
                 className="w-1.5 h-1.5 rounded-full"
                 style={{ background: point.particleColor }}
                 animate={{
-                  scale: [1, 1.4, 1],
+                  // scale: [1, 1.4, 1], // COMMENTED OUT - Causing zoom
                   opacity: [0.5, 1, 0.5],
                 }}
                 transition={{
@@ -312,7 +312,7 @@ function VisionPillarCardMobile({ point, index }: { point: typeof visionPoints[0
                   className="w-1.5 h-1.5 rounded-full"
                   style={{ background: point.particleColor }}
                   animate={{
-                    scale: [1, 1.3, 1],
+                    // scale: [1, 1.3, 1], // COMMENTED OUT - Causing zoom
                     opacity: [0.4, 0.8, 0.4],
                   }}
                   transition={{
@@ -344,8 +344,8 @@ function QuoteCardMobile() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50, scale: 0.96 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 50 }} // scale: 0.96 COMMENTED OUT - Causing zoom
+      whileInView={{ opacity: 1, y: 0 }} // scale: 1 COMMENTED OUT - Causing zoom
       viewport={{ once: true, amount: 0.3 }}
       transition={{ delay: 0.2, duration: 0.8, type: "spring", stiffness: 80 }}
       className="max-w-4xl mx-auto mb-24"
@@ -455,7 +455,7 @@ function PhilosophySectionMobile() {
       <motion.div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full border-[3px] border-cyan-500/25"
         animate={{
-          scale: [1, 1.12, 1],
+          // scale: [1, 1.12, 1], // COMMENTED OUT - Causing zoom
           opacity: [0.3, 0.5, 0.3],
           rotate: 360,
         }}
@@ -472,7 +472,7 @@ function PhilosophySectionMobile() {
       <motion.div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] rounded-full border-[3px] border-purple-500/25"
         animate={{
-          scale: [1.12, 1, 1.12],
+          // scale: [1.12, 1, 1.12], // COMMENTED OUT - Causing zoom
           opacity: [0.4, 0.6, 0.4],
           rotate: -360,
         }}
@@ -514,8 +514,8 @@ function PhilosophySectionMobile() {
           </motion.span>
           
           <motion.span
-            initial={{ opacity: 0, scale: 0.92 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }} // scale: 0.92 COMMENTED OUT - Causing zoom
+            whileInView={{ opacity: 1 }} // scale: 1 COMMENTED OUT - Causing zoom
             viewport={{ once: true }}
             transition={{ delay: 0.25, duration: 0.8, type: "spring" }}
             className="inline-block bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent font-bold relative px-2 mx-1"
@@ -525,7 +525,7 @@ function PhilosophySectionMobile() {
               className="absolute -inset-3 bg-gradient-to-r from-cyan-500/25 to-purple-500/25 rounded-xl blur-xl pointer-events-none"
               animate={{
                 opacity: [0.4, 0.65, 0.4],
-                scale: [1, 1.08, 1],
+                // scale: [1, 1.08, 1], // COMMENTED OUT - Causing zoom
               }}
               transition={{
                 duration: 2,
@@ -569,7 +569,7 @@ export function VisionSectionMobile() {
         <motion.div 
           className="absolute top-20 left-0 w-[200px] h-[200px] bg-cyan-500/12 rounded-full blur-[70px]"
           animate={{
-            scale: [1, 1.25, 1],
+            // scale: [1, 1.25, 1], // COMMENTED OUT - Causing zoom
             opacity: [0.5, 0.75, 0.5],
           }}
           transition={{
@@ -581,7 +581,7 @@ export function VisionSectionMobile() {
         <motion.div 
           className="absolute bottom-20 right-0 w-[200px] h-[200px] bg-purple-500/12 rounded-full blur-[70px]"
           animate={{
-            scale: [1.25, 1, 1.25],
+            // scale: [1.25, 1, 1.25], // COMMENTED OUT - Causing zoom
             opacity: [0.6, 0.85, 0.6],
           }}
           transition={{
