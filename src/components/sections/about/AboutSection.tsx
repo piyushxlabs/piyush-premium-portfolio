@@ -1,4 +1,4 @@
-// AboutSection — Personal story with values display
+
 "use client";
 
 import { motion } from "framer-motion";

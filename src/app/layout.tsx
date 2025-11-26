@@ -10,7 +10,6 @@ import { cn } from "@/utils/helpers/cn";
 import { siteMetadata, structuredDataRoot } from "./metadata";
 import { BackgroundEffects } from "@/components/layout/BackgroundEffects";
 import { Navbar } from "@/components/layout/Navbar/Navbar";
-import { Footer } from "@/components/layout/Footer/Footer";
 import { PageLoader } from "@/components/layout/PageLoader";
 import { ReadingProgress } from "@/components/ui/ReadingProgress";
 
@@ -56,7 +55,6 @@ export default function RootLayout({
           <div className="relative flex min-h-screen flex-col">
             <Navbar />
             <div className="flex-1 relative z-10">{children}</div>
-            <Footer />
           </div>
         </ThemeProvider>
         <Script

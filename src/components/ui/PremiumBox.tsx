@@ -7,7 +7,7 @@ import { cn } from "@/utils/helpers/cn";
 
 export interface PremiumBoxProps {
   children: ReactNode;
-  variant?: "default" | "large" | "card";
+  variant?: "default" | "large" | "card" | "glass-enhanced";
   hover?: boolean;
   glow?: boolean;
   className?: string;
@@ -16,15 +16,16 @@ export interface PremiumBoxProps {
 export const PremiumBox = forwardRef<HTMLDivElement, PremiumBoxProps>(
   ({ className, children, variant = "default", hover = true, glow = false }, ref) => {
     const baseClasses = "relative overflow-hidden group";
-    
+
     const variantClasses = {
       default: "glass-premium rounded-2xl p-6 hover:border-accent-cyan/40 transition-colors duration-500",
-      large: "glass-premium rounded-3xl p-8 md:p-10 hover:border-accent-cyan/40 transition-colors duration-500", 
-      card: "glass-premium rounded-2xl p-8 hover:border-accent-cyan/40 transition-colors duration-500"
+      large: "glass-premium rounded-3xl p-8 md:p-10 hover:border-accent-cyan/40 transition-colors duration-500",
+      card: "glass-premium rounded-2xl p-8 hover:border-accent-cyan/40 transition-colors duration-500",
+      "glass-enhanced": "bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 rounded-3xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_1px_2px_rgba(6,182,212,0.1)] hover:border-cyan-500/60 hover:shadow-[0_12px_48px_rgba(0,0,0,0.5)] transition-all duration-400"
     };
 
     const hoverProps = hover ? {
-      whileHover: { 
+      whileHover: {
         y: -4,
         scale: 1.015
       },
@@ -51,7 +52,7 @@ export const PremiumBox = forwardRef<HTMLDivElement, PremiumBoxProps>(
 
       >
         {/* Consistent glow layer - always rendered, opacity controlled */}
-        <div 
+        <div
           className="absolute inset-0 pointer-events-none rounded-inherit"
           style={{
             background: 'radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.08) 0%, transparent 70%)',
@@ -61,9 +62,9 @@ export const PremiumBox = forwardRef<HTMLDivElement, PremiumBoxProps>(
           }}
           aria-hidden="true"
         />
-        
+
         {/* Subtle gradient overlay for hover */}
-        <div 
+        <div
           className="absolute inset-0 bg-gradient-to-br from-accent-cyan/3 via-transparent to-accent-lavender/3 opacity-0 group-hover:opacity-100 pointer-events-none rounded-inherit"
           style={{
             transition: 'opacity 0.6s cubic-bezier(0.19, 1.0, 0.22, 1.0)',
@@ -74,7 +75,7 @@ export const PremiumBox = forwardRef<HTMLDivElement, PremiumBoxProps>(
 
         {/* Enhanced outer glow on hover */}
         {glow && (
-          <div 
+          <div
             className="absolute -inset-[1px] opacity-0 group-hover:opacity-100 pointer-events-none rounded-inherit"
             style={{
               background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.15), rgba(167, 139, 250, 0.1))',
@@ -85,11 +86,11 @@ export const PremiumBox = forwardRef<HTMLDivElement, PremiumBoxProps>(
             aria-hidden="true"
           />
         )}
-        
+
         {/* Content - Crystal clear text rendering */}
-        <div 
+        <div
           className="relative z-10"
-          style={{ 
+          style={{
             transform: 'translate3d(0, 0, 0)',
             WebkitFontSmoothing: 'subpixel-antialiased',
             MozOsxFontSmoothing: 'grayscale',
