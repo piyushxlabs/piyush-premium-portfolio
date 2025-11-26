@@ -518,8 +518,8 @@ export default function VisionPage() {
                     damping: 12,
                   }}
                   className={`inline-block ${word === 'Future'
-                      ? 'text-transparent bg-clip-text bg-gradient-to-b from-cyan-300 via-cyan-400 to-blue-600 drop-shadow-[0_0_40px_rgba(6,182,212,0.6)]'
-                      : 'text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]'
+                    ? 'text-transparent bg-clip-text bg-gradient-to-b from-cyan-300 via-cyan-400 to-blue-600 drop-shadow-[0_0_40px_rgba(6,182,212,0.6)]'
+                    : 'text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]'
                     }`}
                   style={{
                     transformStyle: "preserve-3d",
@@ -941,7 +941,7 @@ export default function VisionPage() {
                 bottom: 0,
               }}
               animate={{
-                y: [0, -window.innerHeight],
+                y: [0, -1000],
                 opacity: [0, 1, 0],
               }}
               transition={{
