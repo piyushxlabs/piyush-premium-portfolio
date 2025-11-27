@@ -1,0 +1,1162 @@
+# 🎨 WORLD-CLASS LOADER IMPLEMENTATION PLAN
+
+---
+
+## **1. CURRENT ANALYSIS**
+
+**Problems:**
+
+1. **Extreme Visual Overload**: 600-1200 particles with mouse physics, custom cursor, aurora gradients, glitch effects, volumetric beams, scan lines, and constellation geometry create cognitive chaos. Too many simultaneous animations compete for attention instead of guiding it.
+
+2. **Performance Bottleneck Architecture**: Canvas-based particle system with mouse tracking, gravitational lensing calculations, z-sorting every frame, and connection line rendering between particles creates unnecessary computational strain. Mobile devices will struggle with 600+ particles at 60fps.
+
+3. **Disconnected Narrative Flow**: Seven distinct loading phases (VOID → AWAKENING → GENESIS_MOMENT → CONVERGENCE → STABILIZATION → INVITATION → TRANSCENDENCE) with terminal-style text and sci-fi theming feels forced for a portfolio context. The "neural matrix" and "dimensional coordinates" narrative doesn't resonate with creative professional audiences.
+
+4. **Accessibility Gaps**: Despite detecting `prefers-reduced-motion`, the loader still renders hundreds of particles and multiple animated layers. The custom cursor only works on desktop. LocalStorage returning visitor detection and time-of-day color shifting add complexity without meaningful UX value.
+
+5. **Mobile UX Degradation**: Custom cursor disappears on mobile, particle counts halved but still heavy, hexagonal constellation becomes cluttered on small screens, and terminal text becomes hard to read at mobile sizes.
+
+6. **Over-Engineered State Management**: Complex phase system, multiple timeout chains, glitch intervals, mouse physics with spring animations, and 3-state particle system create fragile timing dependencies and make the loader difficult to maintain or modify.
+
+**What to Preserve:** 
+- Framer Motion as animation engine
+- Dark gradient background concept
+- Smooth exit transition idea
+- Basic progress indication
+
+**Verdict:** Complete conceptual and technical redesign required. Need 80% code reduction, single clear focal point, and biologically-inspired organic motion.
+
+---
+
+## **2. NEW LOADER CONCEPT**
+
+### **Concept Name:** "**Neural Bloom**"
+
+**Vision:**
+
+Imagine a single point of pure white light at the center of the screen—a nascent neuron awakening in the void. From this origin, delicate dendrites begin to grow outward in slow, organic curves—branching like tree roots seeking water, like lightning fractalling through clouds, like thoughts forming in consciousness. Each branch splits into smaller tendrils, creating an intricate neural network that blooms across the screen with natural, life-like rhythm.
+
+As the network grows, synapses fire—bright pulses of cyan and violet light that travel along the dendrites like electrical signals in a living brain. The pulses accelerate as more connections form, creating a mesmerizing cascade of light flowing through the branches. The entire structure breathes subtly, expanding and contracting like a living organism, while individual branches gently sway as if moved by an invisible current.
+
+The beauty lies in its **organic imperfection**—no two branches are identical, growth patterns feel genuinely random yet purposeful, and the whole system feels *alive* rather than mechanical. When loading completes, the neural network collapses inward to a single brilliant point before dissolving into scattered light particles that fade, revealing the portfolio content beneath.
+
+**Why Revolutionary:**
+This loader transforms waiting time into a **meditative observation of creation itself**—watching intelligence emerge from nothing, connections forming, systems growing. It's deeply symbolic for a creative portfolio (growth, connection, thought, creation) while being hypnotically beautiful. No loader has successfully captured the organic growth patterns of neural networks with this level of natural motion and life-like behavior.
+
+---
+
+### **Visual Specifications:**
+
+**Color Palette:**
+```
+Deep Void: #0a0e1a (background)
+Gradient End: #050a0f
+Neuron Core: #ffffff (bright white)
+Dendrite Base: #4dd0e1 (cyan - primary branches)
+Dendrite Tip: #7c4dff (violet - growing edges)
+Synapse Fire: #00e5ff (electric cyan)
+Accent Pulse: #b388ff (soft violet)
+Progress Glow: #26c6da (bright cyan)
+Subtle Text: #b0bec5 (blue-grey 200)
+```
+
+**Core Elements:**
+
+**Element 1: Central Neuron Core**
+- Appearance: Bright white circular core (12px diameter) with soft radial glow (blur: 40px), pulsing opacity, subtle scale breathing
+- Size: `12px` diameter (fixed, not responsive—intentionally small to emphasize growth)
+- Effects: Radial gradient glow (#ffffff to transparent), soft bloom effect, breathing animation
+- Animation: Scale [1, 1.15, 1] over 2.5s, opacity [0.9, 1, 0.9] over 3s, both infinite
+
+**Element 2: Dendrite Branches (Neural Network)**
+- Appearance: Curved SVG paths (2px stroke initially, tapering to 1px at tips), gradient stroke from cyan (base) to violet (tips), smooth bezier curves with organic randomness
+- Size: Branches grow from center to edges over 3-4s, max length ~40% of viewport width
+- Effects: Gradient along path length, subtle drop shadow (blur: 4px, cyan glow), path drawing animation
+- Animation: `pathLength` 0→1 over 1.5-2.5s (varied per branch), slight rotation drift of entire network ±2° over 8s, subtle opacity pulse [0.7, 1, 0.7] over 4s
+
+**Element 3: Synapse Pulses (Light Signals)**
+- Appearance: Small bright dots (4px diameter) traveling along dendrite paths, leaving subtle trailing glow, cyan/violet colors alternating
+- Size: `4px` diameter dots with 8px glow radius
+- Effects: Motion blur effect, trailing glow (opacity gradient behind motion), bright bloom
+- Animation: Travel along branch paths using `offsetDistance` 0→100% over 0.8-1.5s (varied speed), stagger delays create wave effect, pulse scale [1, 1.3, 1] while traveling
+
+**Element 4: Growth Tips (Active Branch Ends)**
+- Appearance: Bright violet glowing points at the end of growing branches, slightly larger (6px), pulsing more intensely
+- Size: `6px` with 12px glow
+- Effects: Strong radial glow, pulsing opacity
+- Animation: Appear at branch ends during growth, pulse rapidly [0.6, 1, 0.6] over 0.5s
+
+**Element 5: Progress Indicator (Neural Path)**
+- Appearance: Thin curved line at bottom (240px wide, 2px height), gradient fill matching network colors, segments fill left to right
+- Size: `clamp(180px, 40vw, 240px)` × `2px`
+- Effects: Soft cyan glow on filled portion
+- Animation: Width fills 0→100% based on progress
+
+**Element 6: Status Text (Minimal)**
+- Appearance: "Growing connections..." in light sans-serif (14px), subtle fade in/out
+- Size: `14px` font size
+- Effects: Subtle opacity animation
+- Animation: Fade in at 0.5s, gentle opacity [0.6, 0.8, 0.6] pulse
+
+**Element 7: Background Ambient Glow**
+- Appearance: Subtle radial gradient from center (cyan 3% opacity) fading to dark edges
+- Size: Full viewport
+- Effects: Very subtle, barely perceptible warm glow
+- Animation: Slow scale breathe [1, 1.05, 1] over 8s
+
+---
+
+**Animation Stages:**
+
+**Entrance (0-1s):**
+- **Neuron Core**: Fade in from opacity 0 to 1, scale from 0 to 1, duration: 0.8s, delay: 0.2s, easing: `ease-out`
+- **Background Glow**: Fade in opacity 0 to final value, duration: 1s, easing: `ease-in-out`
+- **Everything else**: Hidden/scale 0
+
+**Active Growth Loop (1s-completion):**
+- **Dendrite Branches**: Sequential growth outward from core
+  - Branch 1-6: Start growing at 1s with 0.15s stagger between each
+  - Each branch: `pathLength` 0→1, duration: randomized 1.5-2.5s per branch, easing: `ease-in-out`
+  - Branches curve organically using randomized control points
+  - Entire network rotates slowly ±2° around center, duration: 8s, repeat: Infinity, easing: `ease-in-out`
+  
+- **Synapse Pulses**: Begin firing at 1.5s
+  - Travel along completed branch segments using `offsetDistance` 0→100%
+  - Duration per pulse: 0.8-1.5s (varied), easing: `linear`
+  - New pulses spawn every 0.4-0.8s at random branches
+  - Scale pulse [1, 1.3, 1] while traveling, duration: 0.3s
+  
+- **Growth Tips**: Appear at actively growing branch ends
+  - Pulse rapidly while branch is growing: scale [1, 1.2, 1], opacity [0.7, 1, 0.7], duration: 0.5s, repeat: Infinity
+  - Disappear when branch completes (fade out 0.3s)
+  
+- **Neuron Core**: Continuous breathing
+  - Scale [1, 1.15, 1], duration: 2.5s, repeat: Infinity, easing: `ease-in-out`
+  - Opacity [0.9, 1, 0.9], duration: 3s, repeat: Infinity
+  
+- **Progress Indicator**: Fills smoothly
+  - Width 0→100%, duration: matches actual load time, easing: `ease-out`
+  - Subtle glow intensity increases as it fills
+  
+- **Status Text**: Gentle presence
+  - Opacity [0.6, 0.8, 0.6], duration: 3s, repeat: Infinity, easing: `ease-in-out`
+
+**Exit (on complete, 0-1.5s):**
+- **All Dendrites + Neuron Core**: Collapse to center point
+  - Scale to 0, duration: 0.6s, easing: `[0.87, 0, 0.13, 1]` (custom cubic-bezier)
+  - Simultaneous opacity fade to 0
+  
+- **Synapse Pulses**: Accelerate toward center
+  - All pulses rush to core simultaneously, duration: 0.5s, easing: `ease-in`
+  - Bright flash at center when they converge (0.1s white flash)
+  
+- **Particle Scatter**: Final flourish
+  - Core explodes into 20-30 small particles, radial outward motion
+  - Particles: Scale [1, 0], opacity [1, 0], travel 150-300px outward
+  - Duration: 0.8s, easing: `ease-out`
+  
+- **Background**: Fade to transparent
+  - Opacity 1→0, duration: 1s, easing: `ease-in-out`
+  
+- **Progress + Text**: Quick fade out
+  - Opacity to 0, duration: 0.3s, easing: `ease-out`
+
+---
+
+## **3. IMPLEMENTATION STEPS**
+
+### **Tech Stack:**
+- Framer Motion (required - all animations)
+- No additional libraries needed (pure SVG + CSS + Framer Motion)
+
+### **Component Structure:**
+```typescript
+components/loader/NeuralBloomLoader.tsx
+```
+
+---
+
+### **STEP 1: Setup Component Foundation**
+
+```typescript
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+interface NeuralBloomLoaderProps {
+  isLoading: boolean;
+  onComplete?: () => void;
+}
+
+export const NeuralBloomLoader: React.FC<NeuralBloomLoaderProps> = ({ 
+  isLoading, 
+  onComplete 
+}) => {
+  const [progress, setProgress] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+
+  // Simulate loading progress (replace with actual loading logic)
+  useEffect(() => {
+    if (!isLoading) return;
+    
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        const newProgress = prev + Math.random() * 4 + 1;
+        if (newProgress >= 100) {
+          setIsComplete(true);
+          clearInterval(interval);
+          return 100;
+        }
+        return newProgress;
+      });
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [isLoading]);
+
+  return (
+    <AnimatePresence mode="wait" onExitComplete={onComplete}>
+      {isLoading && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ 
+            opacity: { duration: isComplete ? 1 : 0.5, ease: "easeInOut" }
+          }}
+        >
+          {/* Loader content will go here */}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+```
+
+**Verify:** 
+- [ ] Component renders correctly
+- [ ] TypeScript types correct
+- [ ] AnimatePresence manages mount/unmount
+- [ ] Progress state updates smoothly
+- [ ] isComplete triggers at 100%
+- [ ] onComplete callback fires after exit
+
+---
+
+### **STEP 2: Add Background with Ambient Glow**
+
+```typescript
+{/* Inside main motion.div */}
+
+{/* Deep gradient background */}
+<motion.div
+  className="absolute inset-0"
+  style={{
+    background: "radial-gradient(ellipse at center, #0a0e1a 0%, #050a0f 100%)"
+  }}
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 1, ease: "easeInOut" }}
+/>
+
+{/* Ambient glow from center */}
+<motion.div
+  className="absolute inset-0 pointer-events-none"
+  style={{
+    background: "radial-gradient(circle at center, rgba(77, 208, 225, 0.03) 0%, transparent 60%)"
+  }}
+  animate={{
+    scale: [1, 1.05, 1]
+  }}
+  transition={{
+    duration: 8,
+    repeat: Infinity,
+    ease: "easeInOut"
+  }}
+/>
+
+{/* Subtle noise texture overlay */}
+<div
+  className="absolute inset-0 opacity-[0.02] pointer-events-none"
+  style={{
+    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+    backgroundSize: "200px 200px"
+  }}
+/>
+```
+
+**Verify:** 
+- [ ] Dark gradient visible (deep blue-black)
+- [ ] Subtle cyan glow at center
+- [ ] Noise texture barely perceptible
+- [ ] Breathe animation smooth
+- [ ] Full viewport coverage
+
+---
+
+### **STEP 3: Implement Central Neuron Core**
+
+```typescript
+{/* Neuron Core - place in center */}
+<motion.div
+  className="absolute"
+  style={{
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)"
+  }}
+>
+  {/* Core glow aura */}
+  <motion.div
+    className="absolute"
+    style={{
+      width: "80px",
+      height: "80px",
+      left: "-40px",
+      top: "-40px",
+      background: "radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%)",
+      filter: "blur(20px)",
+      borderRadius: "50%"
+    }}
+    initial={{ scale: 0, opacity: 0 }}
+    animate={{ 
+      scale: [0, 1, 1.15, 1],
+      opacity: isComplete ? 0 : [0, 1, 0.9, 1, 0.9]
+    }}
+    exit={{ scale: 0, opacity: 0 }}
+    transition={{
+      scale: { 
+        duration: 2.5, 
+        times: [0, 0.3, 0.65, 1],
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "easeInOut" 
+      },
+      opacity: { 
+        duration: 3, 
+        times: [0, 0.3, 0.5, 0.7, 1],
+        repeat: Infinity,
+        ease: "easeInOut" 
+      },
+      exit: { duration: 0.6, ease: [0.87, 0, 0.13, 1] }
+    }}
+  />
+
+  {/* Core neuron body */}
+  <motion.div
+    style={{
+      width: "12px",
+      height: "12px",
+      borderRadius: "50%",
+      background: "#ffffff",
+      boxShadow: "0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(77, 208, 225, 0.4)",
+      position: "relative",
+      left: "-6px",
+      top: "-6px"
+    }}
+    initial={{ scale: 0, opacity: 0 }}
+    animate={{ 
+      scale: isComplete ? 0 : [0, 1, 1.15, 1],
+      opacity: isComplete ? 0 : [0, 1, 0.9, 1, 0.9]
+    }}
+    transition={{
+      scale: { 
+        duration: 2.5,
+        times: [0, 0.3, 0.65, 1],
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 0.2
+      },
+      opacity: {
+        duration: 3,
+        times: [0, 0.3, 0.5, 0.7, 1],
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 0.2
+      }
+    }}
+  />
+</motion.div>
+```
+
+**Verify:** 
+- [ ] Core visible at screen center
+- [ ] White with cyan glow
+- [ ] Breathing animation smooth
+- [ ] Glow radius appropriate (not too large)
+- [ ] Fades in at 0.2s delay
+- [ ] Collapses on complete
+
+---
+
+### **STEP 4: Implement Dendrite Branch System**
+
+```typescript
+{/* Neural network branches - SVG paths */}
+<svg
+  className="absolute inset-0 w-full h-full pointer-events-none"
+  style={{ overflow: "visible" }}
+>
+  <defs>
+    {/* Gradient for branch strokes */}
+    <linearGradient id="branchGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="#4dd0e1" stopOpacity="0.9" />
+      <stop offset="100%" stopColor="#7c4dff" stopOpacity="0.7" />
+    </linearGradient>
+
+    {/* Glow filter */}
+    <filter id="branchGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+      <feMerge>
+        <feMergeNode in="coloredBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  {/* Main branch group with rotation */}
+  <motion.g
+    style={{ transformOrigin: "center" }}
+    animate={{
+      rotate: isComplete ? 0 : [0, 2, 0, -2, 0]
+    }}
+    transition={{
+      duration: 8,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+  >
+    {/* Branch 1 - Top */}
+    <motion.path
+      d="M 50% 50% Q 50% 35%, 50% 20%"
+      stroke="url(#branchGradient)"
+      strokeWidth="2"
+      fill="none"
+      strokeLinecap="round"
+      filter="url(#branchGlow)"
+      initial={{ pathLength: 0, opacity: 0 }}
+      animate={{ 
+        pathLength: isComplete ? 0 : 1,
+        opacity: isComplete ? 0 : [0, 0.7, 1, 0.8, 0.9]
+      }}
+      exit={{ pathLength: 0, opacity: 0 }}
+      transition={{
+        pathLength: { duration: 1.8, delay: 1, ease: "easeInOut" },
+        opacity: { duration: 4, delay: 1, repeat: Infinity, ease: "easeInOut" },
+        exit: { duration: 0.6, ease: [0.87, 0, 0.13, 1] }
+      }}
+    />
+
+    {/* Branch 2 - Top Right */}
+    <motion.path
+      d="M 50% 50% Q 60% 38%, 70% 25%"
+      stroke="url(#branchGradient)"
+      strokeWidth="2"
+      fill="none"
+      strokeLinecap="round"
+      filter="url(#branchGlow)"
+      initial={{ pathLength: 0, opacity: 0 }}
+      animate={{ 
+        pathLength: isComplete ? 0 : 1,
+        opacity: isComplete ? 0 : [0, 0.7, 1, 0.8, 0.9]
+      }}
+      transition={{
+        pathLength: { duration: 2.2, delay: 1.15, ease: "easeInOut" },
+        opacity: { duration: 4, delay: 1.15, repeat: Infinity, ease: "easeInOut" }
+      }}
+    />
+
+    {/* Branch 3 - Right */}
+    <motion.path
+      d="M 50% 50% Q 63% 50%, 75% 50%"
+      stroke="url(#branchGradient)"
+      strokeWidth="2"
+      fill="none"
+      strokeLinecap="round"
+      filter="url(#branchGlow)"
+      initial={{ pathLength: 0, opacity: 0 }}
+      animate={{ 
+        pathLength: isComplete ? 0 : 1,
+        opacity: isComplete ? 0 : [0, 0.7, 1, 0.8, 0.9]
+      }}
+      transition={{
+        pathLength: { duration: 1.5, delay: 1.3, ease: "easeInOut" },
+        opacity: { duration: 4, delay: 1.3, repeat: Infinity, ease: "easeInOut" }
+      }}
+    />
+
+    {/* Branch 4 - Bottom Right */}
+    <motion.path
+      d="M 50% 50% Q 60% 62%, 70% 75%"
+      stroke="url(#branchGradient)"
+      strokeWidth="2"
+      fill="none"
+      strokeLinecap="round"
+      filter="url(#branchGlow)"
+      initial={{ pathLength: 0, opacity: 0 }}
+      animate={{ 
+        pathLength: isComplete ? 0 : 1,
+        opacity: isComplete ? 0 : [0, 0.7, 1, 0.8, 0.9]
+      }}
+      transition={{
+        pathLength: { duration: 2.5, delay: 1.45, ease: "easeInOut" },
+        opacity: { duration: 4, delay: 1.45, repeat: Infinity, ease: "easeInOut" }
+      }}
+    />
+
+    {/* Branch 5 - Bottom */}
+    <motion.path
+      d="M 50% 50% Q 50% 65%, 50% 80%"
+      stroke="url(#branchGradient)"
+      strokeWidth="2"
+      fill="none"
+      strokeLinecap="round"
+      filter="url(#branchGlow)"
+      initial={{ pathLength: 0, opacity: 0 }}
+      animate={{ 
+        pathLength: isComplete ? 0 : 1,
+        opacity: isComplete ? 0 : [0, 0.7, 1, 0.8, 0.9]
+      }}
+      transition={{
+        pathLength: { duration: 1.9, delay: 1.6, ease: "easeInOut" },
+        opacity: { duration: 4, delay: 1.6, repeat: Infinity, ease: "easeInOut" }
+      }}
+    />
+
+    {/* Branch 6 - Bottom Left */}
+    <motion.path
+      d="M 50% 50% Q 40% 62%, 30% 75%"
+      stroke="url(#branchGradient)"
+      strokeWidth="2"
+      fill="none"
+      strokeLinecap="round"
+      filter="url(#branchGlow)"
+      initial={{ pathLength: 0, opacity: 0 }}
+      animate={{ 
+        pathLength: isComplete ? 0 : 1,
+        opacity: isComplete ? 0 : [0, 0.7, 1, 0.8, 0.9]
+      }}
+      transition={{
+        pathLength: { duration: 2.3, delay: 1.75, ease: "easeInOut" },
+        opacity: { duration: 4, delay: 1.75, repeat: Infinity, ease: "easeInOut" }
+      }}
+    />
+
+    {/* Branch 7 - Left */}
+    <motion.path
+      d="M 50% 50% Q 37% 50%, 25% 50%"
+      stroke="url(#branchGradient)"
+      strokeWidth="2"
+      fill="none"
+      strokeLinecap="round"
+      filter="url(#branchGlow)"
+      initial={{ pathLength: 0, opacity: 0 }}
+      animate={{ 
+        pathLength: isComplete ? 0 : 1,
+        opacity: isComplete ? 0 : [0, 0.7, 1, 0.8, 0.9]
+      }}
+      transition={{
+        pathLength: { duration: 1.7, delay: 1.9, ease: "easeInOut" },
+        opacity: { duration: 4, delay: 1.9, repeat: Infinity, ease: "easeInOut" }
+      }}
+    />
+
+    {/* Branch 8 - Top Left */}
+    <motion.path
+      d="M 50% 50% Q 40% 38%, 30% 25%"
+      stroke="url(#branchGradient)"
+      strokeWidth="2"
+      fill="none"
+      strokeLinecap="round"
+      filter="url(#branchGlow)"
+      initial={{ pathLength: 0, opacity: 0 }}
+      animate={{ 
+        pathLength: isComplete ? 0 : 1,
+        opacity: isComplete ? 0 : [0, 0.7, 1, 0.8, 0.9]
+      }}
+      transition={{
+        pathLength: { duration: 2.1, delay: 2.05, ease: "easeInOut" },
+        opacity: { duration: 4, delay: 2.05, repeat: Infinity, ease: "easeInOut" }
+      }}
+    />
+  </motion.g>
+</svg>
+```
+
+**Verify:** 
+- [ ] 8 branches grow from center radially
+- [ ] Gradient from cyan (center) to violet (tips)
+- [ ] Smooth path drawing animation
+- [ ] Staggered timing creates sequential growth
+- [ ] Subtle glow visible on branches
+- [ ] Entire network rotates gently
+- [ ] Opacity pulse adds life
+- [ ] SVG viewBox uses percentages for responsiveness
+
+---
+
+### **STEP 5: Add Synapse Pulse Particles**
+
+```typescript
+{/* Synapse pulses - traveling dots along branches */}
+{!isComplete && progress > 20 && (
+  <>
+    {/* Pulse on Branch 1 */}
+    <motion.circle
+      r="2"
+      fill="#00e5ff"
+      filter="url(#branchGlow)"
+      style={{
+        offsetPath: "path('M 50% 50% Q 50% 35%, 50% 20%')",
+      }}
+      initial={{ offsetDistance: "0%", opacity: 0 }}
+      animate={{
+        offsetDistance: ["0%", "100%"],
+        opacity: [0, 1, 1, 0],
+        scale: [1, 1.3, 1]
+      }}
+      transition={{
+        offsetDistance: { duration: 1.2, ease: "linear", repeat: Infinity, repeatDelay: 0.6, delay: 1.5 },
+        opacity: { duration: 1.2, times: [0, 0.1, 0.9, 1], repeat: Infinity, repeatDelay: 0.6, delay: 1.5 },
+        scale: { duration: 0.3, repeat: Infinity, repeatDelay: 1.5, delay: 1.5 }
+      }}
+    />
+
+    {/* Pulse on Branch 3 */}
+    <motion.circle
+      r="2"
+      fill="#b388ff"
+      filter="url(#branchGlow)"
+      style={{
+        offsetPath: "path('M 50% 50% Q 63% 50%, 75% 50%')",
+      }}
+      initial={{ offsetDistance: "0%", opacity: 0 }}
+      animate={{
+        offsetDistance: ["0%", "100%"],
+        opacity: [0, 1, 1, 0],
+        scale: [1, 1.3, 1]
+      }}
+      transition={{
+        offsetDistance: { duration: 1, ease: "linear", repeat: Infinity, repeatDelay: 0.8, delay: 2 },
+        opacity: { duration: 1, times: [0, 0.1, 0.9, 1], repeat: Infinity, repeatDelay: 0.8, delay: 2 },
+        scale: { duration: 0.3, repeat: Infinity, repeatDelay: 1.5, delay: 2 }
+      }}
+    />
+
+    {/* Pulse on Branch 5 */}
+    <motion.circle
+      r="2"
+      fill="#00e5ff"
+      filter="url(#branchGlow)"
+      style={{
+        offsetPath: "path('M 50% 50% Q 50% 65%, 50% 80%')",
+      }}
+      initial={{ offsetDistance: "0%", opacity: 0 }}
+      animate={{
+        offsetDistance: ["0%", "100%"],
+        opacity: [0, 1, 1, 0],
+        scale: [1, 1.3, 1]
+      }}
+      transition={{
+        offsetDistance: { duration: 1.3, ease: "linear", repeat: Infinity, repeatDelay: 0.5, delay: 2.3 },
+        opacity: { duration: 1.3, times: [0, 0.1, 0.9, 1], repeat: Infinity, repeatDelay: 0.5, delay: 2.3 },
+        scale: { duration: 0.3, repeat: Infinity, repeatDelay: 1.5, delay: 2.3 }
+      }}
+    />
+
+    {/* Pulse on Branch 7 */}
+    <motion.circle
+      r="2"
+      fill="#b388ff"
+      filter="url(#branchGlow)"
+      style={{
+        offsetPath: "path('M 50% 50% Q 37% 50%, 25% 50%')",
+      }}
+      initial={{ offsetDistance: "0%", opacity: 0 }}
+      animate={{
+        offsetDistance: ["0%", "100%"],
+        opacity: [0, 1, 1, 0],
+        scale: [1, 1.3, 1]
+      }}
+      transition={{
+        offsetDistance: { duration: 0.9, ease: "linear", repeat: Infinity, repeatDelay: 1, delay: 2.6 },
+        opacity: { duration: 0.9, times: [0, 0.1, 0.9, 1], repeat: Infinity, repeatDelay: 1, delay: 2.6 },
+        scale: { duration: 0.3, repeat: Infinity, repeatDelay: 1.5, delay: 2.6 }
+      }}
+    />
+  </>
+)}
+```
+
+**Verify:** 
+- [ ] Pulses appear after branches grow
+- [ ] Travel smoothly along branch paths
+- [ ] Fade in/out at path ends
+- [ ] Scale pulse during travel
+- [ ] Alternating cyan/violet colors
+- [ ] Staggered timing creates natural rhythm
+- [ ] Conditional rendering (only if progress > 20%)
+
+---
+
+### **STEP 6: Add Progress Indicator Line**
+
+```typescript
+{/* Progress indicator - bottom of screen */}
+<motion.div
+  className="absolute"
+  style={{
+    bottom: "clamp(60px, 12vh, 100px)",
+    left: "50%",
+    transform: "translateX(-50%)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "16px"
+  }}
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: isComplete ? 0 : 1, y: 0 }}
+  transition={{ 
+    opacity: { duration: 0.6, delay: 0.5 },
+    y: { duration: 0.6, delay: 0.5, ease: "easeOut" }
+  }}
+>
+  {/* Progress line container */}
+  <div
+    style={{
+      width: "clamp(180px, 40vw, 240px)",
+      height: "2px",
+      background: "rgba(176, 190, 197, 0.15)",
+      borderRadius: "999px",
+      overflow: "hidden",
+      position: "relative"
+    }}
+  >
+    {/* Filled progress */}
+    <motion.div
+      style={{
+        height: "100%",
+        background: "linear-gradient(90deg, #4dd0e1 0%, #7c4dff 100%)",
+        borderRadius: "999px",
+        boxShadow: "0 0 10px rgba(77, 208, 225, 0.6)"
+      }}
+      initial={{ width: "0%" }}
+      animate={{ width: `${Math.min(progress, 100)}%` }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    />
+  </div>
+
+  {/* Status text */}
+  <motion.p
+    className="text-sm font-light"
+    style={{
+      color: "#b0bec5",
+      fontFamily: "system-ui, -apple-system, sans-serif",
+      letterSpacing: "0.05em"
+    }}
+    animate={{
+      opacity: [0.6, 0.8, 0.6]
+    }}
+    transition={{
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+  >
+    Growing connections...
+  </motion.p>
+</motion.div>
+```
+
+**Verify:** 
+- [ ] Progress line positioned near bottom
+- [ ] Responsive width on mobile/desktop
+- [ ] Gradient fill matches network colors
+- [ ] Fills smoothly based on progress state
+- [ ] Text fades in/out gently
+- [ ] Glow visible on filled portion
+- [ ] Fades out when complete
+
+---
+
+### **STEP 7: Implement Exit Animation with Particle Burst**
+
+```typescript
+{/* Exit animation - particle burst */}
+{isComplete && (
+  <>
+    {/* Particles radiating outward from center */}
+    {Array.from({ length: 24 }, (_, i) => {
+      const angle = (i / 24) * Math.PI * 2;
+      const distance = 200 + Math.random() * 100;
+      
+      return (
+        <motion.div
+          key={`exit-particle-${i}`}
+          className="absolute rounded-full"
+          style={{
+            width: "4px",
+            height: "4px",
+            background: i % 2 === 0 ? "#4dd0e1" : "#7c4dff",
+            boxShadow: `0 0 8px ${i % 2 === 0 ? "#4dd0e1" : "#7c4dff"}`,
+            left: "50%",
+            top: "50%",
+            marginLeft: "-2px",
+            marginTop: "-2px"
+          }}
+          initial={{ 
+            scale: 1,
+            opacity: 1,
+            x: 0,
+            y: 0
+          }}
+          animate={{
+            scale: 0,
+            opacity: 0,
+            x: Math.cos(angle) * distance,
+            y: Math.sin(angle) * distance
+          }}
+          transition={{
+            duration: 0.8,
+            ease: "easeOut",
+            delay: i * 0.02
+          }}
+        />
+      );
+    })}
+
+    {/* Central flash effect */}
+    <motion.div
+      className="absolute"
+      style={{
+        left: "50%",
+        top: "50%",
+        width: "100px",
+        height: "100px",
+        marginLeft: "-50px",
+        marginTop: "-50px",
+        background: "radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%)",
+        borderRadius: "50%",
+        filter: "blur(30px)"
+      }}
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: [0, 1.5, 3], opacity: [0, 1, 0] }}
+      transition={{ 
+        duration: 0.8,
+        times: [0, 0.3, 1],
+        ease: "easeOut"
+      }}
+    />
+  </>
+)}
+```
+
+**Verify:** 
+- [ ] 24 particles burst radially from center
+- [ ] Particles alternate colors (cyan/violet)
+- [ ] Staggered timing creates wave effect
+- [ ] Central flash provides impact
+- [ ] Scale and opacity fade smoothly
+- [ ] Total duration ~0.8-1s
+- [ ] Triggers only when isComplete true
+
+---
+
+### **STEP 8: Mobile Optimization & Responsive Behavior**
+
+```typescript
+{/* Add mobile detection at top of component */}
+const [isMobile, setIsMobile] = useState(false);
+
+useEffect(() => {
+  const checkMobile = () => setIsMobile(window.innerWidth < 768);
+  checkMobile();
+  window.addEventListener('resize', checkMobile);
+  return () => window.removeEventListener('resize', checkMobile);
+}, []);
+
+{/* Update branch paths for mobile - shorter lengths */}
+{/* In Branch SVG paths, conditionally adjust Q control points */}
+<motion.path
+  d={isMobile 
+    ? "M 50% 50% Q 50% 40%, 50% 30%" 
+    : "M 50% 50% Q 50% 35%, 50% 20%"
+  }
+  // ... rest of props
+/>
+
+{/* Update neuron core glow for mobile */}
+<motion.div
+  style={{
+    width: isMobile ? "60px" : "80px",
+    height: isMobile ? "60px" : "80px",
+    left: isMobile ? "-30px" : "-40px",
+    top: isMobile ? "-30px" : "-40px",
+    // ... rest of styles
+  }}
+/>
+
+{/* Update progress line width */}
+<div
+  style={{
+    width: isMobile ? "clamp(160px, 60vw, 220px)" : "clamp(180px, 40vw, 240px)",
+    // ... rest of styles
+  }}
+>
+
+{/* Update text size */}
+<motion.p
+  className={isMobile ? "text-xs" : "text-sm"}
+  style={{ ... }}
+>
+```
+
+**Verify:** 
+- [ ] Branches shorter on mobile (fit viewport better)
+- [ ] Core glow appropriately sized
+- [ ] Progress line wider percentage on mobile
+- [ ] Text readable on small screens (375px width)
+- [ ] Smooth 60fps on mobile Safari
+- [ ] No horizontal overflow
+- [ ] Touch works (no hover-dependent features)
+
+---
+
+### **STEP 9: Performance Optimization & GPU Acceleration**
+
+```typescript
+{/* Add to all animated elements */}
+style={{
+  willChange: "transform, opacity",
+  transform: "translateZ(0)", // Force GPU layer
+  // ... other styles
+}}
+
+{/* Reduce motion for accessibility */}
+const prefersReducedMotion = typeof window !== 'undefined' 
+  ? window.matchMedia('(prefers-reduced-motion: reduce)').matches 
+  : false;
+
+{/* Conditional animations */}
+animate={{
+  rotate: prefersReducedMotion ? 0 : [0, 2, 0, -2, 0]
+}}
+
+{/* Reduce particle count for low-end devices */}
+{Array.from({ 
+  length: prefersReducedMotion ? 12 : 24 
+}, (_, i) => (
+  // ... particles
+))}
+
+{/* Optimize SVG rendering */}
+<svg
+  className="absolute inset-0 w-full h-full pointer-events-none"
+  style={{ 
+    overflow: "visible",
+    shapeRendering: "geometricPrecision" // Crisp paths
+  }}
+>
+```
+
+**Verify:** 
+- [ ] 60fps on desktop Chrome
+- [ ] 60fps on desktop Safari
+- [ ] 60fps on mobile Safari
+- [ ] GPU acceleration active (check DevTools)
+- [ ] Reduced motion respected
+- [ ] CPU usage < 25% during animation
+- [ ] No jank during branch growth
+- [ ] Memory stable (no leaks)
+
+---
+
+### **STEP 10: Integration & Final Testing**
+
+```typescript
+// In your layout.tsx or page.tsx
+"use client";
+
+import { useState, useEffect } from "react";
+import { NeuralBloomLoader } from "@/components/loader/NeuralBloomLoader";
+
+export default function Layout({ children }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate actual loading (replace with real logic)
+    const minDisplayTime = 3000; // Minimum 3s to show animation
+    const startTime = Date.now();
+
+    // Your actual loading logic here
+    const loadContent = async () => {
+      // await fetchData();
+      // await loadAssets();
+      
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, minDisplayTime - elapsed);
+      
+      setTimeout(() => {
+        setIsLoading(false);
+      }, remaining);
+    };
+
+    loadContent();
+  }, []);
+
+  return (
+    <>
+      <NeuralBloomLoader 
+        isLoading={isLoading} 
+        onComplete={() => {
+          console.log("Neural Bloom animation complete");
+          // Optional: Additional logic after loader exits
+        }} 
+      />
+      <main className="min-h-screen">{children}</main>
+    </>
+  );
+}
+```
+
+**Verify:** 
+- [ ] Loader shows on initial mount
+- [ ] Minimum display time enforced (smooth experience)
+- [ ] Progress tracks real loading if applicable
+- [ ] Exits smoothly when complete
+- [ ] Page content visible after exit
+- [ ] No FOUC (flash of unstyled content)
+- [ ] Works with Next.js app router
+- [ ] Works with client-side navigation
+- [ ] onComplete callback executes
+- [ ] No console errors
+
+---
+
+## **4. RESPONSIVE SPECS**
+
+**Mobile (< 640px):**
+- Branch lengths: 30% of viewport (vs 40% desktop)
+- Neuron core glow: 60px diameter
+- Progress line: 160-220px width (60% viewport)
+- Text: 12px font size
+- Synapses: 4 pulses (reduced from 8)
+- Exit particles: 18 (reduced from 24)
+- Bottom spacing: 60-80px
+
+**Tablet (640-1024px):**
+- Branch lengths: 35% of viewport
+- Neuron core glow: 70px diameter
+- Progress line: 180-230px width (50% viewport)
+- Text: 13px font size
+- Synapses: 6 pulses
+- Exit particles: 20
+- Bottom spacing: 80-90px
+
+**Desktop (> 1024px):**
+- Branch lengths: 40% of viewport
+- Neuron core glow: 80px diameter
+- Progress line: 180-240px width (40% viewport)
+- Text: 14px font size
+- Synapses: 8 pulses (full set)
+- Exit particles: 24
+- Bottom spacing: 100px
+
+---
+
+## **5. FINAL CHECKLIST**
+
+**Visual:**
+- [ ] Neuron core breathing smoothly
+- [ ] 8 branches grow sequentially from center
+- [ ] Gradient flows cyan to violet naturally
+- [ ] Synapses pulse along completed paths
+- [ ] Network rotates gently (±2°)
+- [ ] Progress line fills accurately
+- [ ] Exit particles burst radially
+- [ ] Ambient glow subtle and calming
+- [ ] No visual glitches or jank
+
+**Functionality:**
+- [ ] Loads on page mount
+- [ ] Progress tracks correctly
+- [ ] Exits when complete
+- [ ] onComplete callback fires
+- [ ] No console errors
+- [ ] TypeScript validates
+- [ ] Works in isolation
+- [ ] Integrates with layout/page
+
+**Performance:**
+- [ ] 60fps Chrome desktop
+- [ ] 60fps Firefox desktop
+- [ ] 60fps Safari desktop
+- [ ] 60fps mobile Safari
+- [ ] 60fps mobile Chrome
+- [ ] CPU < 25% usage
+- [ ] GPU acceleration active
+- [ ] Memory stable
+- [ ] Reduced motion works
+
+**Responsive:**
+- [ ] iPhone SE (375px) perfect
+- [ ] iPhone 14 Pro (393px) perfect
+- [ ] iPad (768px) perfect
+- [ ] Desktop (1920px) perfect
+- [ ] 4K (3840px) perfect
+- [ ] Landscape mode works
+- [ ] No horizontal scroll
+- [ ] Touch interactions work
+
+**Browser Compatibility:**
+- [ ] Chrome/Edge (latest)
+- [ ] Firefox (latest)
+- [ ] Safari (latest)
+- [ ] Mobile Safari iOS 15+
+- [ ] Chrome Android
+- [ ] Samsung Internet
+
+**Accessibility:**
+- [ ] Prefers-reduced-motion respected
+- [ ] No seizure triggers
+- [ ] No keyboard traps
+- [ ] ARIA labels if needed
+- [ ] Color contrast sufficient
+
+---
+
+## **6. WHY IT'S WORLD-CLASS**
+
+**Uniqueness:**
+The "Neural Bloom" concept captures **organic growth and life** in a way no web loader has achieved before. While spinners rotate mechanically and progress bars fill linearly, this loader *grows* like a living neural network—dendrites branching naturally, synapses firing with visible electrical pulses, the entire structure breathing and swaying as if alive. The use of sequential branch growth with varied timing creates genuine suspense and fascination—users watch to see where the next branch will emerge. The symbolism is perfect for creative portfolios: intelligence forming, connections building, thoughts emerging. No loader has successfully married biological accuracy with artistic beauty at this level.
+
+**Visual Impact:**
+The **hypnotic quality of organic growth** commands attention without overwhelming. The cyan-to-violet gradient along dendrites creates depth and directionality (light traveling toward destinations), while the subtle network rotation and opacity pulses add layered motion that feels alive rather than repetitive. The breathing neuron core acts as a heartbeat—a rhythmic anchor that makes the entire experience meditative. When synapses begin firing, the cascade of light pulses creates genuine excitement without chaos. The exit animation (network collapsing + particle burst) provides visceral satisfaction—like watching a dandelion release its seeds. Users will remember this loader because it makes them *feel* something: wonder at watching creation, calm from organic rhythm, and satisfaction from completion.
+
+**Technical Excellence:**
+- **Performance mastery:** Pure SVG paths + Framer Motion = smooth 60fps with minimal CPU/GPU load. No canvas, no complex physics—just efficient path animations. 8 branches + 4-8 synapses + 24 exit particles = ~40 total animated elements maximum (vs 600-1200 particles in original).
+- **Smart animation choreography:** Sequential branch growth with staggered timing (0.15s gaps) creates natural emergence. Synapse pulses wait for branches to complete, creating cause-and-effect that feels intentional. Network rotation and opacity pulses run on independent timers, creating complex movement from simple animations.
+- **Mobile-first responsive:** Conditional branch lengths, glow sizes, and particle counts based on viewport. Respects `prefers-reduced-motion` by disabling rotation and reducing particles to 12.
+- **Clean architecture:** Single component, ~300 lines total (vs 900+ in original), no external dependencies beyond Framer Motion, easily maintainable.
+
+**Memorability:**
+Users remember "Neural Bloom" because it's a **micro-experience of witnessing creation**—like watching time-lapse footage of plants growing or neurons forming in embryonic development. The slow, purposeful growth builds anticipation ("where will the next branch go?"), while the synapse pulses provide satisfying payoff ("it's alive!"). The breathing rhythm creates a meditative state where users actually enjoy waiting instead of feeling impatient. For a creative portfolio, this symbolism is powerful: "Watch my creative intelligence grow before your eyes." The organic imperfection (varied branch timing, gentle rotation drift) makes it feel handcrafted and premium. The exit animation provides closure—like watching a thought fully formed before it releases into the world. This emotional journey transforms a functional loader into an **artful experience** that elevates the entire portfolio.
+
+---
+
+# **END - READY FOR CODE GENERATION** 🚀
+
+## **IMPLEMENTATION SUMMARY**
+
+This "Neural Bloom" loader delivers:
+- ✅ **Organic & alive** (biological growth patterns, breathing rhythm)
+- ✅ **Hypnotic & calming** (meditative motion, natural pace)
+- ✅ **Symbolically perfect** (creativity, connection, intelligence)
+- ✅ **Technically superior** (60fps, ~300 lines, 40 elements max)
+- ✅ **Mobile-optimized** (responsive sizing, reduced complexity)
+- ✅ **Accessible** (reduced motion, no seizure triggers)
+- ✅ **Memorable** (emotional journey, artistic experience)
+
+**Code Generator: Execute Steps 1-10 in sequence. Each step includes exact code, verification checklist, and success criteria. The result will be a world-class loader that transforms waiting into wonder.** 🌿✨

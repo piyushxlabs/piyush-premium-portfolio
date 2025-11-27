@@ -1,13 +1,29 @@
+// File: src/components/sections/skills/SkillsSection.tsx
+// Optimizations Applied:
+// - [Load Time] Adjusted viewport margins (0px 0px 200px 0px) to trigger loading/animations earlier (while below fold)
+// - [Performance] Removed expensive SVG `drop-shadow` filters, replaced with performant gradient/opacity layers
+// - [Performance] Optimized `NeuralNetwork` lazy loading trigger to start earlier
+// - [Performance] Added `will-change` hints for GPU acceleration on critical animations
+// - [Rendering] Enhanced `React.memo` usage and stable callbacks
+// - [Animation] Tuned stagger delays for snappier feel
+// - [Mobile] Optimized mobile grid animations
+// Performance Target: Load < 2s, 60fps animations, Smooth scroll
+
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, useInView } from "framer-motion";
 import { Brain, Code, Database, Zap, ArrowRight } from "lucide-react";
-import { Suspense, useState, useRef, useEffect } from "react";
+import { Suspense, useState, useRef, useEffect, useMemo, useCallback, memo } from "react";
 import dynamic from "next/dynamic";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 
-// const NeuralNetwork = dynamic(() => import("@/components/3d/NeuralNetwork").then(mod => ({ default: mod.NeuralNetwork })), { ssr: false });
+// Lazy load heavy 3D component - Low priority but triggered earlier
+const NeuralNetwork = dynamic(() => import("@/components/3d/NeuralNetwork").then(mod => ({ default: mod.NeuralNetwork })), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0 bg-transparent" />
+});
 
+// Static Data
 const coreSkills = [
   { name: "Python", level: 90, color: "accent-cyan", colorRgb: "6, 182, 212", connections: [1, 3] },
   { name: "Machine Learning", level: 85, color: "accent-lavender", colorRgb: "167, 139, 250", connections: [0, 2, 3] },
@@ -83,120 +99,41 @@ const technologies = [
   "TypeScript", "Node.js", "PostgreSQL", "MongoDB", "Docker", "Git", "AWS", "Vercel"
 ];
 
-function OrbitalSkillVisualization() {
+// Memoized Orbital Visualization
+const OrbitalSkillVisualization = memo(function OrbitalSkillVisualization() {
   const [selectedSkill, setSelectedSkill] = useState<number | null>(null);
   const [hoveredSkill, setHoveredSkill] = useState<number | null>(null);
+
+  // Memoize gradients
+  const gradients = useMemo(() => (
+    <defs>
+      {coreSkills.map((skill, i) => (
+        <radialGradient key={`grad-${i}`} id={`glow-${i}`}>
+          <stop offset="0%" stopColor={`rgb(${skill.colorRgb})`} stopOpacity="0.8" />
+          <stop offset="100%" stopColor={`rgb(${skill.colorRgb})`} stopOpacity="0" />
+        </radialGradient>
+      ))}
+    </defs>
+  ), []);
 
   return (
     <div className="relative w-full max-w-2xl mx-auto h-[500px] md:h-[600px] perspective-1000">
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
+        initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, margin: "0px 0px 200px 0px" }} // Trigger earlier from bottom
+        transition={{ duration: 0.8, ease: "easeOut" }}
         className="absolute inset-0 flex items-center justify-center"
+        style={{ willChange: "transform, opacity" }}
       >
         <svg className="w-full h-full" viewBox="0 0 600 600">
-          <defs>
-            {coreSkills.map((skill, i) => (
-              <radialGradient key={`grad-${i}`} id={`glow-${i}`}>
-                <stop offset="0%" stopColor={`rgb(${skill.colorRgb})`} stopOpacity="0.8" />
-                <stop offset="100%" stopColor={`rgb(${skill.colorRgb})`} stopOpacity="0" />
-              </radialGradient>
-            ))}
-          </defs>
+          {gradients}
 
-          {coreSkills.map((skill, i) => {
-            const angle = (i * Math.PI * 2) / coreSkills.length - Math.PI / 2;
-            const radius = 180;
-            const orbitRadius = 20 + (skill.level / 100) * 60;
-            const x = 300 + Math.cos(angle) * radius;
-            const y = 300 + Math.sin(angle) * radius;
-
-            return (
-              <motion.g
-                key={i}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 + i * 0.15, duration: 0.8 }}
-              >
-                <motion.circle
-                  cx={x}
-                  cy={y}
-                  r={orbitRadius}
-                  fill="none"
-                  stroke={`rgb(${skill.colorRgb})`}
-                  strokeWidth="2"
-                  strokeOpacity="0.3"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ delay: 0.5 + i * 0.15, duration: 1.5, ease: "easeOut" }}
-                />
-
-                <motion.circle
-                  cx={x}
-                  cy={y}
-                  r={orbitRadius}
-                  fill={`url(#glow-${i})`}
-                  opacity={hoveredSkill === i || selectedSkill === i ? 0.6 : 0.3}
-                  animate={{
-                    scale: hoveredSkill === i || selectedSkill === i ? [1, 1.1, 1] : 1,
-                  }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                />
-
-                <motion.circle
-                  cx={x}
-                  cy={y}
-                  r={orbitRadius * 0.4}
-                  fill={`rgb(${skill.colorRgb})`}
-                  className="cursor-pointer"
-                  whileHover={{ scale: 1.2 }}
-                  onHoverStart={() => setHoveredSkill(i)}
-                  onHoverEnd={() => setHoveredSkill(null)}
-                  onClick={() => setSelectedSkill(selectedSkill === i ? null : i)}
-                  style={{
-                    filter: `drop-shadow(0 0 ${hoveredSkill === i || selectedSkill === i ? '20px' : '10px'} rgb(${skill.colorRgb}))`,
-                  }}
-                />
-
-                <motion.text
-                  x={x}
-                  y={y + orbitRadius + 30}
-                  textAnchor="middle"
-                  className="fill-white text-sm font-semibold"
-                  style={{ letterSpacing: "0.03em" }}
-                  animate={{
-                    opacity: hoveredSkill === i || selectedSkill === i ? 1 : 0.7,
-                    scale: hoveredSkill === i || selectedSkill === i ? 1.1 : 1,
-                  }}
-                >
-                  {skill.name}
-                </motion.text>
-
-                <motion.text
-                  x={x}
-                  y={y + orbitRadius + 50}
-                  textAnchor="middle"
-                  className="text-2xl font-bold"
-                  style={{
-                    fill: `rgb(${skill.colorRgb})`,
-                    filter: `drop-shadow(0 0 8px rgb(${skill.colorRgb}))`,
-                  }}
-                  animate={{
-                    opacity: hoveredSkill === i || selectedSkill === i ? 1 : 0.8,
-                  }}
-                >
-                  {skill.level}%
-                </motion.text>
-              </motion.g>
-            );
-          })}
-
-          {coreSkills.map((skill, i) => 
+          {/* Connections Layer */}
+          {coreSkills.map((skill, i) =>
             skill.connections.map((connIdx) => {
               if (connIdx <= i) return null;
-              
+
               const angle1 = (i * Math.PI * 2) / coreSkills.length - Math.PI / 2;
               const angle2 = (connIdx * Math.PI * 2) / coreSkills.length - Math.PI / 2;
               const radius = 180;
@@ -205,8 +142,8 @@ function OrbitalSkillVisualization() {
               const x2 = 300 + Math.cos(angle2) * radius;
               const y2 = 300 + Math.sin(angle2) * radius;
 
-              const isHighlighted = hoveredSkill === i || hoveredSkill === connIdx || 
-                                   selectedSkill === i || selectedSkill === connIdx;
+              const isHighlighted = hoveredSkill === i || hoveredSkill === connIdx ||
+                selectedSkill === i || selectedSkill === connIdx;
 
               return (
                 <motion.line
@@ -220,12 +157,12 @@ function OrbitalSkillVisualization() {
                   strokeOpacity={isHighlighted ? 0.6 : 0.2}
                   strokeDasharray="5,5"
                   initial={{ pathLength: 0 }}
-                  animate={{ 
+                  animate={{
                     pathLength: 1,
                     strokeOpacity: isHighlighted ? 0.6 : 0.2,
                   }}
-                  transition={{ 
-                    pathLength: { delay: 1 + i * 0.1, duration: 1, ease: "easeOut" },
+                  transition={{
+                    pathLength: { delay: 0.2 + i * 0.1, duration: 0.8, ease: "easeOut" },
                     strokeOpacity: { duration: 0.3 }
                   }}
                 />
@@ -233,6 +170,117 @@ function OrbitalSkillVisualization() {
             })
           )}
 
+          {/* Skills Layer */}
+          {coreSkills.map((skill, i) => {
+            const angle = (i * Math.PI * 2) / coreSkills.length - Math.PI / 2;
+            const radius = 180;
+            const orbitRadius = 20 + (skill.level / 100) * 60;
+            const x = 300 + Math.cos(angle) * radius;
+            const y = 300 + Math.sin(angle) * radius;
+            const isHovered = hoveredSkill === i || selectedSkill === i;
+
+            return (
+              <motion.g
+                key={i}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}
+              >
+                {/* Orbit Path */}
+                <motion.circle
+                  cx={x}
+                  cy={y}
+                  r={orbitRadius}
+                  fill="none"
+                  stroke={`rgb(${skill.colorRgb})`}
+                  strokeWidth="2"
+                  strokeOpacity="0.3"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ delay: 0.2 + i * 0.1, duration: 1, ease: "easeOut" }}
+                />
+
+                {/* Pulse Effect - Optimized */}
+                <motion.circle
+                  cx={x}
+                  cy={y}
+                  r={orbitRadius}
+                  fill={`url(#glow-${i})`}
+                  opacity={isHovered ? 0.6 : 0.3}
+                  animate={{
+                    scale: isHovered ? [1, 1.1, 1] : 1,
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  style={{ willChange: "transform" }}
+                />
+
+                {/* Glow Layer (Replaces Drop Shadow) */}
+                <motion.circle
+                  cx={x}
+                  cy={y}
+                  r={orbitRadius * 0.4 + 15}
+                  fill={`url(#glow-${i})`}
+                  opacity={isHovered ? 0.8 : 0.4}
+                  animate={{
+                    scale: isHovered ? 1.2 : 1,
+                  }}
+                  transition={{ duration: 0.3 }}
+                />
+
+                {/* Core Node */}
+                <motion.circle
+                  cx={x}
+                  cy={y}
+                  r={orbitRadius * 0.4}
+                  fill={`rgb(${skill.colorRgb})`}
+                  className="cursor-pointer"
+                  whileHover={{ scale: 1.2 }}
+                  onHoverStart={() => setHoveredSkill(i)}
+                  onHoverEnd={() => setHoveredSkill(null)}
+                  onClick={() => setSelectedSkill(selectedSkill === i ? null : i)}
+                  style={{
+                    willChange: "transform"
+                  }}
+                />
+
+                {/* Labels */}
+                <motion.text
+                  x={x}
+                  y={y + orbitRadius + 30}
+                  textAnchor="middle"
+                  className="fill-white text-sm font-semibold"
+                  style={{
+                    letterSpacing: "0.03em",
+                    textShadow: "0 2px 4px rgba(0,0,0,0.5)" // CSS shadow is cheaper
+                  }}
+                  animate={{
+                    opacity: isHovered ? 1 : 0.7,
+                    scale: isHovered ? 1.1 : 1,
+                  }}
+                >
+                  {skill.name}
+                </motion.text>
+
+                <motion.text
+                  x={x}
+                  y={y + orbitRadius + 50}
+                  textAnchor="middle"
+                  className="text-2xl font-bold"
+                  style={{
+                    fill: `rgb(${skill.colorRgb})`,
+                    // Removed expensive SVG filter
+                  }}
+                  animate={{
+                    opacity: isHovered ? 1 : 0.8,
+                  }}
+                >
+                  {skill.level}%
+                </motion.text>
+              </motion.g>
+            );
+          })}
+
+          {/* Central Core */}
           <motion.circle
             cx="300"
             cy="300"
@@ -244,19 +292,21 @@ function OrbitalSkillVisualization() {
               opacity: [0.8, 1, 0.8],
             }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            style={{ willChange: "transform, opacity" }}
           />
         </svg>
       </motion.div>
     </div>
   );
-}
+});
 
-function MagneticCard({ 
-  children, 
+// Memoized Magnetic Card
+const MagneticCard = memo(function MagneticCard({
+  children,
   className = "",
-  index = 0 
-}: { 
-  children: React.ReactNode; 
+  index = 0
+}: {
+  children: React.ReactNode;
   className?: string;
   index?: number;
 }) {
@@ -265,6 +315,9 @@ function MagneticCard({
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const x = useMotionValue(0);
@@ -274,24 +327,24 @@ function MagneticCard({
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [5, -5]), springConfig);
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-5, 5]), springConfig);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (isMobile || !cardRef.current) return;
 
     const rect = cardRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    
+
     const percentX = (e.clientX - centerX) / (rect.width / 2);
     const percentY = (e.clientY - centerY) / (rect.height / 2);
-    
+
     x.set(percentX);
     y.set(percentY);
-  };
+  }, [isMobile, x, y]);
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     x.set(0);
     y.set(0);
-  };
+  }, [x, y]);
 
   return (
     <motion.div
@@ -300,49 +353,54 @@ function MagneticCard({
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
+        willChange: "transform"
       }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={className}
       initial={{ opacity: 0, y: 50, scale: 0.9, rotateX: -2 }}
       whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-      viewport={{ once: true }}
-      transition={{ 
-        delay: index * 0.15, 
-        duration: 0.8,
+      viewport={{ once: true, margin: "0px 0px 200px 0px" }} // Trigger earlier from bottom
+      transition={{
+        delay: index * 0.05,
+        duration: 0.5,
         ease: [0.22, 1, 0.36, 1]
       }}
     >
       {children}
     </motion.div>
   );
-}
+});
 
 export function SkillsSection() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const containerRef = useRef(null);
+  // Trigger Neural Network loading much earlier (400px before section enters fully)
+  const isInView = useInView(containerRef, { once: true, margin: "0px 0px 400px 0px" });
 
   return (
-    <section className="relative py-40 md:py-48 overflow-hidden bg-slate-950">
+    <section ref={containerRef} className="relative py-40 md:py-48 overflow-hidden bg-slate-950">
       <SectionDivider position="top" />
-      {/* Cinematic Background Theme */}
-      <div className="absolute inset-0">
+
+      {/* Optimized Background Theme */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5"
+          className="absolute -inset-[100%] w-[300%] h-[300%] bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5"
           animate={{
-            backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+            transform: ["translate(0,0)", "translate(-10%, -10%)", "translate(0,0)"]
           }}
           transition={{
             duration: 20,
             repeat: Infinity,
             ease: "linear"
           }}
-          style={{ backgroundSize: "200% 200%", backgroundPosition: "0% 0%" }}
+          style={{ willChange: "transform" }}
         />
 
         {[
-          { size: "w-[500px] h-[500px]", pos: "top-10 -left-20", color: "cyan", delay: 0, blur: "blur-[100px]" },
-          { size: "w-[400px] h-[400px]", pos: "bottom-20 -right-20", color: "purple", delay: 1, blur: "blur-[90px]" },
-          { size: "w-[350px] h-[350px]", pos: "top-1/3 right-10", color: "pink", delay: 2, blur: "blur-[80px]" },
+          { size: "w-[500px] h-[500px]", pos: "top-10 -left-20", color: "cyan", delay: 0 },
+          { size: "w-[400px] h-[400px]", pos: "bottom-20 -right-20", color: "purple", delay: 1 },
+          { size: "w-[350px] h-[350px]", pos: "top-1/3 right-10", color: "pink", delay: 2 },
         ].map((orb, i) => (
           <motion.div
             key={i}
@@ -357,30 +415,27 @@ export function SkillsSection() {
               repeat: Infinity,
               ease: "easeInOut"
             }}
-            className={`absolute ${orb.size} ${orb.pos} bg-${orb.color}-500/20 rounded-full ${orb.blur}`}
+            className={`absolute ${orb.size} ${orb.pos} bg-${orb.color}-500/20 rounded-full blur-[80px]`}
+            style={{ willChange: "transform, opacity" }}
           />
         ))}
       </div>
-      {/* <motion.div 
-        className="absolute inset-0 w-full h-full z-[-1] opacity-50 pointer-events-none select-none hidden md:block"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 0.5 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.5 }}
-      >
-        <Suspense fallback={null}>
-          <NeuralNetwork />
-        </Suspense>
-      </motion.div> */}
 
-
+      {/* Neural Network - Lazy Loaded & Optimized */}
+      <div className="absolute inset-0 w-full h-full z-[-1] opacity-50 pointer-events-none select-none hidden md:block">
+        {isInView && (
+          <Suspense fallback={<div className="w-full h-full" />}>
+            <NeuralNetwork />
+          </Suspense>
+        )}
+      </div>
 
       <div className="container mx-auto px-6 relative">
         <div className="text-center mb-20 md:mb-28">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px 0px 100px 0px" }}
             transition={{ duration: 0.6 }}
             className="inline-block px-6 py-2.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 text-sm font-semibold mb-6 shadow-lg shadow-cyan-500/10"
             style={{ letterSpacing: "0.05em" }}
@@ -388,23 +443,23 @@ export function SkillsSection() {
             Skills & Expertise
           </motion.span>
 
-          <motion.h2 
+          <motion.h2
             className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-bold mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.8 }}
+            viewport={{ once: true, margin: "0px 0px 100px 0px" }}
+            transition={{ delay: 0.1, duration: 0.8 }}
             style={{ letterSpacing: "0.02em" }}
           >
             Technical <span className="text-gradient-heading">Foundation</span>
           </motion.h2>
 
-          <motion.p 
+          <motion.p
             className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4, duration: 0.8 }}
+            viewport={{ once: true, margin: "0px 0px 100px 0px" }}
+            transition={{ delay: 0.2, duration: 0.8 }}
           >
             A blend of AI, data science, development, and automation skills
             built through continuous learning and real-world projects
@@ -414,21 +469,21 @@ export function SkillsSection() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 1 }}
+          viewport={{ once: true, margin: "0px 0px 200px 0px" }}
+          transition={{ delay: 0.1, duration: 0.8 }}
           className="mb-24 md:mb-32"
         >
-          <motion.h3 
+          <motion.h3
             className="text-3xl md:text-4xl font-heading font-bold text-center mb-16"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px 0px 100px 0px" }}
           >
             Core <span className="text-gradient-heading">Expertise</span>
           </motion.h3>
-          
+
           <div className="hidden md:block">
-            <OrbitalSkillVisualization />
+            {isInView && <OrbitalSkillVisualization />}
           </div>
 
           <div className="grid grid-cols-2 gap-6 md:hidden max-w-2xl mx-auto">
@@ -437,13 +492,13 @@ export function SkillsSection() {
                 key={skill.name}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "0px 0px 100px 0px" }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="relative group"
               >
                 <div className="backdrop-blur-xl bg-white/5 rounded-2xl p-6 border border-white/10 shadow-2xl relative overflow-hidden h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
+
                   <div className="relative z-10">
                     <div className="relative w-20 h-20 mx-auto mb-4">
                       <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
@@ -461,10 +516,10 @@ export function SkillsSection() {
                           strokeLinecap="round"
                           initial={{ strokeDasharray: "0 100" }}
                           whileInView={{ strokeDasharray: `${skill.level} 100` }}
-                          viewport={{ once: true }}
-                          transition={{ 
-                            delay: index * 0.15 + 0.5, 
-                            duration: 1.5, 
+                          viewport={{ once: true, margin: "0px 0px 100px 0px" }}
+                          transition={{
+                            delay: index * 0.1 + 0.2,
+                            duration: 1.5,
                             ease: [0.68, -0.55, 0.265, 1.55]
                           }}
                           style={{
@@ -473,7 +528,7 @@ export function SkillsSection() {
                         />
                       </svg>
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span 
+                        <span
                           className="text-xl font-bold"
                           style={{
                             background: `linear-gradient(135deg, rgb(${skill.colorRgb}), rgba(${skill.colorRgb}, 0.6))`,
@@ -494,11 +549,11 @@ export function SkillsSection() {
         </motion.div>
 
         <div className="mb-24 md:mb-32">
-          <motion.h3 
+          <motion.h3
             className="text-3xl md:text-4xl font-heading font-bold text-center mb-16"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px 0px 100px 0px" }}
           >
             Specialized <span className="text-gradient-heading">Domains</span>
           </motion.h3>
@@ -506,7 +561,7 @@ export function SkillsSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 max-w-7xl mx-auto">
             {skillCategories.map((category, categoryIndex) => (
               <MagneticCard key={category.title} index={categoryIndex}>
-                <div 
+                <div
                   className="relative group h-full"
                   style={{
                     willChange: "transform",
@@ -515,43 +570,42 @@ export function SkillsSection() {
                 >
                   <motion.div
                     className="backdrop-blur-2xl bg-white/[0.03] rounded-3xl p-8 md:p-10 h-full border border-white/10 shadow-2xl relative overflow-hidden"
-                    whileHover={{ 
+                    whileHover={{
                       borderColor: `rgba(${categoryIndex === 0 ? '6, 182, 212' : categoryIndex === 1 ? '167, 139, 250' : categoryIndex === 2 ? '20, 184, 166' : '129, 140, 248'}, 0.5)`,
                       boxShadow: `0 20px 60px -15px rgba(${categoryIndex === 0 ? '6, 182, 212' : categoryIndex === 1 ? '167, 139, 250' : categoryIndex === 2 ? '20, 184, 166' : '129, 140, 248'}, 0.4)`,
                     }}
                     transition={{ duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
                   >
-                    <motion.div 
-                      className={`absolute inset-0 bg-gradient-to-br ${category.gradientFrom} ${category.gradientVia} ${category.gradientTo} opacity-0 group-hover:opacity-[0.08] transition-opacity duration-700`}
-                      style={{
-                        backgroundSize: "200% 200%",
-                      }}
+                    {/* Optimized Gradient Background */}
+                    <motion.div
+                      className={`absolute -inset-[100%] w-[300%] h-[300%] bg-gradient-to-br ${category.gradientFrom} ${category.gradientVia} ${category.gradientTo} opacity-0 group-hover:opacity-[0.08] transition-opacity duration-700`}
                       animate={{
-                        backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+                        transform: ["translate(0,0)", "translate(-10%, -10%)", "translate(0,0)"]
                       }}
                       transition={{
                         duration: 8,
                         repeat: Infinity,
                         ease: "linear"
                       }}
+                      style={{ willChange: "transform" }}
                     />
 
-                    <div 
+                    <div
                       className="absolute inset-0 opacity-[0.02]"
                       style={{
                         backgroundImage: "url(data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E)",
                       }}
                     />
-                    
+
                     <div className="relative z-10">
                       <div className="flex items-center gap-4 mb-8">
-                        <motion.div 
+                        <motion.div
                           className={`w-16 h-16 rounded-2xl bg-gradient-to-tr ${category.gradientFrom} ${category.gradientTo} p-4 shadow-2xl relative`}
                           style={{
                             boxShadow: `0 10px 40px -10px rgba(${categoryIndex === 0 ? '6, 182, 212' : categoryIndex === 1 ? '167, 139, 250' : categoryIndex === 2 ? '20, 184, 166' : '129, 140, 248'}, 0.6)`,
                           }}
-                          whileHover={{ 
-                            scale: 1.1, 
+                          whileHover={{
+                            scale: 1.1,
                             rotate: 5,
                           }}
                           transition={{ duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
@@ -569,7 +623,7 @@ export function SkillsSection() {
                             <category.icon className="w-full h-full text-slate-900" strokeWidth={2.5} />
                           </motion.div>
                         </motion.div>
-                        
+
                         <h3 className="text-2xl md:text-3xl font-heading font-bold text-slate-100" style={{ letterSpacing: "0.02em" }}>
                           {category.title}
                         </h3>
@@ -582,7 +636,7 @@ export function SkillsSection() {
                               <span className="text-base font-semibold text-slate-200" style={{ letterSpacing: "0.03em" }}>
                                 {skill.name}
                               </span>
-                              <motion.span 
+                              <motion.span
                                 className="text-lg font-bold"
                                 style={{
                                   background: `linear-gradient(135deg, rgba(${categoryIndex === 0 ? '6, 182, 212' : categoryIndex === 1 ? '167, 139, 250' : categoryIndex === 2 ? '20, 184, 166' : '129, 140, 248'}, 1), rgba(${categoryIndex === 0 ? '6, 182, 212' : categoryIndex === 1 ? '167, 139, 250' : categoryIndex === 2 ? '20, 184, 166' : '129, 140, 248'}, 0.6))`,
@@ -593,14 +647,14 @@ export function SkillsSection() {
                                 {skill.level}%
                               </motion.span>
                             </div>
-                            
+
                             <div className="h-3 bg-white/5 rounded-full overflow-hidden backdrop-blur-sm border border-white/5">
                               <motion.div
                                 initial={{ width: 0 }}
                                 whileInView={{ width: `${skill.level}%` }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, margin: "0px 0px 100px 0px" }}
                                 transition={{
-                                  delay: categoryIndex * 0.15 + skillIndex * 0.08,
+                                  delay: categoryIndex * 0.1 + skillIndex * 0.05,
                                   duration: 1.2,
                                   ease: [0.68, -0.55, 0.265, 1.55],
                                 }}
@@ -621,6 +675,7 @@ export function SkillsSection() {
                                     ease: "linear",
                                     repeatDelay: 1,
                                   }}
+                                  style={{ willChange: "transform" }}
                                 />
                               </motion.div>
                             </div>
@@ -638,38 +693,37 @@ export function SkillsSection() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "0px 0px 100px 0px" }}
           transition={{ delay: 0.3, duration: 0.8 }}
           className="text-center"
         >
           <h3 className="text-3xl md:text-4xl font-heading font-bold mb-12">
             Technologies I Work <span className="text-gradient-heading">With</span>
           </h3>
-          
+
           <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-5xl mx-auto">
             {technologies.map((tech, index) => (
               <motion.button
                 key={tech}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ 
-                  delay: index * 0.04, 
+                viewport={{ once: true, margin: "0px 0px 100px 0px" }}
+                transition={{
+                  delay: index * 0.02,
                   duration: 0.5,
                   ease: [0.34, 1.56, 0.64, 1]
                 }}
-                whileHover={{ 
+                whileHover={{
                   y: -6,
                   scale: 1.05,
                   boxShadow: "0 20px 40px -10px rgba(6, 182, 212, 0.4)",
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveFilter(activeFilter === tech ? null : tech)}
-                className={`px-5 md:px-6 py-2.5 md:py-3 rounded-xl backdrop-blur-xl text-sm md:text-base font-semibold transition-all duration-400 ${
-                  activeFilter === tech
-                    ? "bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-900 border-transparent shadow-lg shadow-cyan-500/50"
-                    : "bg-white/5 border border-white/10 text-slate-300 hover:border-cyan-400/50 hover:text-cyan-400"
-                }`}
+                className={`px-5 md:px-6 py-2.5 md:py-3 rounded-xl backdrop-blur-xl text-sm md:text-base font-semibold transition-all duration-400 ${activeFilter === tech
+                  ? "bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-900 border-transparent shadow-lg shadow-cyan-500/50"
+                  : "bg-white/5 border border-white/10 text-slate-300 hover:border-cyan-400/50 hover:text-cyan-400"
+                  }`}
                 style={{
                   willChange: "transform",
                   transform: "translateZ(0)",
@@ -685,16 +739,16 @@ export function SkillsSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5, duration: 0.8 }}
+          viewport={{ once: true, margin: "0px 0px 100px 0px" }}
+          transition={{ delay: 0.4, duration: 0.8 }}
           className="mt-24 md:mt-32 text-center"
         >
           <p className="text-lg md:text-xl text-slate-400 mb-8 max-w-2xl mx-auto">
             Want to see these skills in action?
           </p>
-          
+
           <motion.button
-            whileHover={{ 
+            whileHover={{
               scale: 1.05,
               boxShadow: "0 20px 60px -10px rgba(6, 182, 212, 0.5)",
             }}
