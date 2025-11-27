@@ -87,7 +87,10 @@ body {
 }
 
 @layer base {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     border-color: var(--color-border);
   }
 
@@ -97,7 +100,12 @@ body {
   }
 
   /* Enhanced Typography Hierarchy */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
     letter-spacing: -0.025em;
     color: var(--color-text-primary);
@@ -154,6 +162,7 @@ body {
 
   /* Reduced Motion Support */
   @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {

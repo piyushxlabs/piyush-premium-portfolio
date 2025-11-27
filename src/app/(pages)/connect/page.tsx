@@ -7,7 +7,6 @@
  * DESIGN PILLARS:
  * 1. Asymmetric Harmony — Beauty in deliberate imbalance
  * 2. Kinetic Stillness — Motion that feels intentional
-
  * 3. Haptic Illusion — Visual feedback so convincing you feel it
  * 4. Narrative Space — Every pixel tells part of a story
  * 5. Invisible Complexity — Sophisticated systems hidden behind elegant simplicity
@@ -17,6 +16,7 @@ import { useState, FormEvent, useEffect, useRef, useMemo } from 'react';
 import { Send, Sparkles, Check, Mail, Github, Linkedin, Twitter, Instagram } from 'lucide-react';
 import { socialLinks } from '@/config/social-links';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
+import VisionBackground from '@/components/ui/VisionBackground';
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 💎 CONSTANTS & DATA
@@ -32,211 +32,6 @@ const BADGE_VARIANTS = [
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 🎨 UTILITY COMPONENTS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-/**
- * 🌌 Particle Nebula with Proximity Connections
- * Creates organic floating network visualization
- */
-const ParticleNebula = ({ cursorPosition }: { cursorPosition: { x: number; y: number } }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  // Generate stable particles
-  const particles = useMemo(() => {
-    return Array.from({ length: 80 }).map(() => ({
-      x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920),
-      y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1080),
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      size: Math.random() * 2 + 1,
-      opacity: Math.random() * 0.5 + 0.3,
-    }));
-  }, []);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const updateSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    updateSize();
-    window.addEventListener('resize', updateSize);
-
-    let animationId: number;
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Update and draw particles
-      particles.forEach((particle, i) => {
-        // Move particle
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-
-        // Wrap around edges
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
-
-        // Cursor interaction (gentle repulsion)
-        const dx = particle.x - cursorPosition.x;
-        const dy = particle.y - cursorPosition.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 120) {
-          const force = (120 - dist) / 120;
-          particle.x += (dx / dist) * force * 2;
-          particle.y += (dy / dist) * force * 2;
-        }
-
-        // Draw particle
-        ctx.fillStyle = `rgba(34, 211, 238, ${particle.opacity})`;
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Draw connections within proximity
-        particles.slice(i + 1).forEach((other) => {
-          const dx = other.x - particle.x;
-          const dy = other.y - particle.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 120) {
-            const opacity = (1 - distance / 120) * 0.3;
-            ctx.strokeStyle = `rgba(34, 211, 238, ${opacity})`;
-            ctx.lineWidth = 0.5;
-            ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(other.x, other.y);
-            ctx.stroke();
-          }
-        });
-      });
-
-      animationId = requestAnimationFrame(animate);
-    };
-    animate();
-
-    return () => {
-      window.removeEventListener('resize', updateSize);
-      cancelAnimationFrame(animationId);
-    };
-  }, [particles, cursorPosition]);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 pointer-events-none opacity-60"
-      style={{ mixBlendMode: 'screen' }}
-    />
-  );
-};
-
-/**
- * 💫 Animated Gradient Orb
- */
-const GradientOrb = ({
-  delay = 0,
-  color = 'cyan',
-  position = { x: 20, y: 20 },
-}: {
-  delay?: number;
-  color?: 'cyan' | 'lavender' | 'teal';
-  position?: { x: number; y: number };
-}) => {
-  const colors = {
-    cyan: 'from-cyan-400/30 via-cyan-500/20 to-transparent',
-    lavender: 'from-purple-400/30 via-purple-500/20 to-transparent',
-    teal: 'from-teal-400/30 via-teal-500/20 to-transparent',
-  };
-
-  return (
-    <motion.div
-      className={`absolute w-[700px] h-[700px] rounded-full bg-gradient-radial ${colors[color]} blur-[120px] pointer-events-none`}
-      style={{
-        left: `${position.x}%`,
-        top: `${position.y}%`,
-      }}
-      animate={{
-        x: [0, 120, -80, 0],
-        y: [0, -80, 120, 0],
-        scale: [1, 1.25, 0.9, 1],
-        opacity: [0.4, 0.7, 0.4],
-      }}
-      transition={{
-        duration: 25 + delay * 2,
-        repeat: Infinity,
-        delay,
-        ease: 'easeInOut',
-      }}
-    />
-  );
-};
-
-/**
- * 🌟 Volumetric Light Rays
- * Creates cinematic light shafts piercing through darkness
- */
-const VolumetricLightRays = () => {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(6)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-[2px] h-full origin-top"
-          style={{
-            left: `${15 + i * 15}%`,
-            background: 'linear-gradient(to bottom, rgba(34, 211, 238, 0.15), transparent 70%)',
-            transform: `rotate(${-20 + i * 8}deg)`,
-            transformOrigin: 'top center',
-          }}
-          animate={{
-            opacity: [0.1, 0.3, 0.1],
-            scaleY: [0.8, 1.2, 0.8],
-          }}
-          transition={{
-            duration: 8 + i * 2,
-            repeat: Infinity,
-            delay: i * 1.2,
-            ease: 'easeInOut',
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
-/**
- * 🌀 Gravitational Lensing Effect
- * Space warps around cursor creating reality distortion
- */
-const GravitationalLens = ({ cursorPosition }: { cursorPosition: { x: number; y: number } }) => {
-  return (
-    <motion.div
-      className="absolute rounded-full pointer-events-none mix-blend-screen"
-      style={{
-        left: cursorPosition.x - 150,
-        top: cursorPosition.y - 150,
-        width: 300,
-        height: 300,
-        background: 'radial-gradient(circle, rgba(34, 211, 238, 0.08) 0%, transparent 70%)',
-        filter: 'blur(40px)',
-      }}
-      animate={{
-        scale: [1, 1.2, 1],
-      }}
-      transition={{
-        duration: 2,
-        repeat: Infinity,
-        ease: 'easeInOut',
-      }}
-    />
-  );
-};
 
 /**
  * 💎 Constellation Core - CSS 3D Geometric Visualization
@@ -526,10 +321,10 @@ export default function ConnectPage() {
   );
 
   // Map the rotation angle directly to a CSS gradient string
-const animatedGradient = useTransform(
-  gradientRotation,
-  (deg) => `linear-gradient(${deg}deg, #22d3ee, #c084fc, #ec4899)`
-);
+  const animatedGradient = useTransform(
+    gradientRotation,
+    (deg) => `linear-gradient(${deg}deg, #22d3ee, #c084fc, #ec4899)`
+  );
   // Badge text cycling
   const handleBadgeClick = () => {
     const currentIndex = BADGE_VARIANTS.indexOf(badgeText);
@@ -577,47 +372,9 @@ const animatedGradient = useTransform(
   return (
     <main className="relative min-h-screen bg-[#020817] text-white overflow-hidden selection:bg-cyan-500/30 selection:text-cyan-200">
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      {/* 🌌 MULTI-LAYERED DIMENSIONAL FIELD */}
+      {/* 🌌 VISION BACKGROUND */}
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="fixed inset-0 pointer-events-none">
-        {/* Layer 1: Deep Space */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020817] via-[#0a0a20] to-[#020817]" />
-
-        {/* Layer 2: Film Grain Texture */}
-        <div
-          className="absolute inset-0 opacity-[0.015]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
-          }}
-        />
-
-        {/* Layer 3: Volumetric Light Rays */}
-        <VolumetricLightRays />
-
-        {/* Layer 4: Animated Gradient Orbs */}
-        <GradientOrb delay={0} color="cyan" position={{ x: 15, y: 20 }} />
-        <GradientOrb delay={7} color="lavender" position={{ x: 70, y: 40 }} />
-        <GradientOrb delay={14} color="teal" position={{ x: 40, y: 70 }} />
-
-        {/* Layer 5: Particle Nebula */}
-        <ParticleNebula cursorPosition={cursorPosition} />
-
-        {/* Layer 6: Gravitational Lensing */}
-        <GravitationalLens cursorPosition={cursorPosition} />
-
-        {/* Layer 5: Scanlines */}
-        <motion.div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, #22d3ee 2px, #22d3ee 4px)',
-          }}
-          animate={{ y: [0, 40, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-        />
-
-        {/* Vignette */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(2,8,23,0.8)_100%)]" />
-      </div>
+      <VisionBackground />
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       {/* 📄 CONTENT CONTAINER */}
@@ -639,17 +396,17 @@ const animatedGradient = useTransform(
 
           {/* Cinematic Title with Kinetic Typography */}
           <div className="relative mb-8">
-          <motion.h1
-  className="z-50 text-6xl sm:text-7xl lg:text-8xl font-black tracking-tighter mb-8 relative text-white"
-  style={{
-    backgroundImage: animatedGradient, // Apply the transformed motion value here
-    WebkitBackgroundClip: 'text',
-    // WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-    // color: 'transparent', // Fallback
-    display: 'inline-block', // Ensures the gradient clipping works correctly on all browsers
-  }}
->
+            <motion.h1
+              className="z-50 text-6xl sm:text-7xl lg:text-8xl font-black tracking-tighter mb-8 relative text-white"
+              style={{
+                backgroundImage: animatedGradient, // Apply the transformed motion value here
+                WebkitBackgroundClip: 'text',
+                // WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                // color: 'transparent', // Fallback
+                display: 'inline-block', // Ensures the gradient clipping works correctly on all browsers
+              }}
+            >
               {/* "Let's" - Particle materialization */}
               <motion.span
                 initial={{ opacity: 0, scale: 0.5, filter: 'blur(20px)' }}

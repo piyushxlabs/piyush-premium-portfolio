@@ -13,7 +13,7 @@ export function BackgroundEffects() {
   const handleMouseMove = useCallback((e: MouseEvent) => {
     const now = performance.now();
     if (now - lastUpdateRef.current < 33) return; // Throttle to ~30fps
-    
+
     lastUpdateRef.current = now;
     rafRef.current = requestAnimationFrame(() => {
       setMousePosition({
@@ -36,7 +36,7 @@ export function BackgroundEffects() {
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       {/* Base Gradient Foundation */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
-      
+
       {/* Aurora Layer 1 - Primary (Perf: Reduced opacity changes) */}
       <motion.div
         className="absolute inset-0 opacity-50"
@@ -109,9 +109,9 @@ export function BackgroundEffects() {
       {/* Depth Layers */}
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/40" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/20 to-slate-950/60" />
-      
+
       {/* Subtle Noise Texture */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.015] mix-blend-soft-light"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`

@@ -1,9 +1,11 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useAnimation, AnimatePresence } from 'framer-motion';
 import { Cpu, Activity, GitBranch, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import VisionBackground from '@/components/ui/VisionBackground';
 
 // TYPES
 type Experiment = {
@@ -73,96 +75,6 @@ const initialPrinciples: Principle[] = [
   { id: 'p3', text: 'Share knowledge', x: 50, y: 70 },
   { id: 'p4', text: 'Question assumptions', x: 50, y: 50 },
 ];
-
-// NEURAL BACKGROUND COMPONENT
-const NeuralBackground = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-
-    const particles: Particle[] = [];
-    const particleCount = 80;
-    const connectionDistance = 150;
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        size: Math.random() * 2 + 1,
-        opacity: Math.random() * 0.5 + 0.3,
-      });
-    }
-
-    let animationId: number;
-
-    const animate = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      // Update and draw particles
-      particles.forEach((p, i) => {
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-
-        // Draw particle
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(34, 211, 238, ${p.opacity})`;
-        ctx.fill();
-
-        // Draw connections
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < connectionDistance) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            const opacity = (1 - dist / connectionDistance) * 0.2;
-            ctx.strokeStyle = `rgba(34, 211, 238, ${opacity})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        }
-      });
-
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    const handleResize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationId);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-50" />;
-};
 
 // CUSTOM CURSOR COMPONENT
 const CustomCursor = () => {
@@ -822,7 +734,7 @@ export default function LabPage() {
   return (
     <main className="relative min-h-screen bg-black text-slate-200 overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-100">
       <CustomCursor />
-      <NeuralBackground />
+      <VisionBackground />
 
       {/* HERO SECTION: THE AWAKENING */}
       <section className="relative h-screen flex flex-col justify-center items-center z-10 px-6">
@@ -878,21 +790,21 @@ export default function LabPage() {
               </motion.p>
 
               {/* Scroll indicator */}
-<motion.div
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 1.8, duration: 1 }}
-  style={{ opacity: heroOpacity }}
-  // Yahan maine 'bottom--2' ko change karke 'bottom-10' kar diya hai 👇
-  className="absolute bottom--10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
->
-  <span className="text-xs text-cyan-500/60 tracking-[0.3em] uppercase">Scroll to Initialize</span>
-  <motion.div
-    animate={{ y: [0, 12, 0] }}
-    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-    className="w-[2px] h-16 bg-gradient-to-b from-cyan-500/0 via-cyan-500/60 to-cyan-500/0"
-  />
-</motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.8, duration: 1 }}
+                style={{ opacity: heroOpacity }}
+                // Yahan maine 'bottom--2' ko change karke 'bottom-10' kar diya hai 👇
+                className="absolute bottom--10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+              >
+                <span className="text-xs text-cyan-500/60 tracking-[0.3em] uppercase">Scroll to Initialize</span>
+                <motion.div
+                  animate={{ y: [0, 12, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                  className="w-[2px] h-16 bg-gradient-to-b from-cyan-500/0 via-cyan-500/60 to-cyan-500/0"
+                />
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
