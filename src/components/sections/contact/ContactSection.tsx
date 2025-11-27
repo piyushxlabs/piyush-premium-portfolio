@@ -35,9 +35,9 @@ const contactMethods = [
 
 const cardPositions: Record<string, { angle: number; radius: number; lineAngle?: number }> = {
   // Angle -90 screen par TOP-CENTER hota hai
-  "Email Me": { angle: -135, radius: 550, lineAngle:242 },
+  "Email Me": { angle: -135, radius: 550, lineAngle: 242 },
   // Angle 30 screen par BOTTOM-RIGHT hota hai
-  "Let's Chat": { angle: 5, radius: 300, lineAngle: 10},
+  "Let's Chat": { angle: 5, radius: 300, lineAngle: 10 },
   // Angle 150 (na ki 210) screen par BOTTOM-LEFT hota hai
   "Schedule a Call": { angle: 160, radius: 500, lineAngle: 143 },
 };
@@ -194,7 +194,7 @@ function CentralNexus({ isHovered }: { isHovered: number | null }) {
             boxShadow: "0 0 60px rgba(6, 182, 212, 0.4), inset 0 2px 4px rgba(255,255,255,0.1)"
           }}
         />
-        
+
         <motion.div
           className="absolute inset-4 rounded-full bg-gradient-to-br from-cyan-400/30 to-purple-500/30 blur-3xl"
           animate={{
@@ -358,10 +358,10 @@ function ContactCard({ method, index, onHover, isHovered, hoveredCard }: any) {
               <stop offset="100%" stopColor="rgb(168, 85, 247)" stopOpacity="0.8" />
             </linearGradient>
             <filter id={`glow-${index}`}>
-              <feGaussianBlur stdDeviation={hoveredCard === index ? "4" : "2"} result="coloredBlur"/>
+              <feGaussianBlur stdDeviation={hoveredCard === index ? "4" : "2"} result="coloredBlur" />
               <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
             <path
@@ -378,13 +378,13 @@ function ContactCard({ method, index, onHover, isHovered, hoveredCard }: any) {
             strokeWidth={hoveredCard === index ? "4" : "2.5"}
             filter={`url(#glow-${index})`}
             initial={{ pathLength: 0, y1: lineY1_base }}
-            animate={{ 
+            animate={{
               pathLength: 1,
               y1: hoveredCard === index ? lineY1_hover : lineY1_base
             }}
-            transition={{ 
+            transition={{
               pathLength: { duration: 1, delay: 0.5 + index * 0.1 },
-              y1: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } 
+              y1: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
             }}
           />
           {hoveredCard === index && [0, 1, 2].map((dotIndex) => (
@@ -413,15 +413,15 @@ function ContactCard({ method, index, onHover, isHovered, hoveredCard }: any) {
       <motion.div
         ref={cardRef}
         initial={{ opacity: 0, scale: 0.8, x: 0, y: 0 }}
-        whileInView={{ 
-          opacity: 1, 
+        whileInView={{
+          opacity: 1,
           scale: isMobile ? (isPrimary ? 1.08 : 1) : (isPrimary ? 1.15 : 1),
           x: isMobile ? 0 : xPos,
           y: isMobile ? 0 : yPos,
         }}
         viewport={{ once: true }}
-        transition={{ 
-          delay: 0.6 + index * 0.15, 
+        transition={{
+          delay: 0.6 + index * 0.15,
           duration: 0.8,
           type: "spring",
           stiffness: 80,
@@ -439,8 +439,8 @@ function ContactCard({ method, index, onHover, isHovered, hoveredCard }: any) {
         onHoverEnd={() => onHover(null)}
         className={`${isMobile ? 'relative w-full min-h-[200px]' : 'absolute left-1/2 top-1/2'} group ${isPrimary ? 'md:w-80' : 'md:w-72'}`}
       >
-        <Link 
-          href={method.href} 
+        <Link
+          href={method.href}
           onClick={(e) => {
             if (method.title === "Email Me") {
               e.preventDefault();
@@ -450,23 +450,22 @@ function ContactCard({ method, index, onHover, isHovered, hoveredCard }: any) {
           className="block"
         >
           <motion.div
-            className={`backdrop-blur-3xl rounded-3xl border shadow-2xl relative overflow-hidden ring-1 ring-inset ring-white/10 ${
-              isMobile 
+            className={`backdrop-blur-3xl rounded-3xl border shadow-2xl relative overflow-hidden ring-1 ring-inset ring-white/10 ${isMobile
                 ? (isPrimary ? 'p-9 bg-white/[0.06] border-2 border-cyan-400/30' : 'p-7 bg-white/[0.04] border border-white/10')
                 : (isPrimary ? 'p-12 bg-white/[0.04] border border-white/10' : 'p-10 bg-white/[0.04] border border-white/10')
-            }`}
-            whileHover={{ 
+              }`}
+            whileHover={{
               borderColor: "rgba(6, 182, 212, 0.6)",
               y: isMobile ? 0 : -10,
             }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              boxShadow: hoveredCard === index 
+              boxShadow: hoveredCard === index
                 ? "0 12px 24px rgba(0,0,0,0.5), 0 24px 72px rgba(6,182,212,0.4), 0 0 60px rgba(6,182,212,0.3)"
                 : "0 4px 12px rgba(0,0,0,0.4), 0 16px 48px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.05)",
             }}
           >
-            <motion.div 
+            <motion.div
               className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-purple-500/10"
               animate={{
                 opacity: hoveredCard === index ? 0.2 : 0,
@@ -511,7 +510,7 @@ function ContactCard({ method, index, onHover, isHovered, hoveredCard }: any) {
               />
             ))}
 
-            <div 
+            <div
               className="absolute inset-0 opacity-[0.02]"
               style={{
                 backgroundImage: "url(data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E)",
@@ -519,12 +518,11 @@ function ContactCard({ method, index, onHover, isHovered, hoveredCard }: any) {
             />
 
             <div className="relative z-10">
-              <motion.div 
-                className={`mx-auto rounded-2xl bg-gradient-to-tr from-cyan-400 to-purple-500 shadow-2xl relative ${
-                  isMobile
+              <motion.div
+                className={`mx-auto rounded-2xl bg-gradient-to-tr from-cyan-400 to-purple-500 shadow-2xl relative ${isMobile
                     ? (isPrimary ? 'w-20 h-20 p-5 mb-5' : 'w-18 h-18 p-5 mb-5')
                     : (isPrimary ? 'w-24 h-24 p-5 mb-6' : 'w-20 h-20 p-4 mb-5')
-                }`}
+                  }`}
                 style={{
                   boxShadow: "0 8px 32px rgba(6, 182, 212, 0.4), 0 0 60px rgba(6, 182, 212, 0.3), inset 0 2px 4px rgba(255,255,255,0.1)",
                   transformStyle: "preserve-3d",
@@ -537,8 +535,8 @@ function ContactCard({ method, index, onHover, isHovered, hoveredCard }: any) {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                whileHover={{ 
-                  scale: 1.2, 
+                whileHover={{
+                  scale: 1.2,
                   rotate: 10,
                 }}
               >
@@ -658,15 +656,13 @@ function ContactCard({ method, index, onHover, isHovered, hoveredCard }: any) {
                 )}
               </motion.div>
 
-              <h3 className={`font-heading font-bold text-slate-100 text-center ${
-                isMobile ? 'mb-4' : 'mb-3'
-              } ${isPrimary ? (isMobile ? 'text-2xl' : 'text-3xl') : 'text-xl'}`}>
+              <h3 className={`font-heading font-bold text-slate-100 text-center ${isMobile ? 'mb-4' : 'mb-3'
+                } ${isPrimary ? (isMobile ? 'text-2xl' : 'text-3xl') : 'text-xl'}`}>
                 {method.title}
               </h3>
-              
-              <p className={`text-slate-300 text-center leading-relaxed ${
-                isMobile ? 'mb-3' : 'mb-2'
-              } ${isPrimary ? 'text-base' : 'text-sm'}`}>
+
+              <p className={`text-slate-300 text-center leading-relaxed ${isMobile ? 'mb-3' : 'mb-2'
+                } ${isPrimary ? 'text-base' : 'text-sm'}`}>
                 {method.description}
               </p>
 
@@ -769,7 +765,7 @@ function DirectMessageForm({ isOpen, onClose }: { isOpen: boolean; onClose: () =
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-2xl backdrop-blur-2xl bg-white/[0.05] rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl relative overflow-hidden"
           >
-            <motion.div 
+            <motion.div
               className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-purple-500/10"
               animate={{
                 backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
@@ -960,9 +956,8 @@ function DirectMessageForm({ isOpen, onClose }: { isOpen: boolean; onClose: () =
                             initial={{ opacity: 0, x: 10 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: 10 }}
-                            className={`text-xs font-medium ${
-                              wordCount < 50 ? "text-cyan-400" : wordCount < 150 ? "text-purple-400" : "text-green-400"
-                            }`}
+                            className={`text-xs font-medium ${wordCount < 50 ? "text-cyan-400" : wordCount < 150 ? "text-purple-400" : "text-green-400"
+                              }`}
                           >
                             {getMotivationalText()}
                           </motion.span>
@@ -1015,11 +1010,11 @@ export function ContactSection() {
   const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const ctaDistance = useMotionValue(1000);
-  
+
   const springConfig = { damping: 25, stiffness: 150 };
   const ctaX = useSpring(mouseX, springConfig);
   const ctaY = useSpring(mouseY, springConfig);
@@ -1059,7 +1054,7 @@ export function ContactSection() {
   };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="relative py-32 md:py-48 overflow-hidden bg-slate-950"
       onMouseMove={handleMouseMove}
@@ -1104,7 +1099,7 @@ export function ContactSection() {
           />
         ))}
       </div>
-      <motion.div 
+      <motion.div
         className="absolute w-96 h-96 rounded-full bg-cyan-400/20 blur-[100px] pointer-events-none hidden md:block"
         style={{
           left: cursorXSpring,
@@ -1115,13 +1110,13 @@ export function ContactSection() {
       />
 
       <div className="absolute inset-0 bg-gradient-radial from-cyan-500/5 via-transparent to-transparent opacity-60 pointer-events-none" style={{ transform: "translateZ(-3px)", willChange: "transform" }} />
-      <motion.div 
+      <motion.div
         className="absolute top-1/2 left-1/4 w-[800px] h-[600px] bg-gradient-radial from-purple-500/10 to-transparent blur-[60px] opacity-40 pointer-events-none"
         style={{ transform: "translateZ(-3px)" }}
         animate={{ y: [0, -50, 0], x: [0, 30, 0] }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       />
-      <motion.div 
+      <motion.div
         className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-radial from-cyan-500/10 to-transparent blur-[60px] opacity-40 pointer-events-none"
         style={{ transform: "translateZ(-3px)" }}
         animate={{ y: [0, 50, 0], x: [0, -30, 0] }}
@@ -1148,7 +1143,7 @@ export function ContactSection() {
           }}
         />
       ))}
-      
+
       <div className="absolute inset-0 hidden md:block" style={{ transform: "translateZ(0)" }}>
         <ConstellationParticles />
       </div>
@@ -1206,7 +1201,7 @@ export function ContactSection() {
               </motion.span>
               Let's Connect
             </motion.span>
-            <motion.div 
+            <motion.div
               className="absolute top-full left-1/2 w-px h-8 bg-gradient-to-b from-cyan-400/50 to-transparent md:hidden"
               initial={{ scaleY: 0 }}
               animate={{ scaleY: 1 }}
@@ -1215,7 +1210,7 @@ export function ContactSection() {
           </motion.div>
 
           <div className="overflow-hidden">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -1264,10 +1259,10 @@ export function ContactSection() {
                         <motion.span
                           key={pi}
                           className="absolute w-1 h-1 bg-cyan-400 rounded-full pointer-events-none"
-                          initial={{ 
-                            x: "50%", 
+                          initial={{
+                            x: "50%",
                             y: "50%",
-                            opacity: 0 
+                            opacity: 0
                           }}
                           animate={{
                             x: `${50 + (Math.random() - 0.5) * 200}%`,
@@ -1290,7 +1285,7 @@ export function ContactSection() {
             </motion.h2>
           </div>
 
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -1348,7 +1343,7 @@ export function ContactSection() {
           transition={{ delay: 0.5, duration: 1 }}
           className="relative mb-24 md:mb-32 max-w-5xl mx-auto cursor-pointer" // <-- cursor-pointer add karein
         >
-          <motion.div 
+          <motion.div
             className="h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent relative"
           >
             {[0, 0.25, 0.5, 0.75, 1].map((pos, i) => (
@@ -1368,8 +1363,8 @@ export function ContactSection() {
               />
             ))}
           </motion.div>
-          
-          <motion.p 
+
+          <motion.p
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-2 bg-slate-900 text-xs uppercase tracking-wider text-slate-500 text-center backdrop-blur-sm border border-white/5 rounded-full whitespace-nowrap"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1385,20 +1380,20 @@ export function ContactSection() {
           {isMobile ? (
             <div className="relative max-w-md mx-auto px-6 pt-20 pb-24">
               <div className="absolute left-10 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-cyan-400/40 to-transparent" />
-              
-              <motion.div 
+
+              <motion.div
                 className="absolute left-10 w-2 h-2 bg-cyan-400 rounded-full -translate-x-[3px]"
                 animate={{ y: [0, 600] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                 style={{ filter: "drop-shadow(0 0 8px rgb(6, 182, 212))" }}
               />
-              
+
               <div className="space-y-10">
                 {contactMethods.map((method, index) => (
                   <div key={method.title} className="relative flex items-start gap-6">
-                    <motion.div 
+                    <motion.div
                       className="w-4 h-4 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 flex-shrink-0 mt-8"
-                      style={{ 
+                      style={{
                         boxShadow: "0 0 20px rgba(6,182,212,0.6)",
                         marginLeft: "24px"
                       }}
@@ -1412,7 +1407,7 @@ export function ContactSection() {
                       }}
                       transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
                     />
-                    
+
                     <svg className="absolute left-[28px] top-10 w-8 h-1" style={{ overflow: "visible" }}>
                       <defs>
                         <linearGradient id="mobileLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1430,7 +1425,7 @@ export function ContactSection() {
                         transition={{ duration: 0.8, delay: 0.5 + index * 0.15 }}
                       />
                     </svg>
-                    
+
                     <div className="flex-1">
                       <ContactCard
                         method={method}
@@ -1447,7 +1442,7 @@ export function ContactSection() {
           ) : (
             <div className="relative h-[700px]">
               <CentralNexus isHovered={hoveredCard} />
-              
+
               {contactMethods.map((method, index) => (
                 <ContactCard
                   key={method.title}
@@ -1494,8 +1489,8 @@ export function ContactSection() {
           <Link href="/connect">
             <motion.div
               ref={ctaRef}
-              style={{ 
-                x: ctaX, 
+              style={{
+                x: ctaX,
                 y: ctaY,
                 scale: ctaScale
               }}

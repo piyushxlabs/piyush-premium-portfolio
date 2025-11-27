@@ -1,27 +1,50 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // --- Types & Configuration ---
-// Keeping it simple as per the new design philosophy
 
-export function PageLoader() {
+interface PageLoaderProps {
+  isLoading?: boolean;
+  onComplete?: () => void;
+}
+
+/**
+ * Quantum Crystalline Matrix Loader
+ * 
+ * A premium, cinematic loading experience featuring:
+ * - 3D Holographic Ring System (CSS 3D Transforms)
+ * - Crystalline Hexagon Core with Glassmorphism
+ * - Organic Particle Swarm
+ * - Volumetric Atmospheric Effects
+ * - Optimized 60fps Performance
+ */
+export function PageLoader({ isLoading: externalLoading, onComplete }: PageLoaderProps = {}) {
   const [progress, setProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Device detection for performance optimization
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Simulate loading progress
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => {
-        // Non-linear progress simulation
+        // Non-linear progress for organic feel
         const increment = Math.random() * 4 + 0.5;
         const newProgress = prev + increment;
 
         if (newProgress >= 100) {
           clearInterval(interval);
-          setTimeout(() => setIsComplete(true), 500); // Slight delay at 100%
+          setTimeout(() => setIsComplete(true), 800); // Wait for exit animation trigger
           return 100;
         }
         return newProgress;
@@ -33,7 +56,43 @@ export function PageLoader() {
 
   const handleExitComplete = () => {
     setIsVisible(false);
+    onComplete?.();
   };
+
+  // Memoize random values to prevent re-renders
+  const particles = useMemo(() => {
+    const count = isMobile ? 25 : 50; // Performance optimization
+    return Array.from({ length: count }, (_, i) => ({
+      id: i,
+      angle: (i / count) * Math.PI * 2,
+      radius: 100 + Math.random() * 140, // Expanded radius
+      duration: 3 + Math.random() * 4,
+      delay: Math.random() * 2,
+      size: 2 + Math.random() * 3,
+      color: i % 3 === 0 ? "#00f5ff" : i % 3 === 1 ? "#bd00ff" : "#ffffff",
+    }));
+  }, [isMobile]);
+
+  const satellites = useMemo(() => {
+    if (isMobile) return []; // Hide on mobile for performance
+    return Array.from({ length: 8 }, (_, i) => ({
+      id: i,
+      angle: (i / 8) * Math.PI * 2,
+      distance: 220 + Math.random() * 60, // Pushed outward
+      size: 10 + Math.random() * 8,
+      duration: 6 + Math.random() * 4,
+      delay: i * 0.5,
+    }));
+  }, [isMobile]);
+
+  const rays = useMemo(() => {
+    return Array.from({ length: 6 }, (_, i) => ({
+      id: i,
+      rotation: (i / 6) * 360,
+      width: 8 + (i % 3) * 4, // Thicker rays
+      delay: i * 0.2,
+    }));
+  }, []);
 
   if (!isVisible) return null;
 
@@ -41,550 +100,321 @@ export function PageLoader() {
     <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
       {!isComplete && (
         <motion.div
-          key="neural-bloom-loader"
-          className="fixed inset-0 z-[99999] flex items-center justify-center overflow-hidden"
+          key="quantum-loader-container"
+          className="fixed inset-0 z-[99999] flex items-center justify-center overflow-hidden bg-[#050a14]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{
-            opacity: { duration: 0.8, ease: "easeInOut" }
+          exit={{ opacity: 0, transition: { duration: 1, ease: "easeInOut" } }}
+          style={{
+            perspective: "1200px",
+            transformStyle: "preserve-3d"
           }}
         >
-          {/* --- Layer 0: Deep Gradient Background --- */}
+          {/* --- Layer 0: Deep Space Background & Grid --- */}
           <motion.div
             className="absolute inset-0"
             style={{
-              background: "radial-gradient(ellipse at center, #0a0e1a 0%, #050a0f 100%)"
+              background: "radial-gradient(ellipse at center, #1a0b2e 0%, #0a0118 60%, #000000 100%)", // Lightened midtone
+              zIndex: 0
             }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
           />
 
-          {/* --- Layer 1: Ambient Glow --- */}
+          {/* Isometric Energy Grid - Made Visible */}
           <motion.div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: "radial-gradient(circle at center, rgba(77, 208, 225, 0.03) 0%, transparent 60%)"
+              backgroundImage: `
+                linear-gradient(rgba(0, 245, 255, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 245, 255, 0.15) 1px, transparent 1px)
+              `,
+              backgroundSize: "60px 60px",
+              transform: "perspective(500px) rotateX(60deg) scale(2.5)",
+              transformOrigin: "center 40%",
+              maskImage: "radial-gradient(ellipse at center, black 30%, transparent 80%)",
+              zIndex: 1
             }}
-            animate={{
-              scale: [1, 1.05, 1]
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transform: "perspective(500px) rotateX(60deg) scale(2.5) translateY(0px)" }}
+            transition={{ duration: 1.5 }}
           />
 
-          {/* --- Layer 2: Subtle Noise Texture --- */}
-          <div
-            className="absolute inset-0 opacity-[0.02] pointer-events-none mix-blend-overlay"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-              backgroundSize: "200px 200px"
-            }}
-          />
-
-          {/* --- Layer 3: Dendrite Branch System --- */}
-          <svg
-            className="absolute inset-0 w-full h-full pointer-events-none"
-            style={{ overflow: "visible" }}
-          >
-            <defs>
-              <linearGradient id="branchGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#4dd0e1" stopOpacity="0.9" />
-                <stop offset="100%" stopColor="#7c4dff" stopOpacity="0.7" />
-              </linearGradient>
-
-              <filter id="branchGlow">
-                <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-                <feMerge>
-                  <feMergeNode in="coloredBlur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
-
-            <motion.g
-              style={{ transformOrigin: "center" }}
-              animate={{
-                rotate: [0, 2, 0, -2, 0]
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              {/* Branch 1 - Top */}
-              <motion.path
-                d="M 50% 50% Q 50% 35%, 50% 20%"
-                stroke="url(#branchGradient)"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                filter="url(#branchGlow)"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{
-                  pathLength: 1,
-                  opacity: [0, 0.7, 1, 0.8, 0.9]
-                }}
-                exit={{
-                  pathLength: 0,
-                  opacity: 0,
-                  transition: { duration: 0.6, ease: [0.87, 0, 0.13, 1] }
-                }}
-                transition={{
-                  pathLength: { duration: 1.8, delay: 0.2, ease: "easeInOut" },
-                  opacity: { duration: 4, delay: 0.2, repeat: Infinity, ease: "easeInOut" }
-                }}
-              />
-
-              {/* Branch 2 - Top Right */}
-              <motion.path
-                d="M 50% 50% Q 60% 38%, 70% 25%"
-                stroke="url(#branchGradient)"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                filter="url(#branchGlow)"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{
-                  pathLength: 1,
-                  opacity: [0, 0.7, 1, 0.8, 0.9]
-                }}
-                exit={{
-                  pathLength: 0,
-                  opacity: 0,
-                  transition: { duration: 0.6, ease: [0.87, 0, 0.13, 1] }
-                }}
-                transition={{
-                  pathLength: { duration: 2.2, delay: 0.35, ease: "easeInOut" },
-                  opacity: { duration: 4, delay: 0.35, repeat: Infinity, ease: "easeInOut" }
-                }}
-              />
-
-              {/* Branch 3 - Right */}
-              <motion.path
-                d="M 50% 50% Q 63% 50%, 75% 50%"
-                stroke="url(#branchGradient)"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                filter="url(#branchGlow)"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{
-                  pathLength: 1,
-                  opacity: [0, 0.7, 1, 0.8, 0.9]
-                }}
-                exit={{
-                  pathLength: 0,
-                  opacity: 0,
-                  transition: { duration: 0.6, ease: [0.87, 0, 0.13, 1] }
-                }}
-                transition={{
-                  pathLength: { duration: 1.5, delay: 0.5, ease: "easeInOut" },
-                  opacity: { duration: 4, delay: 0.5, repeat: Infinity, ease: "easeInOut" }
-                }}
-              />
-
-              {/* Branch 4 - Bottom Right */}
-              <motion.path
-                d="M 50% 50% Q 60% 62%, 70% 75%"
-                stroke="url(#branchGradient)"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                filter="url(#branchGlow)"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{
-                  pathLength: 1,
-                  opacity: [0, 0.7, 1, 0.8, 0.9]
-                }}
-                exit={{
-                  pathLength: 0,
-                  opacity: 0,
-                  transition: { duration: 0.6, ease: [0.87, 0, 0.13, 1] }
-                }}
-                transition={{
-                  pathLength: { duration: 2.5, delay: 0.65, ease: "easeInOut" },
-                  opacity: { duration: 4, delay: 0.65, repeat: Infinity, ease: "easeInOut" }
-                }}
-              />
-
-              {/* Branch 5 - Bottom */}
-              <motion.path
-                d="M 50% 50% Q 50% 65%, 50% 80%"
-                stroke="url(#branchGradient)"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                filter="url(#branchGlow)"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{
-                  pathLength: 1,
-                  opacity: [0, 0.7, 1, 0.8, 0.9]
-                }}
-                exit={{
-                  pathLength: 0,
-                  opacity: 0,
-                  transition: { duration: 0.6, ease: [0.87, 0, 0.13, 1] }
-                }}
-                transition={{
-                  pathLength: { duration: 1.9, delay: 0.8, ease: "easeInOut" },
-                  opacity: { duration: 4, delay: 0.8, repeat: Infinity, ease: "easeInOut" }
-                }}
-              />
-
-              {/* Branch 6 - Bottom Left */}
-              <motion.path
-                d="M 50% 50% Q 40% 62%, 30% 75%"
-                stroke="url(#branchGradient)"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                filter="url(#branchGlow)"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{
-                  pathLength: 1,
-                  opacity: [0, 0.7, 1, 0.8, 0.9]
-                }}
-                exit={{
-                  pathLength: 0,
-                  opacity: 0,
-                  transition: { duration: 0.6, ease: [0.87, 0, 0.13, 1] }
-                }}
-                transition={{
-                  pathLength: { duration: 2.3, delay: 0.95, ease: "easeInOut" },
-                  opacity: { duration: 4, delay: 0.95, repeat: Infinity, ease: "easeInOut" }
-                }}
-              />
-
-              {/* Branch 7 - Left */}
-              <motion.path
-                d="M 50% 50% Q 37% 50%, 25% 50%"
-                stroke="url(#branchGradient)"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                filter="url(#branchGlow)"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{
-                  pathLength: 1,
-                  opacity: [0, 0.7, 1, 0.8, 0.9]
-                }}
-                exit={{
-                  pathLength: 0,
-                  opacity: 0,
-                  transition: { duration: 0.6, ease: [0.87, 0, 0.13, 1] }
-                }}
-                transition={{
-                  pathLength: { duration: 1.7, delay: 1.1, ease: "easeInOut" },
-                  opacity: { duration: 4, delay: 1.1, repeat: Infinity, ease: "easeInOut" }
-                }}
-              />
-
-              {/* Branch 8 - Top Left */}
-              <motion.path
-                d="M 50% 50% Q 40% 38%, 30% 25%"
-                stroke="url(#branchGradient)"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                filter="url(#branchGlow)"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{
-                  pathLength: 1,
-                  opacity: [0, 0.7, 1, 0.8, 0.9]
-                }}
-                exit={{
-                  pathLength: 0,
-                  opacity: 0,
-                  transition: { duration: 0.6, ease: [0.87, 0, 0.13, 1] }
-                }}
-                transition={{
-                  pathLength: { duration: 2.1, delay: 1.25, ease: "easeInOut" },
-                  opacity: { duration: 4, delay: 1.25, repeat: Infinity, ease: "easeInOut" }
-                }}
-              />
-
-              {/* Synapse Pulses */}
-              {progress > 20 && (
-                <>
-                  <motion.circle
-                    r="2"
-                    fill="#00e5ff"
-                    filter="url(#branchGlow)"
-                    style={{ offsetPath: "path('M 50% 50% Q 50% 35%, 50% 20%')" }}
-                    initial={{ offsetDistance: "0%", opacity: 0 }}
-                    animate={{
-                      offsetDistance: ["0%", "100%"],
-                      opacity: [0, 1, 1, 0],
-                      scale: [1, 1.3, 1]
-                    }}
-                    transition={{
-                      offsetDistance: { duration: 1.2, ease: "linear", repeat: Infinity, repeatDelay: 0.6, delay: 0 },
-                      opacity: { duration: 1.2, times: [0, 0.1, 0.9, 1], repeat: Infinity, repeatDelay: 0.6, delay: 0 },
-                      scale: { duration: 0.3, repeat: Infinity, repeatDelay: 1.5, delay: 0 }
-                    }}
-                  />
-                  <motion.circle
-                    r="2"
-                    fill="#b388ff"
-                    filter="url(#branchGlow)"
-                    style={{ offsetPath: "path('M 50% 50% Q 63% 50%, 75% 50%')" }}
-                    initial={{ offsetDistance: "0%", opacity: 0 }}
-                    animate={{
-                      offsetDistance: ["0%", "100%"],
-                      opacity: [0, 1, 1, 0],
-                      scale: [1, 1.3, 1]
-                    }}
-                    transition={{
-                      offsetDistance: { duration: 1, ease: "linear", repeat: Infinity, repeatDelay: 0.8, delay: 0.5 },
-                      opacity: { duration: 1, times: [0, 0.1, 0.9, 1], repeat: Infinity, repeatDelay: 0.8, delay: 0.5 },
-                      scale: { duration: 0.3, repeat: Infinity, repeatDelay: 1.5, delay: 0.5 }
-                    }}
-                  />
-                  <motion.circle
-                    r="2"
-                    fill="#00e5ff"
-                    filter="url(#branchGlow)"
-                    style={{ offsetPath: "path('M 50% 50% Q 50% 65%, 50% 80%')" }}
-                    initial={{ offsetDistance: "0%", opacity: 0 }}
-                    animate={{
-                      offsetDistance: ["0%", "100%"],
-                      opacity: [0, 1, 1, 0],
-                      scale: [1, 1.3, 1]
-                    }}
-                    transition={{
-                      offsetDistance: { duration: 1.3, ease: "linear", repeat: Infinity, repeatDelay: 0.5, delay: 0.8 },
-                      opacity: { duration: 1.3, times: [0, 0.1, 0.9, 1], repeat: Infinity, repeatDelay: 0.5, delay: 0.8 },
-                      scale: { duration: 0.3, repeat: Infinity, repeatDelay: 1.5, delay: 0.8 }
-                    }}
-                  />
-                  <motion.circle
-                    r="2"
-                    fill="#b388ff"
-                    filter="url(#branchGlow)"
-                    style={{ offsetPath: "path('M 50% 50% Q 37% 50%, 25% 50%')" }}
-                    initial={{ offsetDistance: "0%", opacity: 0 }}
-                    animate={{
-                      offsetDistance: ["0%", "100%"],
-                      opacity: [0, 1, 1, 0],
-                      scale: [1, 1.3, 1]
-                    }}
-                    transition={{
-                      offsetDistance: { duration: 0.9, ease: "linear", repeat: Infinity, repeatDelay: 1, delay: 1.1 },
-                      opacity: { duration: 0.9, times: [0, 0.1, 0.9, 1], repeat: Infinity, repeatDelay: 1, delay: 1.1 },
-                      scale: { duration: 0.3, repeat: Infinity, repeatDelay: 1.5, delay: 1.1 }
-                    }}
-                  />
-                </>
-              )}
-            </motion.g>
-          </svg>
-
-          {/* --- Layer 4: Central Neuron Core --- */}
+          {/* --- Layer 1: Volumetric Light Rays --- */}
           <motion.div
-            className="absolute"
-            style={{
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)"
-            }}
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ zIndex: 2 }}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           >
-            {/* Core glow aura */}
-            <motion.div
-              className="absolute"
-              style={{
-                width: "80px",
-                height: "80px",
-                left: "-40px",
-                top: "-40px",
-                background: "radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%)",
-                filter: "blur(20px)",
-                borderRadius: "50%"
-              }}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{
-                scale: [0, 1, 1.15, 1],
-                opacity: [0, 1, 0.9, 1, 0.9]
-              }}
-              exit={{
-                scale: 0,
-                opacity: 0,
-                transition: { duration: 0.6, ease: [0.87, 0, 0.13, 1] }
-              }}
-              transition={{
-                scale: {
-                  duration: 2.5,
-                  times: [0, 0.3, 0.65, 1],
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  ease: "easeInOut"
-                },
-                opacity: {
-                  duration: 3,
-                  times: [0, 0.3, 0.5, 0.7, 1],
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }
-              }}
-            />
-
-            {/* Core neuron body */}
-            <motion.div
-              style={{
-                width: "12px",
-                height: "12px",
-                borderRadius: "50%",
-                background: "#ffffff",
-                boxShadow: "0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(77, 208, 225, 0.4)",
-                position: "relative",
-                left: "-6px",
-                top: "-6px"
-              }}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{
-                scale: [0, 1, 1.15, 1],
-                opacity: [0, 1, 0.9, 1, 0.9]
-              }}
-              exit={{
-                scale: 0,
-                opacity: 0,
-                transition: { duration: 0.6, ease: [0.87, 0, 0.13, 1] }
-              }}
-              transition={{
-                scale: {
-                  duration: 2.5,
-                  times: [0, 0.3, 0.65, 1],
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.2
-                },
-                opacity: {
-                  duration: 3,
-                  times: [0, 0.3, 0.5, 0.7, 1],
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.2
-                }
-              }}
-            />
+            {rays.map((ray) => (
+              <motion.div
+                key={`ray-${ray.id}`}
+                className="absolute top-1/2 left-1/2 origin-bottom"
+                style={{
+                  width: ray.width,
+                  height: "100vmax",
+                  background: `linear-gradient(to top, rgba(0, 245, 255, 0) 0%, rgba(0, 245, 255, 0.15) 40%, rgba(0, 0, 0, 0) 100%)`, // Increased opacity
+                  transform: `translate(-50%, -100%) rotate(${ray.rotation}deg)`,
+                  filter: "blur(8px)",
+                }}
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 4, delay: ray.delay, repeat: Infinity, ease: "easeInOut" }}
+              />
+            ))}
           </motion.div>
 
-          {/* --- Layer 5: Progress Indicator --- */}
-          <motion.div
-            className="absolute"
-            style={{
-              bottom: "clamp(60px, 12vh, 100px)",
-              left: "50%",
-              transform: "translateX(-50%)",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "16px"
-            }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10, transition: { duration: 0.3 } }}
-            transition={{
-              opacity: { duration: 0.6, delay: 0.5 },
-              y: { duration: 0.6, delay: 0.5, ease: "easeOut" }
-            }}
-          >
-            {/* Progress line container */}
-            <div
+          {/* --- Layer 2: 3D Orbital Ring System (HTML/CSS) --- */}
+          {/* Replaced SVG with Divs for true 3D transforms */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ zIndex: 10, transformStyle: "preserve-3d" }}>
+
+            {/* Ring 1: Horizontal Plane */}
+            <motion.div
+              className="absolute rounded-full border border-cyan-400/60"
               style={{
-                width: "clamp(180px, 40vw, 240px)",
-                height: "2px",
-                background: "rgba(176, 190, 197, 0.15)",
-                borderRadius: "999px",
-                overflow: "hidden",
-                position: "relative"
+                width: "min(60vw, 360px)",
+                height: "min(60vw, 360px)",
+                boxShadow: "0 0 20px rgba(0, 245, 255, 0.3), inset 0 0 20px rgba(0, 245, 255, 0.1)",
+                borderWidth: "1px",
+              }}
+              animate={{ rotateX: [70, 70], rotateZ: [0, 360] }}
+              transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+            />
+
+            {/* Ring 2: 45 Degree Plane */}
+            <motion.div
+              className="absolute rounded-full border border-purple-500/60"
+              style={{
+                width: "min(70vw, 440px)",
+                height: "min(70vw, 440px)",
+                boxShadow: "0 0 20px rgba(189, 0, 255, 0.3), inset 0 0 20px rgba(189, 0, 255, 0.1)",
+                borderWidth: "1px",
+              }}
+              animate={{ rotateX: [70, 70], rotateY: [45, 45], rotateZ: [0, -360] }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            />
+
+            {/* Ring 3: Vertical-ish Plane */}
+            <motion.div
+              className="absolute rounded-full border border-cyan-300/50"
+              style={{
+                width: "min(80vw, 520px)",
+                height: "min(80vw, 520px)",
+                boxShadow: "0 0 25px rgba(0, 245, 255, 0.2)",
+                borderWidth: "2px",
+                borderStyle: "dashed",
+              }}
+              animate={{ rotateX: [60, 60], rotateY: [-45, -45], rotateZ: [0, 360] }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
+
+          {/* --- Layer 3: Organic Particle Swarm --- */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ zIndex: 20 }}>
+            {particles.map((p) => (
+              <motion.div
+                key={`particle-${p.id}`}
+                className="absolute rounded-full"
+                style={{
+                  width: p.size,
+                  height: p.size,
+                  background: p.color,
+                  boxShadow: `0 0 ${p.size * 3}px ${p.color}`,
+                }}
+                animate={{
+                  x: [
+                    Math.cos(p.angle) * p.radius,
+                    Math.cos(p.angle + Math.PI) * (p.radius * 0.8),
+                    Math.cos(p.angle + Math.PI * 2) * p.radius
+                  ],
+                  y: [
+                    Math.sin(p.angle) * (p.radius * 0.6),
+                    Math.sin(p.angle + Math.PI) * p.radius,
+                    Math.sin(p.angle + Math.PI * 2) * (p.radius * 0.6)
+                  ],
+                  scale: [0.8, 1.2, 0.8],
+                  opacity: [0.4, 1, 0.4],
+                }}
+                transition={{
+                  duration: p.duration,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: p.delay,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* --- Layer 4: Geometric Satellites (Visible) --- */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ zIndex: 15 }}>
+            {satellites.map((s) => (
+              <motion.div
+                key={`sat-${s.id}`}
+                className="absolute"
+                style={{
+                  width: s.size,
+                  height: s.size,
+                  background: "rgba(255, 255, 255, 0.2)", // Increased opacity
+                  border: "1px solid rgba(0, 245, 255, 0.8)", // Visible border
+                  boxShadow: "0 0 15px rgba(0, 245, 255, 0.6)", // Stronger glow
+                  backdropFilter: "none", // Removed problematic blur
+                }}
+                animate={{
+                  x: [
+                    Math.cos(s.angle) * s.distance,
+                    Math.cos(s.angle + Math.PI) * s.distance
+                  ],
+                  y: [
+                    Math.sin(s.angle) * s.distance,
+                    Math.sin(s.angle + Math.PI) * s.distance
+                  ],
+                  rotate: [0, 360],
+                  rotateX: [0, 180],
+                }}
+                transition={{
+                  duration: s.duration,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: s.delay,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* --- Layer 5: Central Crystalline Core --- */}
+          <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 30, transformStyle: "preserve-3d" }}>
+            {/* Core Glow */}
+            <motion.div
+              className="absolute rounded-full"
+              style={{
+                width: "180px",
+                height: "180px",
+                background: "radial-gradient(circle, rgba(0, 245, 255, 0.6) 0%, rgba(189, 0, 255, 0.3) 60%, transparent 100%)",
+                filter: "blur(30px)",
+              }}
+              animate={{ scale: [1, 1.2, 1], opacity: [0.6, 0.9, 0.6] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
+
+            {/* Hexagon Crystal */}
+            <motion.div
+              className="relative flex items-center justify-center"
+              style={{
+                width: "140px",
+                height: "140px",
+                transformStyle: "preserve-3d",
+              }}
+              animate={{
+                rotateY: [0, 360],
+                rotateZ: [0, 10, 0, -10, 0]
+              }}
+              transition={{
+                rotateY: { duration: 10, repeat: Infinity, ease: "linear" },
+                rotateZ: { duration: 5, repeat: Infinity, ease: "easeInOut" }
               }}
             >
-              {/* Filled progress */}
-              <motion.div
+              <div
+                className="absolute inset-0"
                 style={{
-                  height: "100%",
-                  background: "linear-gradient(90deg, #4dd0e1 0%, #7c4dff 100%)",
-                  borderRadius: "999px",
-                  boxShadow: "0 0 10px rgba(77, 208, 225, 0.6)"
+                  background: "rgba(255, 255, 255, 0.05)",
+                  backdropFilter: "blur(10px)",
+                  clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+                  border: "2px solid rgba(0, 245, 255, 0.8)", // Stronger border
+                  boxShadow: "0 0 30px rgba(0, 245, 255, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.2)",
                 }}
-                initial={{ width: "0%" }}
-                animate={{ width: `${Math.min(progress, 100)}%` }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
+              />
+              {/* Inner Core */}
+              <motion.div
+                className="absolute w-12 h-12 rounded-full bg-white"
+                style={{
+                  boxShadow: "0 0 40px rgba(0, 245, 255, 1), 0 0 80px rgba(189, 0, 255, 0.8)",
+                }}
+                animate={{ scale: [0.8, 1.1, 0.8] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
+          </div>
+
+          {/* --- Layer 6: Progress UI --- */}
+          <motion.div
+            className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
+            style={{ zIndex: 40 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+          >
+            {/* Progress Bar */}
+            <div className="w-[300px] h-1 bg-white/10 rounded-full overflow-hidden relative">
+              <motion.div
+                className="h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-cyan-400"
+                style={{ width: `${progress}%`, boxShadow: "0 0 15px rgba(0, 245, 255, 0.8)" }}
+              />
+              {/* Shimmer */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                animate={{ x: ["-100%", "100%"] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
               />
             </div>
 
-            {/* Status text */}
-            <motion.p
-              className="text-sm font-light"
-              style={{
-                color: "#b0bec5",
-                fontFamily: "system-ui, -apple-system, sans-serif",
-                letterSpacing: "0.05em"
-              }}
-              animate={{
-                opacity: [0.6, 0.8, 0.6]
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              Growing connections...
-            </motion.p>
+            {/* Text */}
+            <div className="flex items-center gap-2">
+              <span className="text-cyan-400 text-xs font-medium tracking-[0.2em] font-mono uppercase drop-shadow-[0_0_5px_rgba(0,245,255,0.8)]">
+                Initializing Matrix
+              </span>
+              <div className="flex gap-1">
+                {[0, 1, 2].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="w-1 h-1 rounded-full bg-cyan-400"
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 1, delay: i * 0.2, repeat: Infinity }}
+                  />
+                ))}
+              </div>
+            </div>
           </motion.div>
 
-        </motion.div>
-      )}
-
-      {/* --- Layer 6: Exit Particle Burst --- */}
-      {isComplete && (
-        <motion.div key="exit-particles" className="fixed inset-0 z-[99999] pointer-events-none flex items-center justify-center">
-          {Array.from({ length: 24 }, (_, i) => {
-            const angle = (i / 24) * Math.PI * 2;
-            const distance = 200 + Math.random() * 100;
-
-            return (
+          {/* --- Layer 7: Exit Burst (Conditional) --- */}
+          {isComplete && (
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              style={{ zIndex: 50 }}
+            >
+              {/* Shockwave */}
               <motion.div
-                key={`exit-particle-${i}`}
-                className="absolute rounded-full"
-                style={{
-                  width: "4px",
-                  height: "4px",
-                  background: i % 2 === 0 ? "#4dd0e1" : "#7c4dff",
-                  boxShadow: `0 0 10px ${i % 2 === 0 ? "#4dd0e1" : "#7c4dff"}`,
-                  left: "50%",
-                  top: "50%"
-                }}
-                initial={{ x: 0, y: 0, scale: 1, opacity: 1 }}
-                animate={{
-                  x: Math.cos(angle) * distance,
-                  y: Math.sin(angle) * distance,
-                  scale: 0,
-                  opacity: 0
-                }}
-                transition={{
-                  duration: 0.8,
-                  ease: "easeOut"
-                }}
+                className="absolute rounded-full border-2 border-white"
+                initial={{ width: 0, height: 0, opacity: 1, borderWidth: 5 }}
+                animate={{ width: "150vmax", height: "150vmax", opacity: 0, borderWidth: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
               />
-            );
-          })}
 
-          {/* Central Flash */}
-          <motion.div
-            className="absolute rounded-full bg-white"
-            style={{ width: "20px", height: "20px" }}
-            initial={{ scale: 0, opacity: 1 }}
-            animate={{ scale: 4, opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-          />
+              {/* Particle Explosion */}
+              {Array.from({ length: 30 }).map((_, i) => {
+                const angle = (i / 30) * Math.PI * 2;
+                return (
+                  <motion.div
+                    key={`burst-${i}`}
+                    className="absolute w-2 h-2 bg-white rounded-full"
+                    initial={{ x: 0, y: 0, scale: 1, opacity: 1 }}
+                    animate={{
+                      x: Math.cos(angle) * 800,
+                      y: Math.sin(angle) * 800,
+                      scale: 0,
+                      opacity: 0
+                    }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                  />
+                );
+              })}
+
+              {/* Flash */}
+              <motion.div
+                className="absolute inset-0 bg-white"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ duration: 0.4, times: [0, 0.1, 1] }}
+              />
+            </motion.div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
