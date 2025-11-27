@@ -605,9 +605,9 @@ export default function AboutPage() {
                       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                       style={{
                         background: `radial-gradient(circle at 50% 0%, ${item.color === 'cyan' ? 'rgba(0, 229, 255, 0.1)' :
-                            item.color === 'purple' ? 'rgba(182, 89, 255, 0.1)' :
-                              item.color === 'blue' ? 'rgba(14, 165, 233, 0.1)' :
-                                'rgba(147, 51, 234, 0.1)'
+                          item.color === 'purple' ? 'rgba(182, 89, 255, 0.1)' :
+                            item.color === 'blue' ? 'rgba(14, 165, 233, 0.1)' :
+                              'rgba(147, 51, 234, 0.1)'
                           }, transparent 70%)`,
                       }}
                     />
@@ -633,9 +633,9 @@ export default function AboutPage() {
                       className="absolute bottom-0 right-0 w-32 h-32 rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                       style={{
                         background: `radial-gradient(circle at bottom right, ${item.color === 'cyan' ? 'rgba(0, 229, 255, 0.15)' :
-                            item.color === 'purple' ? 'rgba(182, 89, 255, 0.15)' :
-                              item.color === 'blue' ? 'rgba(14, 165, 233, 0.15)' :
-                                'rgba(147, 51, 234, 0.15)'
+                          item.color === 'purple' ? 'rgba(182, 89, 255, 0.15)' :
+                            item.color === 'blue' ? 'rgba(14, 165, 233, 0.15)' :
+                              'rgba(147, 51, 234, 0.15)'
                           }, transparent)`,
                       }}
                     />
@@ -724,9 +724,9 @@ export default function AboutPage() {
                       }
                     >
                       <div className={`w-16 h-16 rounded-2xl mb-6 flex items-center justify-center bg-gradient-to-br ${index === 0 ? "from-cyan-500/20 to-blue-500/20 text-cyan-400" :
-                          index === 1 ? "from-pink-500/20 to-rose-500/20 text-pink-400" :
-                            index === 2 ? "from-purple-500/20 to-indigo-500/20 text-purple-400" :
-                              "from-green-500/20 to-emerald-500/20 text-green-400"
+                        index === 1 ? "from-pink-500/20 to-rose-500/20 text-pink-400" :
+                          index === 2 ? "from-purple-500/20 to-indigo-500/20 text-purple-400" :
+                            "from-green-500/20 to-emerald-500/20 text-green-400"
                         }`}>
                         <value.icon className="w-8 h-8" />
                       </div>
@@ -744,9 +744,9 @@ export default function AboutPage() {
                     className="absolute inset-0 backface-hidden rotate-y-180 rounded-3xl p-8 flex flex-col items-center justify-center text-center bg-[#111] border border-white/10"
                     style={{
                       background: `linear-gradient(135deg, ${index === 0 ? "rgba(6, 182, 212, 0.1)" :
-                          index === 1 ? "rgba(236, 72, 153, 0.1)" :
-                            index === 2 ? "rgba(168, 85, 247, 0.1)" :
-                              "rgba(34, 197, 94, 0.1)"
+                        index === 1 ? "rgba(236, 72, 153, 0.1)" :
+                          index === 2 ? "rgba(168, 85, 247, 0.1)" :
+                            "rgba(34, 197, 94, 0.1)"
                         }, rgba(17, 17, 17, 0.9))`,
                     }}
                   >
@@ -754,19 +754,20 @@ export default function AboutPage() {
                       {value.expandedText}
                     </p>
                     <div className={`mt-6 w-12 h-1 rounded-full ${index === 0 ? "bg-cyan-500" :
-                        index === 1 ? "bg-pink-500" :
-                          index === 2 ? "bg-purple-500" :
-                            "bg-green-500"
+                      index === 1 ? "bg-pink-500" :
+                        index === 2 ? "bg-purple-500" :
+                          "bg-green-500"
                       }`} />
                   </div>
                 </motion.div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+              </motion.div >
+            ))
+            }
+          </div >
+        </motion.div >
 
         {/* QUOTE SECTION - The Final Transmission */}
-        <motion.div
+        < motion.div
           ref={quoteRef}
           initial={{ opacity: 0 }}
           animate={quoteInView ? { opacity: 1 } : {}}
@@ -790,8 +791,8 @@ export default function AboutPage() {
               </p>
             </motion.div>
           </div>
-        </motion.div>
-      </div>
-    </main>
+        </motion.div >
+      </div >
+    </main >
   );
 }
