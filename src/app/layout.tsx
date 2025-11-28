@@ -48,15 +48,6 @@ export default function RootLayout({
           monoFont.variable,
         )}
       >
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                document.body.classList.add('loading');
-              })();
-            `,
-          }}
-        />
         <ThemeProvider>
           <PageLoader />
           <ReadingProgress />
