@@ -102,7 +102,7 @@ export function PageLoader({ isLoading: externalLoading, onComplete }: PageLoade
         <motion.div
           key="quantum-loader-container"
           className="fixed inset-0 z-[99999] flex items-center justify-center overflow-hidden bg-[#050a14]"
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 1, ease: "easeInOut" } }}
           style={{
