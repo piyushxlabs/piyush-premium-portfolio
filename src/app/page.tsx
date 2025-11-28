@@ -9,8 +9,16 @@ import { VisionSection } from "@/components/sections/vision/VisionSection";
 import { ContactSection } from "@/components/sections/contact/ContactSection";
 import { Footer } from "@/components/layout/Footer/Footer";
 
-const CinematicHero = dynamic(() => import("@/components/sections/hero/CinematicHero").then(mod => ({ default: mod.CinematicHero })), { ssr: false });
-const CinematicHeroMobile = dynamic(() => import("@/components/sections/hero/CinematicHeroMobile").then(mod => ({ default: mod.CinematicHeroMobile })), { ssr: false });
+import { HeroSplash } from "@/components/sections/hero/HeroSplash";
+
+const CinematicHero = dynamic(() => import("@/components/sections/hero/CinematicHero").then(mod => ({ default: mod.CinematicHero })), {
+  ssr: false,
+  loading: () => <HeroSplash />
+});
+const CinematicHeroMobile = dynamic(() => import("@/components/sections/hero/CinematicHeroMobile").then(mod => ({ default: mod.CinematicHeroMobile })), {
+  ssr: false,
+  loading: () => <HeroSplash />
+});
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);

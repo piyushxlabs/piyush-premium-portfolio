@@ -9,31 +9,31 @@ import { SectionDivider } from "@/components/ui/SectionDivider";
 function AnimatedNumber({ value, delay }: { value: string | number; delay: number }) {
   const [displayValue, setDisplayValue] = useState(0);
   const [inView, setInView] = useState(false);
-  
+
   useEffect(() => {
     setInView(true);
   }, []);
-  
+
   useEffect(() => {
     if (!inView || typeof value !== "number") return;
-    
+
     const duration = 1500;
     const startTime = Date.now();
-    
+
     const animate = () => {
       const now = Date.now();
       const progress = Math.min((now - startTime) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       setDisplayValue(Math.floor(eased * value));
-      
+
       if (progress < 1) requestAnimationFrame(animate);
     };
-    
+
     setTimeout(animate, delay * 1000);
   }, [inView, value, delay]);
-  
+
   if (typeof value === "string") return <>{value}</>;
-  
+
   return <>{displayValue}</>;
 }
 
@@ -55,60 +55,31 @@ function SimpleBadge() {
   );
 }
 
+import { HeroSplash } from "./HeroSplash";
+
 export function CinematicHeroMobile() {
   const [mounted, setMounted] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-
   const words = ["Impact", "Innovation", "Purpose", "Vision", "Future"];
 
   useEffect(() => {
-    // This effect runs only once to set the 5-second delay for the header
     const timer = setTimeout(() => {
       setMounted(true);
-    }, 5000); // 5000ms = 5 seconds
-    
+    }, 5000);
     return () => clearTimeout(timer);
-  }, []); // Empty dependency array, runs once on mount
+  }, []);
 
   useEffect(() => {
-    // This effect runs only AFTER mounted becomes true
-    if (!mounted) return; // Do nothing if the header is still showing
-
+    if (!mounted) return;
     const interval = setInterval(() => {
       setCurrentWordIndex((prev) => (prev + 1) % words.length);
     }, 3000); // Keeping the original 3s word swap for mobile
-    
+
     return () => clearInterval(interval);
-  }, [mounted]); // Dependency on 'mounted'
+  }, [mounted]);
 
   if (!mounted) {
-    return (
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950">
-        <div className="container relative z-10 mx-auto px-6 py-32 text-center">
-          {/* ROOT CAUSE FIX 1: 
-            This 'if (!mounted)' block is the "Portfolio Header".
-            It was being skipped immediately because 'setMounted(true)' was called instantly.
-            The 'useEffect' logic above now adds a 5-second delay before setting mounted to true.
-            
-            FIX 2:
-            Updated this mobile header to match the desktop "Piyush" header for consistency,
-            as requested in the prompt. Adjusted font sizes for mobile.
-          */}
-          <h1 className="text-5xl sm:text-6xl font-heading font-bold flex flex-col items-center gap-y-4">
-            
-            <div className="leading-tight">
-              <span className="text-slate-100">𝓗𝓔𝓨 𝓘 𝓐𝓜 </span>
-              <span className="text-gradient-heading">𝓟𝓘𝓨𝓤𝓢𝓗</span>
-            </div>
-            
-            <span className="text-3xl sm:text-4xl text-slate-100 font-normal">
-            𝓦𝓔𝓛𝓒𝓞𝓜𝓔 𝓣𝓞 𝓜𝓨 𝓟𝓞𝓡𝓣𝓕𝓞𝓛𝓘𝓞
-            </span>
-  
-          </h1>
-        </div>
-      </section>
-    );
+    return <HeroSplash />;
   }
 
   return (

@@ -12,31 +12,31 @@ import { SectionDivider } from "@/components/ui/SectionDivider";
 function AnimatedNumber({ value, delay }: { value: string | number; delay: number }) {
   const [displayValue, setDisplayValue] = useState(0);
   const [inView, setInView] = useState(false);
-  
+
   useEffect(() => {
     setInView(true);
   }, []);
-  
+
   useEffect(() => {
     if (!inView || typeof value !== "number") return;
-    
+
     const duration = 1500;
     const startTime = Date.now();
-    
+
     const animate = () => {
       const now = Date.now();
       const progress = Math.min((now - startTime) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       setDisplayValue(Math.floor(eased * value));
-      
+
       if (progress < 1) requestAnimationFrame(animate);
     };
-    
+
     setTimeout(animate, delay * 1000);
   }, [inView, value, delay]);
-  
+
   if (typeof value === "string") return <>{value}</>;
-  
+
   return <>{displayValue}</>;
 }
 
@@ -303,6 +303,8 @@ function OrbitalBadge() {
   );
 }
 
+import { HeroSplash } from "./HeroSplash";
+
 export function CinematicHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLButtonElement>(null);
@@ -322,32 +324,20 @@ export function CinematicHero() {
   // const opacity = useTransform(scrollY, [0, 1400], [1, 0]); // COMMENTED OUT - Causing scroll fade/invisibility
 
   useEffect(() => {
-    // ROOT CAUSE FIX:
-    // The original code called 'setMounted(true)' immediately on load.
-    // This caused the 'if (!mounted)' block (the "Portfolio Header") to be skipped instantly.
-    // The app would then try to render the main hero, which has 'initial={{ opacity: 0 }}' animations,
-    // causing a hydration mismatch and making the content invisible on deployment.
-    //
-    // THE FIX:
-    // 1. This 'useEffect' now *only* handles the 5-second timer for the Portfolio Header.
     const timer = setTimeout(() => {
       setMounted(true);
-    }, 5000); // 5000ms = 5 seconds (as requested)
-    
+    }, 5000);
     return () => clearTimeout(timer);
-  }, []); // Empty dependency array, runs once on mount
+  }, []);
 
   useEffect(() => {
-    // 2. This *new* 'useEffect' handles the word-swapping animation.
-    //    It will *only* run AFTER 'mounted' becomes true (i.e., after the 5s header is gone).
-    if (!mounted) return; // Do nothing if the header is still showing
-
+    if (!mounted) return;
     const interval = setInterval(() => {
       setCurrentWordIndex((prev) => (prev + 1) % words.length);
     }, 3000);
-    
+
     return () => clearInterval(interval);
-  }, [mounted]); // Dependency on 'mounted'
+  }, [mounted]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -360,51 +350,19 @@ export function CinematicHero() {
       );
       setCtaDistance(distance);
     };
-    
+
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   if (!mounted) {
-    return (
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950">
-        <div className="container relative z-10 mx-auto px-6 py-32 text-center">
-          
-          {/* NOTE: 
-            1. h1 ko 'flex flex-col' bana diya hai taaki content stack ho.
-            2. 'items-center' se text horizontally centered rahega.
-            3. 'gap-y-4' dono lines ke beech vertical spacing add karta hai.
-          */}
-          <h1 className="text-6xl lg:text-8xl font-heading font-bold flex flex-col items-center gap-y-4">
-            
-            {/* Pehli line: "Hey I Am Piyush" */}
-            {/* Isko ek div mein wrap kiya hai taaki yeh ek saath rahe */}
-            <div className="leading-tight">
-              <span className="text-slate-100">𝓗𝓔𝓨 𝓘 𝓐𝓜 </span>
-              {/* '/n' hata diya hai */}
-              <span className="text-gradient-heading">𝓟𝓘𝓨𝓤𝓢𝓗</span>
-            </div>
-            
-            {/* Doosri line: "Welcome To My Portfolio" */}
-            {/* NOTE:
-              Iski font size thodi choti kar di hai (text-4xl lg:text-6xl)
-              aur weight normal (font-normal) kar diya hai.
-              Yeh visual hierarchy ke liye accha lagta hai (title bada, subtitle thoda chota).
-            */}
-            <span className="text-4xl lg:text-6xl text-slate-100 font-normal">
-            𝓦𝓔𝓛𝓒𝓞𝓜𝓔 𝓣𝓞 𝓜𝓨 𝓟𝓞𝓡𝓣𝓕𝓞𝓛𝓘𝓞
-            </span>
-  
-          </h1>
-        </div>
-      </section>
-    );
+    return <HeroSplash />;
   }
 
   return (
     <>
       <CursorGlow />
-      
+
       <motion.section
         ref={containerRef}
         // style={{ opacity }} // COMMENTED OUT - Causing scroll fade/invisibility
@@ -545,7 +503,7 @@ export function CinematicHero() {
                   ))}
                 </motion.span>
                 {" "}
-                
+
                 <motion.span
                   // style={{ y: yIntelligence }} // COMMENTED OUT - Causing scroll jitter
                   initial={{ opacity: 0, y: 80 }}
@@ -574,7 +532,7 @@ export function CinematicHero() {
                       {char}
                     </motion.span>
                   ))}
-                  
+
                   {[...Array(8)].map((_, idx) => (
                     <motion.span
                       key={idx}
@@ -682,7 +640,7 @@ export function CinematicHero() {
                   }}
                 >
                   {words[currentWordIndex]}
-                  
+
                   {[...Array(15)].map((_, i) => (
                     <motion.div
                       key={i}
@@ -733,7 +691,7 @@ export function CinematicHero() {
                   backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
                 }}
               />
-              
+
               <p className="text-xl md:text-2xl lg:text-3xl text-slate-300 max-w-4xl mx-auto leading-relaxed font-light relative z-10">
                 I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-semibold">Piyush</span>, an 18-year-old AI & Data Science learner
                 <br className="hidden sm:block" />
@@ -762,7 +720,7 @@ export function CinematicHero() {
                 className="group relative w-full sm:w-auto px-12 py-5 text-lg font-semibold rounded-full overflow-hidden"
                 style={{
                   background: "linear-gradient(135deg, #06b6d4, #8b5cf6)",
-                  boxShadow: `0 0 ${Math.max(40, 120 - ctaDistance/3)}px rgba(6, 182, 212, ${Math.min(0.8, 0.3 + (300 - ctaDistance)/600)}), 0 20px 40px -10px rgba(0,0,0,0.5)`,
+                  boxShadow: `0 0 ${Math.max(40, 120 - ctaDistance / 3)}px rgba(6, 182, 212, ${Math.min(0.8, 0.3 + (300 - ctaDistance) / 600)}), 0 20px 40px -10px rgba(0,0,0,0.5)`,
                 }}
               >
                 <motion.div
@@ -829,8 +787,8 @@ export function CinematicHero() {
                     <ArrowRight size={22} />
                   </motion.div>
                 </span>
-              </motion.button>
-            </Link>
+              </motion.button >
+            </Link >
 
             <Link href="/connect" className="w-full sm:w-auto">
               <motion.button
@@ -857,7 +815,7 @@ export function CinematicHero() {
                 </span>
               </motion.button>
             </Link>
-          </motion.div>
+          </motion.div >
 
           <motion.div
             initial={{ opacity: 0, y: 80 }}
@@ -872,7 +830,7 @@ export function CinematicHero() {
                   <stop offset="100%" stopColor="rgb(168, 85, 247)" stopOpacity="0.4" />
                 </linearGradient>
               </defs>
-              
+
               <motion.line
                 x1="25%" y1="50%"
                 x2="50%" y2="50%"
@@ -883,7 +841,7 @@ export function CinematicHero() {
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ delay: 2, duration: 1 }}
               />
-              
+
               <motion.line
                 x1="50%" y1="50%"
                 x2="75%" y2="50%"
@@ -894,7 +852,7 @@ export function CinematicHero() {
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{ delay: 2.2, duration: 1 }}
               />
-              
+
               <motion.line
                 x1="75%" y1="50%"
                 x2="87.5%" y2="50%"
@@ -1017,7 +975,7 @@ export function CinematicHero() {
               </motion.div>
             ))}
           </motion.div>
-        </motion.div>
+        </motion.div >
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -1063,8 +1021,8 @@ export function CinematicHero() {
 
         <div className="absolute inset-0 pointer-events-none z-20">
           <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-slate-950/60" />
-          
-          <div 
+
+          <div
             className="absolute inset-0 opacity-[0.015]"
             style={{
               backgroundImage: `repeating-linear-gradient(
@@ -1076,7 +1034,7 @@ export function CinematicHero() {
               )`,
             }}
           />
-          
+
           {[0, 1, 2].map((i) => (
             <motion.div
               key={`ray-${i}`}
@@ -1099,7 +1057,7 @@ export function CinematicHero() {
           ))}
         </div>
         <SectionDivider position="bottom" />
-      </motion.section>
+      </motion.section >
     </>
   );
 }
