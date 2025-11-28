@@ -34,6 +34,20 @@ export function PageLoader({ isLoading: externalLoading, onComplete }: PageLoade
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Add loading class to body on mount, remove when loader completes
+  useEffect(() => {
+    // Add loading class immediately
+    if (typeof document !== 'undefined') {
+      document.body.classList.add('loading');
+    }
+
+    return () => {
+      if (typeof document !== 'undefined') {
+        document.body.classList.remove('loading');
+      }
+    };
+  }, []);
+
   // Simulate loading progress
   useEffect(() => {
     const interval = setInterval(() => {
@@ -56,6 +70,10 @@ export function PageLoader({ isLoading: externalLoading, onComplete }: PageLoade
 
   const handleExitComplete = () => {
     setIsVisible(false);
+    // Remove loading class when loader exits
+    if (typeof document !== 'undefined') {
+      document.body.classList.remove('loading');
+    }
     onComplete?.();
   };
 

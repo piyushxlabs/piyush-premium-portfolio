@@ -67,41 +67,8 @@ html {
   overflow-x: hidden;
 }
 
-html:not([data-scroll-behavior]) {
-  scroll-behavior: smooth;
-}
-
-body {
-  min-height: 100%;
-  background-color: #020617;
-  color: var(--color-text-primary);
-  font-family: var(--font-body);
-  text-rendering: optimizeLegibility;
-  letter-spacing: 0.01em;
-  overflow-x: hidden;
-}
-
-::selection {
-  background-color: rgba(167, 139, 250, 0.45);
-  color: var(--color-bg-primary);
-}
-
 @layer base {
 
-  *,
-  *::before,
-  *::after {
-    border-color: var(--color-border);
-  }
-
-  body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  /* Enhanced Typography Hierarchy */
-  h1,
-  h2,
   h3,
   h4,
   h5,
