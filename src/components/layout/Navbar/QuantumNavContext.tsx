@@ -15,7 +15,6 @@ interface QuantumNavContextType {
     scrollProgress: MotionValue<number>;
     focusedLink: string | null;
     setFocusedLink: (href: string | null) => void;
-    hasUnfolded: boolean;
 }
 
 const QuantumNavContext = createContext<QuantumNavContextType | undefined>(undefined);
@@ -24,11 +23,6 @@ export function QuantumNavProvider({ children }: { children: ReactNode }) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [focusedLink, setFocusedLink] = useState<string | null>(null);
-
-    // [NEW] Persistent Unfold State
-    // false = Folded (Pill state), true = Unfolded (Full navbar)
-    // [MODIFIED] Forced to true to disable animation temporarily
-    const [hasUnfolded, setHasUnfolded] = useState(true);
 
     // Motion values for physics
     const cursorX = useMotionValue(0);
@@ -48,15 +42,6 @@ export function QuantumNavProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50); // Threshold from plan
-
-            // [NEW] Scroll Trigger for Unfold
-            // If user scrolls more than 10px, force unfold immediately
-            // [DISABLED] Animation disabled
-            /*
-            if (!hasUnfolded && window.scrollY > 10) {
-                setHasUnfolded(true);
-            }
-            */
         };
 
         const handleMouseMove = (e: MouseEvent) => {
@@ -71,30 +56,7 @@ export function QuantumNavProvider({ children }: { children: ReactNode }) {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("mousemove", handleMouseMove);
         };
-    }, [cursorX, cursorY, hasUnfolded]);
-
-    // [NEW] Handle Initial Unfold Logic
-    /* [DISABLED] Animation disabled
-    useEffect(() => {
-        // Check if we are on the home page
-        const isHomePage = window.location.pathname === "/";
-        
-        if (isHomePage) {
-            // If on Home, start folded (false) and wait for timer or scroll
-            // TOGGLE: Change this value to adjust delay
-            const NAV_DELAY = 3000; 
-            
-            const timer = setTimeout(() => {
-                setHasUnfolded(true);
-            }, NAV_DELAY);
-            
-            return () => clearTimeout(timer);
-        } else {
-            // If on other pages, unfold immediately
-            setHasUnfolded(true);
-        }
-    }, []);
-    */
+    }, [cursorX, cursorY]);
 
     // Lock body scroll when mobile menu is open
     useEffect(() => {
@@ -125,7 +87,6 @@ export function QuantumNavProvider({ children }: { children: ReactNode }) {
                 scrollProgress,
                 focusedLink,
                 setFocusedLink,
-                hasUnfolded, // Exported
             }}
         >
             {children}

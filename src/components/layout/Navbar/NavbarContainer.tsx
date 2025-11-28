@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useTransform, useReducedMotion } from "framer-motion";
+import { motion, useTransform } from "framer-motion";
 import { useQuantumNav } from "./QuantumNavContext";
 import { useScrollMorphology } from "./hooks/useScrollMorphology";
 import { NavParticleField } from "./NavParticleField";
@@ -13,9 +13,7 @@ interface NavbarContainerProps {
 }
 
 export function NavbarContainer({ children, className }: NavbarContainerProps) {
-    // [MODIFIED] Use hasUnfolded from context
-    const { isScrolled, hasUnfolded } = useQuantumNav();
-    const prefersReducedMotion = useReducedMotion();
+    const { isScrolled } = useQuantumNav();
 
     const {
         width,
@@ -23,40 +21,23 @@ export function NavbarContainer({ children, className }: NavbarContainerProps) {
         borderRadius,
         backgroundOpacity,
         backdropBlur,
-        borderLightSpeed,
         top
     } = useScrollMorphology();
-
-    // [NEW] Dimensions for the folded "Pill" state
-    // TOGGLE: Edit this value to change the initial folded width
-    const INITIAL_WIDTH = "-400px";
 
     return (
         <motion.div
             className={cn("fixed left-0 right-0 z-50 flex justify-center items-start", className)}
             style={{
                 top,
-                // Always visible now, but starts small
                 visibility: "visible"
             }}
         >
             <motion.nav
                 className="relative overflow-hidden flex items-center justify-between"
-                // Animate width based on hasUnfolded state
-                animate={{
-                    width: hasUnfolded ? width.get() : INITIAL_WIDTH,
-                    height: hasUnfolded ? height.get() : "200px", // Fixed height for pill
-                    borderRadius: hasUnfolded ? borderRadius.get() : "40px", // Rounder for pill
-                }}
-                transition={{
-                    duration: 1.2,
-                    ease: [0.22, 1, 0.36, 1], // Smooth exponential ease out
-                }}
                 style={{
-                    width: hasUnfolded ? width : INITIAL_WIDTH,
-                    height: hasUnfolded ? height : "200px",
-                    borderRadius: hasUnfolded ? borderRadius : "40px",
-
+                    width,
+                    height,
+                    borderRadius,
                     willChange: "width, height, border-radius",
                     transform: "translateZ(0)",
                 }}
@@ -78,10 +59,7 @@ export function NavbarContainer({ children, className }: NavbarContainerProps) {
 
                 {/* Layer 1: Glass Interface (Content) */}
                 <div className="relative z-10 w-full h-full px-6 flex items-center justify-between">
-                    <div className={cn(
-                        "flex items-center justify-between w-full transition-opacity duration-500",
-                        !hasUnfolded ? "justify-center" : "" // Center logo when folded
-                    )}>
+                    <div className="flex items-center justify-between w-full">
                         {children}
                     </div>
                 </div>

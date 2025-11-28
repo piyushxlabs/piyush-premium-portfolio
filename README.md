@@ -1,190 +1,185 @@
-# 🚀 Piyush Premium Portfolio
+# 🌌 Piyush Premium Portfolio
 
-> **Building intelligence with empathy — one idea at a time.**
+> **"Designing intelligence with empathy — one idea at a time."**
 
-A world-class, premium AI portfolio website showcasing Piyush's journey as an AI innovator, data scientist, and future founder. Built with Next.js 15, TypeScript, Tailwind CSS, and Framer Motion.
+![Next.js 16](https://img.shields.io/badge/Next.js-16.0-black?style=for-the-badge&logo=next.js)
+![React 19](https://img.shields.io/badge/React-19.0-blue?style=for-the-badge&logo=react)
+![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_4.0-38B2AC?style=for-the-badge&logo=tailwind-css)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.0-0055FF?style=for-the-badge&logo=framer)
 
-## ✨ Features
+---
 
-### 🎨 Design System
-- **Neural Horizon × Cognitive Infinity Theme** — Futuristic minimalism with emotional depth
-- **Glassmorphism Effects** — Premium frosted glass UI components
-- **Gradient Glow System** — Animated gradient borders and hover effects
-- **Smooth Animations** — 60fps Framer Motion animations throughout
-- **Responsive Design** — Seamless experience across all devices
+## 📋 Overview
 
-### 🧠 Core Sections
-- **Hero Section** — Cinematic intro with typewriter effect and gradient background
-- **About Section** — Personal story with core values display
-- **Skills Section** — Interactive skill bars and tech stack showcase
-- **Projects Section** — Filterable project gallery with hover effects
-- **Vision Section** — Future goals and startup vision
-- **Contact Section** — Multiple contact methods with ambient effects
+**Piyush Premium Portfolio** is a hyper-futuristic, cinematic digital experience designed to showcase the journey of an AI innovator and future founder. Built on the bleeding edge of web technology, it leverages **Next.js 16**, **React 19**, and **Tailwind CSS 4** to deliver a performance-obsessed, visually stunning interface.
 
-### 🎭 Components
-- **Navbar** — Glassmorphism navigation with scroll effects
-- **Footer** — Multi-column layout with social links
-- **Cards** — Base, Glass, and Hover variants
-- **Buttons** — Primary, Secondary, Outline, Ghost, and Glow variants
-- **Animations** — FadeIn, SlideUp, StaggerChildren, and more
+The project embodies the **"Neural Cosmos"** design philosophy—blending deep space aesthetics with organic neural network visualizations. It features a living, breathing UI where every interaction feels intelligent, responsive, and alive.
 
-### 🌟 Advanced Features
-- **Background Effects** — Particle system with neural network connections
-- **Gradient Orbs** — Floating ambient gradient spheres
-- **Theme System** — Dark/Light mode support (dark by default)
-- **Smooth Scrolling** — Optimized scroll experience
-- **SEO Optimized** — Meta tags, Open Graph, and structured data
+---
+
+## ✨ Key Features
+
+### 🧠 **Quantum Consciousness Interface (Navbar)**
+A revolutionary navigation system that transcends traditional menus.
+- **3D Particle Physics:** Interactive particle fields that react to cursor proximity.
+- **Predictive Morphing:** UI elements that anticipate user intent.
+- **Dynamic State Management:** Seamless transitions between scroll states.
+
+### 🌸 **Neural Bloom Loader**
+A procedural, organic loading experience.
+- **Generative Growth:** SVG-based neural networks that grow and branch in real-time.
+- **Cinematic Transitions:** Smooth, zero-layout-shift entry into the application.
+
+### 🌌 **Primordial Quantum Foam (Background)**
+An intelligent, WebGL-powered ambient background.
+- **Interactive Probability Clouds:** Emergent structures that form based on user interaction.
+- **Scroll-Reactive Depth:** Parallax effects that create a sense of infinite scale.
+
+### 💎 **Holographic Glassmorphism**
+- **Advanced Frosting:** Real-time backdrop filters with dynamic light refraction.
+- **Gradient Glow System:** Ambient lighting that bleeds through UI components.
+
+---
 
 ## 🛠️ Tech Stack
 
-- **Framework:** Next.js 15 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS 4
-- **Animations:** Framer Motion
-- **UI Components:** Radix UI
-- **Icons:** Lucide React
-- **Fonts:** Sora, Inter, Fira Code (Google Fonts)
+This project is built on a **bleeding-edge** stack to ensure maximum performance and future-proofing.
 
-## 📦 Installation
+### **Core Framework**
+- **Next.js 16.0.1** (App Router, Server Actions)
+- **React 19.2.0** (Concurrent features, new hooks)
+- **TypeScript 5** (Strict type safety)
+
+### **Styling & Design**
+- **Tailwind CSS 4** (Zero-runtime compiler, CSS variables)
+- **CSS Modules** (Scoped styles for complex animations)
+- **Radix UI** (Accessible UI primitives)
+
+### **Animation & 3D**
+- **Framer Motion 12.23** (Complex layout animations, shared layout)
+- **Three.js / React Three Fiber** (WebGL rendering)
+- **GSAP 3.13** (High-performance timeline sequencing)
+- **Lucide React** (Consistent iconography)
+
+### **Tools & Quality**
+- **ESLint 9** (Code quality)
+- **Prettier** (Code formatting)
+- **PostCSS** (CSS processing)
+
+---
+
+## 📁 Project Structure
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/piyush-premium-portfolio.git
-
-# Navigate to project directory
-cd piyush-premium-portfolio
-
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view the portfolio.
-
-## 🎯 Project Structure
-
-```
 piyush-premium-portfolio/
 ├── src/
-│   ├── app/                    # Next.js App Router
-│   │   ├── (pages)/           # Additional pages
-│   │   ├── layout.tsx         # Root layout
-│   │   ├── page.tsx           # Homepage
-│   │   └── globals.css        # Global styles
+│   ├── app/                    # Next.js 16 App Router
+│   │   ├── (pages)/            # Route groups for organization
+│   │   ├── globals.css         # Tailwind 4 configuration
+│   │   └── layout.tsx          # Root layout with providers
 │   ├── components/
-│   │   ├── animations/        # Animation components
-│   │   ├── layout/            # Layout components (Navbar, Footer)
-│   │   ├── sections/          # Page sections (Hero, About, etc.)
-│   │   ├── ui/                # UI primitives (Button, Card, etc.)
-│   │   └── providers/         # Context providers
-│   ├── data/                  # Static data (JSON)
-│   ├── content/               # MDX content
-│   ├── utils/                 # Helper functions
-│   ├── hooks/                 # Custom React hooks
-│   └── styles/                # Additional styles
-├── public/                    # Static assets
-└── docs/                      # Documentation
+│   │   ├── animations/         # Complex animation logic
+│   │   ├── layout/             # Navbar, Footer, Shell
+│   │   ├── sections/           # Page-specific sections (Hero, Contact)
+│   │   └── ui/                 # Reusable design tokens
+│   ├── config/                 # App-wide configuration
+│   ├── hooks/                  # Custom React hooks
+│   ├── lib/                    # Utility libraries
+│   └── styles/                 # Shared style definitions
+├── public/                     # Static assets
+├── next.config.ts              # Next.js configuration
+└── package.json                # Dependencies and scripts
 ```
 
-## 🎨 Design System
+---
 
-### Colors
-```css
---color-bg-primary: #0f172a;      /* Deep navy background */
---color-accent-primary: #22d3ee;   /* Cyan accent */
---color-accent-secondary: #a78bfa; /* Lavender accent */
---color-accent-tertiary: #14b8a6;  /* Teal accent */
+## 🚀 Getting Started
+
+### Prerequisites
+- **Node.js 18+** (Recommended: 20 LTS)
+- **npm** or **yarn**
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/piyush-premium-portfolio.git
+   cd piyush-premium-portfolio
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open the application**
+   Visit [http://localhost:3000](http://localhost:3000) to view the portfolio.
+
+---
+
+## ⚙️ Environment Variables
+
+Currently, the project is designed to run without mandatory environment variables for local development. 
+
+However, for production features (like email services), you may need to configure a `.env.local` file:
+
+```env
+# Example (Future Integration)
+# NEXT_PUBLIC_API_URL=https://api.example.com
 ```
 
-### Typography
-- **Headings:** Sora (geometric, modern)
-- **Body:** Inter (clean, readable)
-- **Code:** Fira Code (monospace)
+---
 
-### Spacing
-- Base grid: 8px
-- Section padding: 80px (desktop) / 48px (mobile)
+## 📦 Deployment
 
-## 🚀 Deployment
+The project is optimized for deployment on **Vercel**.
 
-### Vercel (Recommended)
-```bash
-# Install Vercel CLI
-npm i -g vercel
+1. Push your code to a Git repository (GitHub, GitLab, Bitbucket).
+2. Import the project into Vercel.
+3. Vercel will automatically detect **Next.js** and configure the build settings.
+4. Click **Deploy**.
 
-# Deploy
-vercel --prod
-```
-
-### Build for Production
+**Build Command:**
 ```bash
 npm run build
-npm run start
 ```
 
-## 📝 Customization
-
-### Update Personal Information
-1. Edit `src/data/personal/about.json` for personal story
-2. Edit `src/data/projects/index.json` for projects
-3. Edit `src/data/skills/technical.json` for skills
-4. Edit `src/data/social/links.json` for social media links
-
-### Add New Projects
-Create a new MDX file in `src/content/projects/`:
-```mdx
 ---
-title: "Project Name"
-date: "2024-01-01"
-category: "AI/ML"
----
-
-Your project content here...
-```
-
-### Modify Colors
-Update CSS variables in `src/app/globals.css`:
-```css
-:root {
-  --color-accent-primary: #your-color;
-}
-```
-
-## 🎯 Development Phases
-
-- ✅ **Phase 1:** Foundation Setup (Design system, Tailwind config)
-- ✅ **Phase 2:** Core Components (Buttons, Cards, Layout)
-- ✅ **Phase 3:** Homepage Sections (Hero, About, Skills, Projects, Vision, Contact)
-- ✅ **Phase 4:** Animations (FadeIn, SlideUp, Background effects)
-- ✅ **Phase 5:** Content & Data (JSON data files, MDX content)
-- ✅ **Phase 6:** Additional Pages (Work, About, Vision, Journey, Lab, Thoughts, Connect)
-- ⏳ **Phase 7:** Advanced Features (3D elements, AI integration)
-- ⏳ **Phase 8:** Testing & Optimization
-- ⏳ **Phase 9:** Deployment
-
-## 📚 Documentation
-
-- [Design System](./docs/design/design-system.md)
-- [Component Guidelines](./docs/development/component-guidelines.md)
-- [Animation Principles](./docs/design/animation-principles.md)
-- [Deployment Guide](./docs/deployment/vercel-setup.md)
 
 ## 🤝 Contributing
 
-This is a personal portfolio project. However, if you find bugs or have suggestions, feel free to open an issue.
+Contributions are welcome! Please follow these steps:
 
-## 📄 License
-
-© 2024 Piyush. All rights reserved.
-
-## 🌟 Acknowledgments
-
-- Design inspiration: Apple, OpenAI, Notion
-- Theme: Neural Horizon × Cognitive Infinity
-- Built with passion for AI innovation and human empathy
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
 
 ---
 
-**"Designing intelligence with empathy — one idea at a time."**
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 👤 Author
+
+**Piyush**
+
+- **Portfolio:** [Coming Soon]
+- **LinkedIn:** [Piyush Billinare](https://linkedin.com/in/piyush-billinare)
+- **Email:** piyushjaguri13@gmail.com
+
+---
+
+<p align="center">
+  Made with ❤️ and ⚛️ by Piyush
+</p>

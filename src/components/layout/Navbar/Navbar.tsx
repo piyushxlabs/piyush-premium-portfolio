@@ -1,13 +1,11 @@
 "use client";
 
-
 import { QuantumNavProvider } from "./QuantumNavContext";
 import { NavbarContainer } from "./NavbarContainer";
 import { NavLogo } from "./NavLogo";
 import { NavLink } from "./NavLink";
 import { MobileMenuToggle } from "./MobileMenuToggle";
 import { MobileMenu } from "./MobileMenu";
-import { NavVisibilityWrapper } from "./NavVisibilityWrapper";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -27,18 +25,14 @@ export function Navbar() {
         <NavLogo />
 
         {/* Center/Right: Desktop Links */}
-        <NavVisibilityWrapper>
-          <div className="hidden lg:flex items-center gap-1">
-            {navItems.map((item) => (
-              <NavLink key={item.href} href={item.href} label={item.label} />
-            ))}
-          </div>
-        </NavVisibilityWrapper>
+        <div className="hidden lg:flex items-center gap-1">
+          {navItems.map((item) => (
+            <NavLink key={item.href} href={item.href} label={item.label} />
+          ))}
+        </div>
 
         {/* Right: Mobile Toggle */}
-        <NavVisibilityWrapper>
-          <MobileMenuToggle />
-        </NavVisibilityWrapper>
+        <MobileMenuToggle />
       </NavbarContainer>
 
       {/* Mobile Menu Portal */}
