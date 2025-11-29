@@ -145,27 +145,27 @@ const config = {
         ".bg-glass": {
           "background-color": "var(--layer-overlay-light)",
           "border": "1px solid var(--layer-overlay-medium)",
-          "backdrop-filter": "blur(18px)",
+          "backdrop-filter": "blur(8px)",
         },
         ".bg-glass-heavy": {
           "background-color": "var(--layer-overlay-medium)",
           "border": "1px solid var(--layer-overlay-heavy)",
-          "backdrop-filter": "blur(28px)",
+          "backdrop-filter": "blur(12px)",
         },
         ".glass-premium": {
-          "background": "rgba(255, 255, 255, 0.08)",
-          "border": "1px solid rgba(255, 255, 255, 0.12)",
-          "backdrop-filter": "blur(24px) saturate(180%)",
-          "box-shadow": "0 8px 32px rgba(0, 0, 0, 0.12)",
+          "background": "rgba(255, 255, 255, 0.05)",
+          "border": "1px solid rgba(255, 255, 255, 0.08)",
+          "backdrop-filter": "blur(10px)",
+          "box-shadow": "0 4px 12px rgba(0, 0, 0, 0.1)",
         },
         ".glass-heavy": {
-          "background": "rgba(15, 23, 42, 0.6)",
-          "border": "1px solid rgba(34, 211, 238, 0.2)",
-          "backdrop-filter": "blur(32px) saturate(200%)",
-          "box-shadow": "0 16px 64px rgba(34, 211, 238, 0.1)",
+          "background": "rgba(15, 23, 42, 0.85)",
+          "border": "1px solid rgba(34, 211, 238, 0.15)",
+          "backdrop-filter": "blur(12px)",
+          "box-shadow": "0 8px 24px rgba(34, 211, 238, 0.05)",
         },
         ".premium-shadow": {
-          "box-shadow": "0 32px 80px rgba(15, 23, 42, 0.4), 0 8px 32px rgba(34, 211, 238, 0.1)",
+          "box-shadow": "0 12px 32px rgba(15, 23, 42, 0.3), 0 4px 12px rgba(34, 211, 238, 0.05)",
         },
         ".section-padding": {
           "padding-top": "6rem",

@@ -1,15 +1,10 @@
-
 "use client";
 
 import { motion } from "framer-motion";
 import { Sparkles, Heart, Lightbulb, Target, Compass } from "lucide-react";
-import { Suspense } from "react";
-import dynamic from "next/dynamic";
-import { FadeIn, SlideUp } from "@/components/animations/core";
+import { FadeIn } from "@/components/animations/core";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionDivider } from "@/components/ui/SectionDivider";
-
-const DataSphere = dynamic(() => import("@/components/3d/DataSphere").then(mod => ({ default: mod.DataSphere })), { ssr: false });
 
 const values = [
   {
@@ -41,81 +36,24 @@ const values = [
 
 export function AboutSection() {
   return (
-<section className="relative section-padding overflow-visible isolate bg-slate-950">
-  <SectionDivider position="top" />
-  {/* Cinematic Background Theme */}
-  <div className="absolute inset-0">
-    <motion.div
-      className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5"
-      animate={{
-        backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-      }}
-      transition={{
-        duration: 20,
-        repeat: Infinity,
-        ease: "linear"
-      }}
-      style={{ backgroundSize: "200% 200%", backgroundPosition: "0% 0%" }}
-    />
+    <section className="relative py-24 md:py-32 overflow-hidden bg-slate-950">
+      <SectionDivider position="top" />
 
-    {[
-      { size: "w-[500px] h-[500px]", pos: "top-10 -left-20", color: "cyan", delay: 0, blur: "blur-[100px]" },
-      { size: "w-[400px] h-[400px]", pos: "bottom-20 -right-20", color: "purple", delay: 1, blur: "blur-[90px]" },
-      { size: "w-[350px] h-[350px]", pos: "top-1/3 right-10", color: "pink", delay: 2, blur: "blur-[80px]" },
-    ].map((orb, i) => (
-      <motion.div
-        key={i}
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{
-          opacity: [0.15, 0.35, 0.15],
-          scale: [0.95, 1.05, 0.95],
-        }}
-        transition={{
-          delay: orb.delay,
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        className={`absolute ${orb.size} ${orb.pos} bg-${orb.color}-500/20 rounded-full ${orb.blur}`}
-      />
-    ))}
-  </div>
-  {/* 3D Background - DataSphere */}
-  <div
-    className="
-      absolute 
-      top-0 
-      right-[-25vw]     /* ❗ Moved further right to be fully visible */
-      w-[70vw]          /* ❗ Increased width for full visibility */
-      h-[90vh]          /* ❗ Increased height so sphere does not cut */
-      z-[-2] 
-      opacity-70 
-      pointer-events-none 
-      select-none 
-      hidden lg:block
-    "
-  >
-    <div className="sticky top-24 w-full h-full overflow-visible">
-      <Suspense fallback={null}>
-        <DataSphere />
-      </Suspense>
-    </div>
-  </div>
+      {/* Static Background Theme - MVP Optimized */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[100px]" />
+      </div>
 
-  <div className="container relative z-10 mx-auto container-padding max-w-7xl">
-
+      <div className="container relative z-10 mx-auto px-6 max-w-7xl">
         <FadeIn>
           <div className="text-center mb-16">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="inline-block px-4 py-2 rounded-full bg-glass border border-overlay-medium text-sm font-medium mb-4"
-            >
+            <span className="inline-block px-4 py-2 rounded-full bg-slate-900/50 border border-slate-800 text-sm font-medium mb-4 text-slate-300">
               About Me
-            </motion.span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6 leading-tight tracking-tight">
-              The <span className="text-gradient-heading">Spark</span> Behind the Journey
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6 leading-tight tracking-tight text-slate-100">
+              The <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Spark</span> Behind the Journey
             </h2>
             <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
               My journey into AI began with a simple curiosity — how can machines think,
@@ -124,71 +62,40 @@ export function AboutSection() {
           </div>
         </FadeIn>
 
-        {/* Story - Enhanced with Staggered Reveal */}
+        {/* Story */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto mb-20"
         >
-          <GlassCard variant="large" glow>
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.3,
-                    delayChildren: 0.4
-                  }
-                }
-              }}
-              className="space-y-6 md:space-y-8"
-            >
-              <motion.p 
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-                className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-[60ch]"
-              >
+          <GlassCard variant="large" className="p-8 md:p-12 bg-slate-900/40 border-slate-800/50">
+            <div className="space-y-6 md:space-y-8 text-lg md:text-xl text-slate-300 leading-relaxed">
+              <p>
                 As a teenager, I was fascinated by how data could reveal patterns that
                 even humans miss. Watching how AI could write, create, and solve problems
                 made me realize one thing — intelligence isn't just something we use,
                 it's something we can build.
-              </motion.p>
-              <motion.p 
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-                className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-[60ch]"
-              >
+              </p>
+              <p>
                 That spark turned into a deep desire to understand the science behind
                 intelligence — not just to use AI tools, but to create them with purpose.
-              </motion.p>
-              <motion.p 
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-                className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-[60ch]"
-              >
+              </p>
+              <p>
                 I believe AI is not just technology — it's a reflection of how humans
                 think, decide, and dream. My purpose is to create ethical, human-centered
                 AI systems that enhance creativity, productivity, and opportunity.
-              </motion.p>
-            </motion.div>
+              </p>
+            </div>
           </GlassCard>
         </motion.div>
 
-        {/* Values - Enhanced */}
-        <FadeIn delay={0.4}>
+        {/* Values */}
+        <FadeIn delay={0.2}>
           <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-heading font-bold mb-4 leading-tight tracking-tight">
-              Core <span className="text-gradient-heading">Values</span>
+            <h3 className="text-3xl md:text-4xl font-heading font-bold mb-4 leading-tight tracking-tight text-slate-100">
+              Core <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Values</span>
             </h3>
             <p className="text-lg text-slate-300 max-w-2xl mx-auto">
               The principles that guide how I think, create, and build
@@ -196,58 +103,45 @@ export function AboutSection() {
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
           {values.map((value, index) => (
             <motion.div
               key={value.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ 
-                delay: index * 0.08, 
-                duration: 0.5,
-                type: "spring",
-                stiffness: 100
-              }}
-              whileHover={{ 
-                y: -6, 
-                scale: 1.02
-              }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
               className="group"
             >
-              <div className="glass-premium rounded-2xl p-8 text-center h-full hover:border-accent-cyan/40 transition-all duration-300 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-lavender/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative z-10">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 p-4 mx-auto mb-6 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform duration-300">
-                    <value.icon className="w-full h-full text-slate-900" />
-                  </div>
-                  <h4 className="font-heading font-semibold text-xl mb-3 text-slate-100">
-                    {value.title}
-                  </h4>
-                  <p className="text-sm text-slate-300 leading-relaxed">
-                    {value.description}
-                  </p>
+              <div className="h-full p-6 rounded-2xl bg-slate-900/40 border border-slate-800 hover:border-cyan-500/30 transition-colors text-center">
+                <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center mx-auto mb-4 group-hover:bg-cyan-500/10 group-hover:text-cyan-400 transition-colors">
+                  <value.icon size={24} />
                 </div>
+                <h4 className="font-heading font-semibold text-lg mb-2 text-slate-100">
+                  {value.title}
+                </h4>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  {value.description}
+                </p>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Quote - Enhanced */}
+        {/* Quote */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.6, duration: 0.8 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
           className="mt-20 text-center"
         >
-          <GlassCard variant="large" glow className="inline-block max-w-4xl">
-            <div className="absolute inset-0 bg-gradient-radial from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <blockquote className="text-2xl md:text-3xl font-heading font-medium text-gradient-heading leading-relaxed relative z-10">
+          <div className="inline-block max-w-4xl p-8 md:p-12 rounded-3xl bg-gradient-to-br from-slate-900/50 to-slate-900/30 border border-slate-800">
+            <blockquote className="text-2xl md:text-3xl font-heading font-medium text-slate-200 leading-relaxed">
               "I design intelligence with empathy — blending data, emotion, and purpose
               into a calm futuristic experience."
             </blockquote>
-          </GlassCard>
+          </div>
         </motion.div>
       </div>
       <SectionDivider position="bottom" />
