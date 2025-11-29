@@ -41,16 +41,14 @@ export function CinematicHero() {
   if (!mounted) {
     return <HeroSplash />;
   }
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950">
       <SectionDivider position="top" />
 
-      {/* Static Background Gradients - Replaces heavy canvas/orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-cyan-500/5 blur-[100px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-500/5 blur-[100px]" />
+      {/* Background Effects - Optimized */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020617] via-[#0a0f1e] to-[#020617]" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20" />
       </div>
 
       <div className="container relative z-10 mx-auto px-6 md:px-12 py-32 text-center max-w-7xl">
@@ -112,7 +110,7 @@ export function CinematicHero() {
             </button>
           </Link>
         </motion.div>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 }
