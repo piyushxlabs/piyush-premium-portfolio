@@ -1,8 +1,7 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionValue, useAnimation, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValue, AnimatePresence } from 'framer-motion';
 import { Cpu, Activity, GitBranch, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import VisionBackground from '@/components/ui/VisionBackground';
